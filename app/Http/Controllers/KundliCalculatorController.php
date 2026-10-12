@@ -1,0 +1,126 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Helpers\AscendantHelper;
+use App\Helpers\DoshaHelper;
+use App\Helpers\JaiminiHelper;
+use App\Helpers\KundliHelper;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+
+/**
+ * Report pages of the calculators that work from the birth details
+ * (name, date, time and place of birth).
+ */
+class KundliCalculatorController extends Controller
+{
+    public function atmakarakaDarakaraka(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('atmakaraka-darakaraka-report', $input + ['report' => JaiminiHelper::report($input['birth'])]);
+    }
+
+    public function sunSign(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('sun-sign-report', $input + ['report' => KundliHelper::sunSign($input['birth'])]);
+    }
+
+    public function rashi(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('rashi-report', $input + ['report' => KundliHelper::rashi($input['birth'])]);
+    }
+
+    public function nakshatra(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('nakshatra-report', $input + ['report' => KundliHelper::nakshatra($input['birth'])]);
+    }
+
+    public function sadeSati(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('shani-sade-sati-report', $input + ['report' => DoshaHelper::sadeSati($input['birth'])]);
+    }
+
+    public function birthChart(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('birth-chart-report', $input + ['report' => KundliHelper::birthChart($input['birth'], $input['lat'], $input['lng'])]);
+    }
+
+    public function kaalSarpDosh(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('kaal-sarp-dosh-report', $input + ['report' => DoshaHelper::kaalSarp($input['birth'], $input['lat'], $input['lng'])]);
+    }
+
+    public function ishtaDevata(Request $request)
+    {
+        $input = $this->birthInput($request);
+
+        return view('ishta-devata-report', $input + ['report' => JaiminiHelper::ishtaDevata($input['birth'])]);
+    }
+
+    /**
+     * Checks the birth form and returns name, gender, birth moment, place and coordinates.
+     * A wrong value sends the visitor back to the form with the message.
+     */
+    private function birthInput(Request $request): array
+    {
+        $data = $request->validate([
+            'name'   => 'required|string|max:50',
+            'gender' => 'nullable|in:male,female',
+            'day'    => 'required|integer|between:1,31',
+            'month'  => 'required|integer|between:1,12',
+            'year'   => 'required|integer|between:1900,' . date('Y'),
+            'hour'   => 'required_without:time_unknown|nullable|integer|between:1,12',
+            'minute' => 'required_without:time_unknown|nullable|integer|between:0,59',
+            'ampm'   => 'required_without:time_unknown|nullable|in:AM,PM',
+            'place'  => 'required|string|max:120',
+            'lat'    => 'nullable|numeric|between:-90,90',
+            'lng'    => 'nullable|numeric|between:-180,180',
+            'tz'     => 'nullable|timezone',
+        ]);
+
+        if (!checkdate($data['month'], $data['day'], $data['year'])) {
+            throw ValidationException::withMessages(['day' => 'Please choose a valid date of birth.']);
+        }
+
+        // Place typed but not picked from the list: look it up here
+        if (empty($data['lat']) || empty($data['lng']) || empty($data['tz'])) {
+            $match = AscendantHelper::searchPlaces($data['place'], 1)[0] ?? null;
+
+            if (!$match) {
+                throw ValidationException::withMessages(['place' => 'We could not find this place. Please type the city name and pick it from the list.']);
+            }
+
+            $data = array_merge($data, ['place' => $match['label'], 'lat' => $match['lat'], 'lng' => $match['lng'], 'tz' => $match['tz']]);
+        }
+
+        // Without a birth time noon is used and the report says so
+        $timeUnknown = $request->boolean('time_unknown');
+        $hour = $timeUnknown ? 12 : ($data['hour'] % 12) + ($data['ampm'] === 'PM' ? 12 : 0);
+        $minute = $timeUnknown ? 0 : (int) $data['minute'];
+
+        return [
+            'name'        => $data['name'],
+            'gender'      => $data['gender'] ?? 'male',
+            'birth'       => Carbon::create($data['year'], $data['month'], $data['day'], $hour, $minute, 0, $data['tz']),
+            'place'       => $data['place'],
+            'lat'         => (float) $data['lat'],
+            'lng'         => (float) $data['lng'],
+            'timeUnknown' => $timeUnknown,
+        ];
+    }
+}
