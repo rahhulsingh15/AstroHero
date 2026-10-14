@@ -35,4 +35,21 @@ return [
         ],
     ],
 
+    // Firebase Cloud Messaging (browser push notifications)
+    'firebase' => [
+        // Server side: service account JSON file (Firebase Console > Project settings > Service accounts)
+        'credentials' => base_path(env('FIREBASE_CREDENTIALS', 'storage/app/firebase/service-account.json')),
+
+        // Browser side: web app config (Project settings > General > Your apps)
+        'api_key' => env('FIREBASE_API_KEY'),
+        'auth_domain' => env('FIREBASE_AUTH_DOMAIN'),
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+        'storage_bucket' => env('FIREBASE_STORAGE_BUCKET'),
+        'messaging_sender_id' => env('FIREBASE_MESSAGING_SENDER_ID'),
+        'app_id' => env('FIREBASE_APP_ID'),
+
+        // Project settings > Cloud Messaging > Web Push certificates > Key pair
+        'vapid_key' => env('FIREBASE_VAPID_KEY'),
+    ],
+
 ];

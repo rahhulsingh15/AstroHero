@@ -25,6 +25,10 @@
       <span class="nav-icon"><i class="bi bi-gear" aria-hidden="true"></i></span>
       <span class="nav-text">Settings</span>
     </a>
+    <a class="nav-link {{ request()->routeIs('admin.push_notification.*') ? 'active' : '' }}" href="{{ route('admin.push_notification.index') }}">
+      <span class="nav-icon"><i class="bi bi-bell" aria-hidden="true"></i></span>
+      <span class="nav-text">Push Notifications</span>
+    </a>
 
 
 <!-- Home Page CMS Dropdown -->
@@ -144,5 +148,45 @@
 
         </div>
     @endforeach
+
+    <!-- Love Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.love_calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-heart"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Love Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.love_calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.love_calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.love_calculator.faq.*') ? 'active' : '' }}" href="{{ route('admin.love_calculator.faq.index') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">FAQs</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.love_calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.love_calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
 </nav>
 </aside>

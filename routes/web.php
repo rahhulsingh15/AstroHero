@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\AstrologerCategoryController;
 use App\Http\Controllers\Admin\HomeServiceController;
 use App\Http\Controllers\Admin\AstrologerPageController;
 use App\Http\Controllers\Admin\AstrologerPageItemController;
+use App\Http\Controllers\Admin\PushNotificationController;
+use App\Http\Controllers\Admin\LoveCalculatorContentController;
+use App\Http\Controllers\Admin\LoveCalculatorFaqController;
 use App\Models\AstrologerPage;
 use App\Models\AstrologerPageItem;
 use App\Helpers\CompatibilityHelper;
@@ -25,6 +28,7 @@ use App\Http\Controllers\MulankCalculatorController;
 use App\Http\Controllers\AgeCalculatorController;
 use App\Http\Controllers\KundliCalculatorController;
 use App\Http\Controllers\NumerologyToolsController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +65,9 @@ Route::get('/clear', function () {
 });
 
 
+
+Route::post('/save-subscriber', [SubscriberController::class, 'store'])->name('subscriber.save');
+Route::get('/firebase-messaging-sw.js', [SubscriberController::class, 'serviceWorker'])->name('firebase.sw');
 
 
 
@@ -175,6 +182,26 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/home-service/edit/{id}', [HomeServiceController::class, 'edit'])->name('home_service.edit');
     Route::put('/home-service/update/{id}', [HomeServiceController::class, 'update'])->name('home_service.update');
     Route::get('/home-service/delete/{id}', [HomeServiceController::class, 'delete'])->name('home_service.delete');
+
+    // Push Notification Routes (Firebase)
+    Route::get('/push-notification', [PushNotificationController::class, 'index'])->name('push_notification.index');
+    Route::get('/push-notification/create', [PushNotificationController::class, 'create'])->name('push_notification.create');
+    Route::post('/push-notification/store', [PushNotificationController::class, 'store'])->name('push_notification.store');
+    Route::get('/push-notification/delete/{id}', [PushNotificationController::class, 'delete'])->name('push_notification.delete');
+
+    // Love Calculator Page Routes
+    Route::get('/love-calculator/content', [LoveCalculatorContentController::class, 'edit'])->name('love_calculator.content.edit');
+    Route::put('/love-calculator/content/update', [LoveCalculatorContentController::class, 'update'])->name('love_calculator.content.update');
+    Route::get('/love-calculator/report', [LoveCalculatorContentController::class, 'reportEdit'])->name('love_calculator.report.edit');
+    Route::put('/love-calculator/report/update', [LoveCalculatorContentController::class, 'reportUpdate'])->name('love_calculator.report.update');
+
+    // FAQs
+    Route::get('/love-calculator/faq', [LoveCalculatorFaqController::class, 'index'])->name('love_calculator.faq.index');
+    Route::get('/love-calculator/faq/create', [LoveCalculatorFaqController::class, 'create'])->name('love_calculator.faq.create');
+    Route::post('/love-calculator/faq/store', [LoveCalculatorFaqController::class, 'store'])->name('love_calculator.faq.store');
+    Route::get('/love-calculator/faq/edit/{id}', [LoveCalculatorFaqController::class, 'edit'])->name('love_calculator.faq.edit');
+    Route::put('/love-calculator/faq/update/{id}', [LoveCalculatorFaqController::class, 'update'])->name('love_calculator.faq.update');
+    Route::get('/love-calculator/faq/delete/{id}', [LoveCalculatorFaqController::class, 'delete'])->name('love_calculator.faq.delete');
 
     // Chat with Astrologers / Talk to Astrologers Page Routes ({page} = chat | talk)
     Route::prefix('astrologer-page/{page}')->name('astrologer_page.')->where([

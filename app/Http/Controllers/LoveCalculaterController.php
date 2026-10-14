@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\LoveCalculatorContent;
+use App\Models\LoveCalculatorFaq;
 
 class LoveCalculaterController extends Controller
 {
@@ -15,7 +17,10 @@ class LoveCalculaterController extends Controller
 
     public function index()
     {
-        return view('love-calculator');
+        return view('love-calculator', [
+            'content' => LoveCalculatorContent::current(),
+            'faqs'    => LoveCalculatorFaq::where('is_active', 1)->orderBy('id')->get(),
+        ]);
     }
 
     public function report(Request $request)
@@ -41,6 +46,7 @@ class LoveCalculaterController extends Controller
             'gender2' => $request->query('gender2') === 'male' ? 'male' : 'female',
             'percent' => $percent,
             'band'    => $band,
+            'content' => LoveCalculatorContent::current(),
         ]);
     }
 

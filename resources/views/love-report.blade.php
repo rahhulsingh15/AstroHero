@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', 'Love Report | Find Your Love Compatibility')
+@section('title', $content->report_meta_title ?: 'Love Report | Find Your Love Compatibility')
 @section('content')
 
     <!-- Loading Popup -->
@@ -113,11 +113,12 @@
             <div class="banner-card">
                 <div class="banner-content">
                     <div>
-                        <span class="banner-tag">LIMITED-TIME OFFER</span>
-                    <h2>Have Questions About Your Score?</h2>
-                    <p>Ask our verified love astrologers anything about this calculation — what your numbers mean, where
-                        the friction lies, and what to do next. Your first conversation is free.</p>
-                    <a href="{{ route('chat-with-astrologers') }}" class="btn-primary banner-btn">Start a Free Chat →</a>
+                        @if($content->report_banner_tag)
+                            <span class="banner-tag">{{ $content->report_banner_tag }}</span>
+                        @endif
+                    <h2>{{ $content->report_banner_title }}</h2>
+                    <p>{{ $content->report_banner_text }}</p>
+                    <a href="{{ route('chat-with-astrologers') }}" class="btn-primary banner-btn">{{ $content->report_banner_button ?: 'Start a Free Chat →' }}</a>
                     </div>
                 </div>
                 <div class="banner-images">
@@ -130,7 +131,7 @@
             <!-- Astrologer Grid -->
             <div class="astrologer-section">
                 <div class="astro-header">
-                    <h2>Talk to Love Experts</h2>
+                    <h2>{{ $content->report_experts_title ?: 'Talk to Love Experts' }}</h2>
                     <a href="{{ route('talk-to-astrologers') }}" class="view-all">View all astrologers →</a>
                 </div>
                 <div class="astro-grid">

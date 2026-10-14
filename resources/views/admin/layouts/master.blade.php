@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
+    @stack('styles')
 </head>
 <body>
     <div class="admin-shell">
@@ -25,6 +26,7 @@
         </div>
     </div>
 @include('admin.layouts.scripts')
+@stack('scripts')
 </body>
 
 </html>

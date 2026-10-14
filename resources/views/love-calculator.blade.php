@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', 'Love Calculator by Name | Love Compatibility Test')
+@section('title', $content->meta_title ?: 'Love Calculator by Name | Love Compatibility Test')
 @section('content')
 <section class="love-calculator-section">
     <div class="lc-container">
@@ -7,17 +7,15 @@
             <div class="breadcrumb">
                 <a href="{{ route('home') }}">HOME</a>
                 <span class="separator">›</span>
-                <span class="current">LOVE CALCULATOR</span>
+                <span class="current">{{ $content->breadcrumb_label ?: 'LOVE CALCULATOR' }}</span>
             </div>
-            <h1>Love Calculator <span class="highlight-text">by Name</span></h1>
+            <h1>{{ $content->hero_title ?: 'Love Calculator' }} @if($content->hero_highlight)<span class="highlight-text">{{ $content->hero_highlight }}</span>@endif</h1>
             <div class="lc-description">
-                <p>Ever wondered whether your current partner truly loves you, or if it's all in your head? Has
-                    someone new sparked your interest, but you are unsure if they are the right match for you? If
-                    yes, the Love Calculator by Name might just be the right tool for you<span
-                        class="more-dots">...</span><span class="more-text" style="display: none;"> Simply enter
-                        your name and your partner's name below to get a detailed love percentage and uncover the
-                        hidden dynamics of your relationship based on numerology!</span></p>
-                <button class="read-more" onclick="toggleReadMore()">Read more</button>
+                <p>{{ $content->hero_intro }}@if($content->hero_more)<span
+                        class="more-dots">...</span><span class="more-text" style="display: none;"> {{ $content->hero_more }}</span>@endif</p>
+                @if($content->hero_more)
+                    <button class="read-more" onclick="toggleReadMore()">Read more</button>
+                @endif
             </div>
         </div>
         <div class="lc-visual">
@@ -52,7 +50,7 @@
 <!-- Compatibility Form -->
 <section class="compatibility-form-section">
     <div class="container lc-box">
-        <h2><span class="heart-icon">❤️</span> Check Your Love <span class="highlight-text">Compatibility</span>
+        <h2><span class="heart-icon">❤️</span> {{ $content->form_title }} @if($content->form_highlight)<span class="highlight-text">{{ $content->form_highlight }}</span>@endif
         </h2>
         <form class="love-form" method="GET" action="{{ route('love-report') }}">
             <div class="form-inputs-row">
@@ -91,50 +89,8 @@
         <div class=" lc-split">
             <!-- Left Content -->
             <div class="lc-left">
-                <h3>What is a Love Calculator?</h3>
-                <p>A Love Calculator is an online tool that determines the compatibility between two individuals based
-                    on their names or date of birth. It uses ancient numerology and astrological principles to give you
-                    a detailed compatibility report.</p>
-
-                <h3>How Does Love Calculator By Name Work?</h3>
-                <p>The name-based calculator converts your names into numbers. It checks for compatibility of both the
-                    names using principles of numerology and astrology. It makes a complex calculation to arrive at a
-                    definitive love percentage.</p>
-
-                <h3>Name-Based Calculator</h3>
-                <p>Calculating love compatibility by name is quite popular among the youth. According to numerology,
-                    each alphabet in your name has a particular value. Our system sums these values to compute the
-                    numeric total of your names.</p>
-                <p>Then the numbers from both names are analyzed using numerological rules to arrive at a percentage of
-                    love.</p>
-
-                <h3>What Does Your Love Percentage Say?</h3>
-                <div class="percentage-cards">
-                    <div class="p-card">
-                        <div class="p-range">80-100%</div>
-                        <h4>Soulmate Bond</h4>
-                        <p>A score in this range indicates that you two share a deep connection. You are practically
-                            soulmates. It implies a high level of understanding and mutual respect.</p>
-                    </div>
-                    <div class="p-card">
-                        <div class="p-range">60-80%</div>
-                        <h4>A Promising Bond</h4>
-                        <p>This percentage shows you have a promising bond that can develop into a strong relationship
-                            with a little effort and communication.</p>
-                    </div>
-                    <div class="p-card">
-                        <div class="p-range">40-60%</div>
-                        <h4>A Growing Bond</h4>
-                        <p>There is potential here, but it requires patience. Focus on building trust and spending
-                            quality time together to strengthen this bond.</p>
-                    </div>
-                    <div class="p-card">
-                        <div class="p-range">Below 40%</div>
-                        <h4>A Fainter Bond</h4>
-                        <p>A lower percentage doesn't mean it's impossible, but it does mean that making the
-                            relationship work will require significant effort and compromise.</p>
-                    </div>
-                </div>
+                {{-- Admin > Love Calculator > Page Content > Main Content (Jodit, % cards samet) --}}
+                {!! $content->main_content !!}
 
 
             </div>
@@ -205,187 +161,45 @@
 
 
         <div class="lc-additional-content">
-            <h3>Love Compatibility by Zodiac Sign</h3>
-            <div class="zodiac-table-wrapper">
-                <table class="zodiac-table">
-                    <thead>
-                        <tr>
-                            <th>Zodiac Elements</th>
-                            <th>Compatible With</th>
-                            <th>Relationship Style</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="z-icon">♈</span> Fire (Aries, Leo, Sagittarius)</td>
-                            <td>Air & Fire</td>
-                            <td>Passionate, energetic, adventurous, action-oriented</td>
-                        </tr>
-                        <tr>
-                            <td><span class="z-icon">♉</span> Earth (Taurus, Virgo, Capricorn)</td>
-                            <td>Water & Earth</td>
-                            <td>Practical, stable, reliable, focused on building</td>
-                        </tr>
-                        <tr>
-                            <td><span class="z-icon">♊</span> Air (Gemini, Libra, Aquarius)</td>
-                            <td>Fire & Air</td>
-                            <td>Intellectual, communicative, social, independent</td>
-                        </tr>
-                        <tr>
-                            <td><span class="z-icon">♋</span> Water (Cancer, Scorpio, Pisces)</td>
-                            <td>Earth & Water</td>
-                            <td>Emotional, intuitive, deeply connected, sensitive</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>How to Use the Love Calculator</h3>
-            <ul class="clean-list">
-                <li>1. Enter your name in the first field.</li>
-                <li>2. Enter your partner's name in the second field.</li>
-                <li>3. Select the genders correctly.</li>
-                <li>4. Click on 'Calculate Love %' to see the magic happen!</li>
-            </ul>
-
-            <h3>Why Use AstroHero's Love Calculator?</h3>
-            <p>We combine accurate numerological patterns with astrological insights to give you not just a number,
-                but real guidance on your relationship. It is an advanced algorithm tested over thousands of real
-                relationship queries.</p>
-            <p>If you wish to explore more, you can connect directly with our expert astrologers for an in-depth
-                reading.</p>
-
-            <h3>Other Love Compatibility Tools</h3>
-            <p>We offer other specialized tools such as Kundli Matching and Tarot reading for more nuanced
-                compatibility insights.</p>
-
-            <h3>Other Compatibility Tools</h3>
-            <div class="tools-cards">
-                <div class="tool-card">
-                    <div class="t-icon">💑</div>
-                    <div>
-                        <h5>Kundli Matching</h5>
-                        <p>Check marriage compatibility based on stars.</p>
-                    </div>
-                </div>
-                <div class="tool-card">
-                    <div class="t-icon">🤝</div>
-                    <div>
-                        <h5>Friendship Calculator</h5>
-                        <p>Find out if you are true friends.</p>
-                    </div>
-                </div>
-                <div class="tool-card">
-                    <div class="t-icon">🔮</div>
-                    <div>
-                        <h5>Flames Calculator</h5>
-                        <p>The classic childhood game.</p>
-                    </div>
-                </div>
-            </div>
+            {{-- Admin > Love Calculator > Page Content > More Content (Jodit, tools cards samet) --}}
+            {!! $content->extra_content !!}
         </div>
     </div>
 
 </section>
+@if($faqs->isNotEmpty())
 <section class="acording_section">
     <div class="acord-container">
         <!-- Left Side: Title -->
         <div class="acord-left">
-            <span class="acord-subtitle">FREQUENTLY ASKED</span>
-            <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
+            <span class="acord-subtitle">{{ $content->faq_subtitle }}</span>
+            <h2 class="acord-title">{!! $content->faq_title !!}</h2>
         </div>
 
-        <!-- Right Side: Accordion List -->
+        <!-- Right Side: Accordion List (Admin > Love Calculator > FAQs) -->
         <div class="acord-right">
 
-            <div class="acord-item">
-                <button class="acord-btn">
-                    <span>Is my first astrology call session completely free?</span>
-                    <div class="acord-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+            @foreach($faqs as $faq)
+                <div class="acord-item">
+                    <button class="acord-btn">
+                        <span>{{ $faq->question }}</span>
+                        <div class="acord-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </button>
+                    <div class="acord-content">
+                        {!! $faq->answer !!}
                     </div>
-                </button>
-                <div class="acord-content">
-                    <p>Yes! As a new user on AstroHero, you get a complimentary first call session. You can connect
-                        with our premium astrologers instantly to experience our guidance without any upfront
-                        payment.</p>
                 </div>
-            </div>
-
-            <div class="acord-item">
-                <button class="acord-btn">
-                    <span>How do I know if an astrologer is genuine?</span>
-                    <div class="acord-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </button>
-                <div class="acord-content">
-                    <p>Every astrologer on our platform goes through a strict 4-step verification process. We
-                        conduct thorough background checks and live panel interviews to ensure you only speak with
-                        authentic, highly qualified experts.</p>
-                </div>
-            </div>
-
-            <div class="acord-item">
-                <button class="acord-btn">
-                    <span>Are online call consultations as effective as physical meetings?</span>
-                    <div class="acord-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </button>
-                <div class="acord-content">
-                    <p>Absolutely. Online call sessions offer the exact same level of accuracy as face-to-face
-                        meetings. In fact, they provide more privacy and give you the flexibility to get predictions
-                        and remedies that you can refer back to anytime.</p>
-                </div>
-            </div>
-
-            <div class="acord-item">
-                <button class="acord-btn">
-                    <span>Will I receive specific remedies during the call?</span>
-                    <div class="acord-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </button>
-                <div class="acord-content">
-                    <p>Yes, our astrologers provide highly personalized and practical remedies—such as specific
-                        gemstone advice, powerful mantras, and easy daily rituals—tailored precisely to your unique
-                        birth chart.</p>
-                </div>
-            </div>
-
-            <div class="acord-item">
-                <button class="acord-btn">
-                    <span>What details do I need to provide for a consultation?</span>
-                    <div class="acord-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </div>
-                </button>
-                <div class="acord-content">
-                    <p>For the most accurate reading, you simply need to share your exact date of birth, time of
-                        birth, and place of birth. Our experts will use these details to generate your Kundli
-                        instantly and answer your queries.</p>
-                </div>
-            </div>
+            @endforeach
 
         </div>
     </div>
 </section>
+@endif
 <!-- Sort Modal -->
 <div class="modal-overlay" id="sortModalOverlay">
     <div class="sort-modal">

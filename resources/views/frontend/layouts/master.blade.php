@@ -270,49 +270,115 @@
             });
         })();
     </script>
+    <!-- Firebase push notifications -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const banner = document.getElementById("astroNotifyBanner");
-    const allowBtn = document.getElementById("enableAstroNotify");
-    const laterBtn = document.getElementById("laterAstroNotify");
-    const dismissBtn = document.getElementById("dismissAstroNotify");
+        // Browser ka FCM token lo aur DB mein save karo. Isi token par admin se notification jaata hai.
+        window.astroSaveSubscriber = async function (permission) {
+            let fcmToken = null;
 
-    // Check if notifications are supported & not already granted/dismissed
-    const isDismissed = localStorage.getItem("astro_notify_dismissed");
+            if (permission === "granted" && "serviceWorker" in navigator && window.firebase) {
+                try {
+                    if (!firebase.apps.length) {
+                        firebase.initializeApp(@json(\App\Http\Controllers\SubscriberController::firebaseWebConfig()));
+                    }
+                    const registration = await navigator.serviceWorker.register("{{ route('firebase.sw') }}");
+                    const messaging = firebase.messaging();
+                    fcmToken = await messaging.getToken({
+                        vapidKey: @json(config('services.firebase.vapid_key')),
+                        serviceWorkerRegistration: registration
+                    });
 
-    if ("Notification" in window && Notification.permission === "default" && !isDismissed) {
-        // Show after 2.5 seconds of page load smoothly
-        setTimeout(() => {
-            banner.classList.add("show");
-        }, 2500);
-    }
-
-    function hideBanner(permanently = false) {
-        banner.classList.remove("show");
-        if (permanently) {
-            localStorage.setItem("astro_notify_dismissed", "true");
-        }
-    }
-
-    // User triggers the browser notification API via user click
-    allowBtn.addEventListener("click", async function () {
-        hideBanner(true);
-        try {
-            const permission = await Notification.requestPermission();
-            if (permission === "granted") {
-                new Notification("Kundli Predictions Active ✨", {
-                    body: "Namaste! Daily horoscope and horoscope updates are now active.",
-                    icon: "/favicon.ico"
-                });
+                    // Site khuli ho tab bhi notification dikhao
+                    messaging.onMessage(function (payload) {
+                        const n = payload.notification || {};
+                        registration.showNotification(n.title || "Kundli", {
+                            body: n.body || "",
+                            icon: "/favicon.ico",
+                            data: { link: (payload.fcmOptions && payload.fcmOptions.link) || "/" }
+                        });
+                    });
+                } catch (e) {
+                    console.error("Firebase token error:", e);
+                }
             }
-        } catch (e) {
-            console.error("Notification permission error:", e);
-        }
-    });
 
-    laterBtn.addEventListener("click", () => hideBanner(false));
-    dismissBtn.addEventListener("click", () => hideBanner(true));
-});
+            // Token bina badle baar baar save na ho
+            try {
+                if (fcmToken && localStorage.getItem("astro_fcm_token") === fcmToken) return;
+            } catch (e) {}
+
+            return fetch("{{ route('subscriber.save') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ status: permission, fcm_token: fcmToken })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (fcmToken) {
+                    try { localStorage.setItem("astro_fcm_token", fcmToken); } catch (e) {}
+                }
+                console.log("DB Saved:", data);
+            })
+            .catch(err => console.error("Error saving:", err));
+        };
+
+        // Jinhone pehle hi Allow kar diya hai unka token bhi save/refresh karo
+        if ("Notification" in window && Notification.permission === "granted") {
+            window.addEventListener("load", () => window.astroSaveSubscriber("granted"));
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const banner = document.getElementById("astroNotifyBanner");
+            const allowBtn = document.getElementById("enableAstroNotify");
+            const laterBtn = document.getElementById("laterAstroNotify");
+            const dismissBtn = document.getElementById("dismissAstroNotify");
+
+            // Check if notifications are supported & not already granted/dismissed
+            const isDismissed = localStorage.getItem("astro_notify_dismissed");
+
+            if ("Notification" in window && Notification.permission === "default" && !isDismissed) {
+                // Show after 2.5 seconds of page load smoothly
+                setTimeout(() => {
+                    banner.classList.add("show");
+                }, 2500);
+            }
+
+            function hideBanner(permanently = false) {
+                banner.classList.remove("show");
+                if (permanently) {
+                    localStorage.setItem("astro_notify_dismissed", "true");
+                }
+            }
+
+            // User triggers the browser notification API via user click
+            allowBtn.addEventListener("click", async function () {
+            hideBanner(true);
+            try {
+                const permission = await Notification.requestPermission();
+                
+                // Backend Laravel Route par IP, permission aur FCM token send karein
+                window.astroSaveSubscriber(permission);
+
+                if (permission === "granted") {
+                    new Notification("Kundli Predictions Active ✨", {
+                        body: "Namaste! Daily updates are now active.",
+                        icon: "/favicon.ico"
+                    });
+                }
+            } catch (e) {
+                console.error("Notification permission error:", e);
+            }
+        });
+
+            laterBtn.addEventListener("click", () => hideBanner(false));
+            dismissBtn.addEventListener("click", () => hideBanner(true));
+        });
 </script>
 </body>
 </html>
