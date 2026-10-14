@@ -1,0 +1,16 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Files that exist in Laravel's public folder are served from there
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public/$1 -f
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Everything else goes to Laravel
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^ public/index.php [L]
+</IfModule>

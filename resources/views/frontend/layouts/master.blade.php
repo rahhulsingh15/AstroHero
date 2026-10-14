@@ -30,6 +30,142 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+
+        <style>
+            /* Card Container */
+.astro-notify-card {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    width: 360px;
+    background: linear-gradient(145deg, #181428, #0e0b18);
+    border: 1px solid rgba(245, 197, 24, 0.28);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(245, 197, 24, 0.08);
+    z-index: 999999;
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+    transform: translateY(-20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.astro-notify-card.show {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Header & Icon */
+.astro-notify-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.astro-icon-glow {
+    width: 44px;
+    height: 44px;
+    background: radial-gradient(circle, rgba(245, 197, 24, 0.22) 0%, rgba(20, 16, 35, 0.8) 100%);
+    border: 1px solid rgba(245, 197, 24, 0.45);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f5c518;
+}
+
+.astro-close-btn {
+    background: transparent;
+    border: none;
+    color: #8c829e;
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.astro-close-btn:hover {
+    color: #ffffff;
+}
+
+/* Body Content */
+.astro-notify-body h4 {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #f5c518;
+    letter-spacing: 0.3px;
+}
+
+.astro-notify-body p {
+    margin: 0 0 18px 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #b7b0c8;
+}
+
+/* Action Buttons */
+.astro-notify-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-astro-cancel {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #b7b0c8;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-astro-cancel:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+.btn-astro-allow {
+    flex: 1.4;
+    background: linear-gradient(135deg, #f5c518, #d49a07);
+    border: none;
+    color: #120e1e;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(245, 197, 24, 0.35);
+    transition: all 0.2s ease;
+}
+
+.btn-astro-allow:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* Mobile responsive */
+@media (max-width: 480px) {
+    .astro-notify-card {
+        top: auto;
+        bottom: 20px;
+        right: 15px;
+        left: 15px;
+        width: auto;
+    }
+}
+        </style>
 </head>
 
 <body>
@@ -57,7 +193,45 @@
     </div>
     <!-- Header -->
     @include('frontend.layouts.header')
+
+
+
+
+
+
     @yield('content')
+
+
+<!-- Astro Notification Permission Card -->
+<div id="astroNotifyBanner" class="astro-notify-card">
+    <div class="astro-notify-header">
+        <div class="astro-icon-glow">
+            <!-- Spiritual / Star Icon -->
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+        </div>
+        <button type="button" class="astro-close-btn" id="dismissAstroNotify">&times;</button>
+    </div>
+
+    <div class="astro-notify-body">
+        <h4>Daily Kundli & Nakshatra Updates</h4>
+        <p>Get instant alerts when your daily rashifal and auspicious muhurat are published.</p>
+    </div>
+
+    <div class="astro-notify-actions">
+        <button type="button" class="btn-astro-cancel" id="laterAstroNotify">Maybe Later</button>
+        <button type="button" class="btn-astro-allow" id="enableAstroNotify">
+            <span>Enable Updates</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+    </div>
+</div>
+
+
+
+
     <!-- Footer -->
     @include('frontend.layouts.footer')
     <!-- Night sky stars, shown behind every page -->
@@ -96,6 +270,49 @@
             });
         })();
     </script>
-    
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const banner = document.getElementById("astroNotifyBanner");
+    const allowBtn = document.getElementById("enableAstroNotify");
+    const laterBtn = document.getElementById("laterAstroNotify");
+    const dismissBtn = document.getElementById("dismissAstroNotify");
+
+    // Check if notifications are supported & not already granted/dismissed
+    const isDismissed = localStorage.getItem("astro_notify_dismissed");
+
+    if ("Notification" in window && Notification.permission === "default" && !isDismissed) {
+        // Show after 2.5 seconds of page load smoothly
+        setTimeout(() => {
+            banner.classList.add("show");
+        }, 2500);
+    }
+
+    function hideBanner(permanently = false) {
+        banner.classList.remove("show");
+        if (permanently) {
+            localStorage.setItem("astro_notify_dismissed", "true");
+        }
+    }
+
+    // User triggers the browser notification API via user click
+    allowBtn.addEventListener("click", async function () {
+        hideBanner(true);
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission === "granted") {
+                new Notification("Kundli Predictions Active ✨", {
+                    body: "Namaste! Daily horoscope and horoscope updates are now active.",
+                    icon: "/favicon.ico"
+                });
+            }
+        } catch (e) {
+            console.error("Notification permission error:", e);
+        }
+    });
+
+    laterBtn.addEventListener("click", () => hideBanner(false));
+    dismissBtn.addEventListener("click", () => hideBanner(true));
+});
+</script>
 </body>
 </html>
