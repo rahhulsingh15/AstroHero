@@ -89,8 +89,10 @@
             <!-- Banner / Action Card -->
             <div class="num-banner-card">
                 <div class="banner-text">
-                    <h3>Want deeper insights into your destiny?</h3>
-                    <p>Consult our expert numerologists for a personalized reading today.</p>
+                    <h3>{{ $content->report_banner_title ?: 'Want deeper insights into your destiny?' }}</h3>
+                    @if($content->report_banner_text)
+                        <p>{{ $content->report_banner_text }}</p>
+                    @endif
                 </div>
                 <div class="banner-buttons">
                     <a href="{{ route('chat-with-astrologers') }}" class="btn-chat">Chat with Astrologer</a>
@@ -98,78 +100,13 @@
                 </div>
             </div>
 
-            <!-- SEO Content & Tables -->
-            <div class="num-seo-content">
-                <h3>The Power of Name Numerology</h3>
-                <p>Every letter in your name carries a specific vibrational frequency. In Chaldean and Pythagorean numerology, these letters are translated into numbers, revealing profound insights into your destiny, hidden traits, and life purpose. A balanced name can attract wealth, health, and harmonious relationships.</p>
+            <!-- SEO Content & Tables (Admin > Numerology Calculator > Report Page) -->
+            @if($content->report_content)
+                <div class="num-seo-content">
+                    {!! $content->report_content !!}
+                </div>
+            @endif
 
-                <h4>What the Numbers Reveal About You</h4>
-                <ul>
-                    <li><strong>Numerology Number:</strong> Represents your overall vibration and the energy you emit into the universe.</li>
-                    <li><strong>Destiny Number:</strong> Highlights your ultimate goal, life path, and what you are meant to achieve.</li>
-                    <li><strong>Soul Urge Number:</strong> Uncovers your deepest, most hidden inner desires and emotional cravings.</li>
-                    <li><strong>Personality Number:</strong> Shows the 'outer you'—how others perceive you at first glance.</li>
-                </ul>
-
-                <h4>Chaldean Numerology Alphabet Chart</h4>
-                <p>The Chaldean system is considered one of the oldest and most accurate numerology systems. It assigns numbers 1 through 8 to letters based on their vibrational frequencies.</p>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Number</th>
-                            <th>Letters Assigned</th>
-                            <th>Planetary Ruling</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>A, I, J, Q, Y</td>
-                            <td>Sun</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>B, K, R</td>
-                            <td>Moon</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>C, G, L, S</td>
-                            <td>Jupiter</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>D, M, T</td>
-                            <td>Rahu</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>E, H, N, X</td>
-                            <td>Mercury</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>U, V, W</td>
-                            <td>Venus</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>O, Z</td>
-                            <td>Ketu</td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>F, P</td>
-                            <td>Saturn</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h4>Should you change your name spelling?</h4>
-                <p>Many successful individuals, from Bollywood celebrities to top business tycoons, have altered their name spellings to align with a luckier numerology vibration. If your current Name Number clashes with your Birth Number, you might face unnecessary hurdles in career and relationships. Our expert numerologists can suggest minor spelling adjustments to unlock maximum fortune.</p>
-            </div>
-            
             <!-- Discover More Tools -->
             <div class="discover-more">
                 <h3 style="text-align: center; color: var(--gold-soft); margin-bottom: 30px;">Discover More Astrology Tools</h3>

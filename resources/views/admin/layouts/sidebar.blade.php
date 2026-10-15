@@ -188,5 +188,120 @@
         </div>
 
     </div>
+
+    <!-- Numerology Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.numerology_calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-123"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Numerology Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.numerology_calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.numerology_calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.numerology_calculator.faq.*') ? 'active' : '' }}" href="{{ route('admin.numerology_calculator.faq.index') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">FAQs</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.numerology_calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.numerology_calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Rising Ascendant Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.rising-ascendant-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-123"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Rising Ascendant Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.rising-ascendant-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.rising-ascendant-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.rising-ascendant-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.rising-ascendant-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+     <!-- Dasha Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.dasha-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-123"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Dasha Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.dasha-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.dasha-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.dasha-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.dasha-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
 </nav>
 </aside>

@@ -6,20 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('talk_astrologer_helps', function (Blueprint $table) {
+        Schema::create('rising_ascendant_calculator_contents', function (Blueprint $table) {
             $table->id();
             $table->string('heading')->nullable();
-            $table->string('subheading')->nullable();
-            $table->longText('content')->nullable();
-            $table->boolean('is_active')->default(true);
+            $table->longText('description')->nullable();
+            $table->longText('main_content')->nullable();
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('talk_astrologer_helps');
+        Schema::dropIfExists('rising_ascendant_calculator_contents');
     }
 };

@@ -8,8 +8,8 @@
                 <span class="separator">›</span>
                 <span class="current">DASHA CALCULATOR</span>
             </div>
-            <h1>What is My Current Dasha? Find Your Mahadasha & Antardasha</h1>
-            <p class="ras-subtitle">Ever wondered when a major life event will happen? Vimshottari Dasha helps you understand the timing of events in your life. Discover your current Mahadasha and Antardasha below!</p>
+            <h1>{{ $content->heading ?? '' }}</h1>
+            <p class="ras-subtitle">{{ $content->description ?? '' }}</p>
         </div>
     </section>
 
@@ -99,168 +99,10 @@
     </section>
 
     <section class="ras-content-section">
-        <div class="container ras-content-wrapper">
-            <h3>How to Calculate Vimshottari Dasha?</h3>
-            <p>Vimshottari Dasha is calculated based on the position of the Moon in a specific Nakshatra (lunar mansion) at the exact time of your birth. The entire cycle spans 120 years and is divided among nine planetary periods (Mahadashas), which give specific results based on your birth chart.</p>
-
-            <h3>What are the Nine Planetary Dashas?</h3>
-            <div class="signs-list">
-                <div class="sign-item">
-                    <h4><span class="sign-icon">☀️</span> Sun (Surya) Mahadasha</h4>
-                    <p>A 6-year period of authority, career advancement, and self-realization. It brings focus on leadership, government connections, and overall vitality.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🌙</span> Moon (Chandra) Mahadasha</h4>
-                    <p>A 10-year time of emotional growth, mental changes, and focus on home and mother. It brings emotional sensitivity and can lead to domestic changes.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">☄️</span> Mars (Mangal) Mahadasha</h4>
-                    <p>A 7-year energetic and action-oriented period. It brings courage, ambition, and sometimes conflict or property-related matters. A time to take initiative.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🌪️</span> Rahu Mahadasha</h4>
-                    <p>An 18-year period of intense worldly desires, sudden changes, and unconventional paths. It can bring immense success or confusion, focusing on material gains.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🌟</span> Jupiter (Guru) Mahadasha</h4>
-                    <p>A 16-year phase of wisdom, expansion, and spiritual growth. Often associated with marriage, wealth, and higher education. It generally brings optimism.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🪐</span> Saturn (Shani) Mahadasha</h4>
-                    <p>A 19-year period of discipline, hard work, and karmic lessons. It demands patience and perseverance, bringing long-term stability through sustained effort.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🌠</span> Mercury (Budha) Mahadasha</h4>
-                    <p>A 17-year time of learning, communication, and intellectual pursuits. It favors business, writing, trade, and analytical thinking.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🌫️</span> Ketu Mahadasha</h4>
-                    <p>A 7-year deeply spiritual and introspective period. It brings detachment from materialistic desires, sudden spiritual insights, and sometimes a sense of isolation.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">✨</span> Venus (Shukra) Mahadasha</h4>
-                    <p>A 20-year phase of luxury, romance, and artistic pursuits. It brings focus on relationships, comforts, wealth, and aesthetic pleasures.</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 40px;">Conclusion</h3>
-            <p>Vimshottari Dasha provides a profound timeline of your life's journey. By understanding your current planetary periods, you can align your actions with the cosmic flow, preparing for challenges and maximizing opportunities. Remember that the results of a Dasha heavily depend on the specific placement and strength of that planet in your unique birth chart.</p>
-
-            <div class="discover-more">
-                <h3>Explore More Astrology Tools</h3>
-                <div class="calc-cards">
-                    <div class="calc-card">
-                        <span class="c-icon">🌅</span>
-                        <h4>Rising Sign Calculator</h4>
-                        <p>Discover your ascendant</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">📜</span>
-                        <h4>Free Kundli (Birth Chart)</h4>
-                        <p>Detailed astrological profile</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Sade Sati Calculator</h4>
-                        <p>Check Saturn's impact</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">💞</span>
-                        <h4>Kundli Matching</h4>
-                        <p>Check marriage compatibility</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+       {!! $content->main_content ?? '' !!}
     </section>
     <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>What is Vimshottari Dasha?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Vimshottari Dasha is the most widely used planetary period system in Vedic Astrology. It assumes a maximum human lifespan of 120 years, divided into periods ruled by the nine planets, determining when specific events will unfold in your life.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>How is my starting Dasha determined?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Your starting Mahadasha is determined by the Nakshatra (moon mansion) the Moon was placed in at the exact time of your birth. The lord of that Nakshatra becomes your first Dasha ruler.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>What are Mahadasha and Antardasha?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Mahadasha is the major planetary period that can last from 6 to 20 years. Antardasha (or Bhukti) is a sub-period within the Mahadasha, ruled by another planet, which modifies the results of the major period.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Do I need my exact birth time for Dasha calculation?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Yes, since the Moon moves quickly, your exact birth time is essential to accurately calculate the degree of the Moon in its Nakshatra, which determines exactly how much of your first Dasha is left at birth.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Will a bad planet's Dasha always give bad results?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Not necessarily. The results depend on the planet's dignity, placement, and conjunctions in your individual birth chart. Even traditionally malefic planets like Saturn or Rahu can give excellent results if well-placed.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        {!! $content->faq_content ?? '' !!}
     </section>
     <script>
 

@@ -6,12 +6,15 @@ use App\Helpers\AscendantHelper;
 use App\Helpers\DashaHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\DashaCalculatorContent;
+use App\Models\DashaReportContent;
 
 class DashaCalculatorController extends Controller
 {
     public function index()
     {
-        return view('dasha-calculator');
+        $content = DashaCalculatorContent::first();
+        return view('dasha-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -58,6 +61,7 @@ class DashaCalculatorController extends Controller
             'birth'       => $birth,
             'place'       => $data['place'],
             'timeUnknown' => $timeUnknown,
+            'content'     => DashaReportContent::firstOrNew([]),
             'report'      => DashaHelper::report($birth),
         ]);
     }

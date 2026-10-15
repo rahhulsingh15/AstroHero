@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\AstrologerPageItemController;
 use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\LoveCalculatorContentController;
 use App\Http\Controllers\Admin\LoveCalculatorFaqController;
+use App\Http\Controllers\Admin\NumerologyCalculatorContentController;
+use App\Http\Controllers\Admin\NumerologyCalculatorFaqController;
+use App\Http\Controllers\Admin\RisingAscendantCalculatorContentController;
+use App\Http\Controllers\Admin\DashaCalculatorContentController;
 use App\Models\AstrologerPage;
 use App\Models\AstrologerPageItem;
 use App\Helpers\CompatibilityHelper;
@@ -202,6 +206,52 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/love-calculator/faq/edit/{id}', [LoveCalculatorFaqController::class, 'edit'])->name('love_calculator.faq.edit');
     Route::put('/love-calculator/faq/update/{id}', [LoveCalculatorFaqController::class, 'update'])->name('love_calculator.faq.update');
     Route::get('/love-calculator/faq/delete/{id}', [LoveCalculatorFaqController::class, 'delete'])->name('love_calculator.faq.delete');
+
+    // Numerology Calculator Page Routes
+    Route::get('/numerology-calculator/content', [NumerologyCalculatorContentController::class, 'edit'])->name('numerology_calculator.content.edit');
+    Route::put('/numerology-calculator/content/update', [NumerologyCalculatorContentController::class, 'update'])->name('numerology_calculator.content.update');
+    Route::get('/numerology-calculator/report', [NumerologyCalculatorContentController::class, 'reportEdit'])->name('numerology_calculator.report.edit');
+    Route::put('/numerology-calculator/report/update', [NumerologyCalculatorContentController::class, 'reportUpdate'])->name('numerology_calculator.report.update');
+
+    // Numerology Calculator FAQ Routes
+    Route::get('/numerology-calculator/faq', [NumerologyCalculatorFaqController::class, 'index'])->name('numerology_calculator.faq.index');
+    Route::get('/numerology-calculator/faq/create', [NumerologyCalculatorFaqController::class, 'create'])->name('numerology_calculator.faq.create');
+    Route::post('/numerology-calculator/faq/store', [NumerologyCalculatorFaqController::class, 'store'])->name('numerology_calculator.faq.store');
+    Route::get('/numerology-calculator/faq/edit/{id}', [NumerologyCalculatorFaqController::class, 'edit'])->name('numerology_calculator.faq.edit');
+    Route::put('/numerology-calculator/faq/update/{id}', [NumerologyCalculatorFaqController::class, 'update'])->name('numerology_calculator.faq.update');
+    Route::get('/numerology-calculator/faq/delete/{id}', [NumerologyCalculatorFaqController::class, 'delete'])->name('numerology_calculator.faq.delete');
+
+
+    //Rising Ascendant Sign Calculator Page Routes
+    Route::get('/rising-ascendant-calculator/content', [RisingAscendantCalculatorContentController::class, 'edit'])->name('rising-ascendant-calculator.content.edit');
+    Route::put('/rising-ascendant-calculator/content/update', [RisingAscendantCalculatorContentController::class, 'update'])->name('rising-ascendant-calculator.content.update');
+    Route::get('/rising-ascendant-calculator/report', [RisingAscendantCalculatorContentController::class, 'reportEdit'])->name('rising-ascendant-calculator.report.edit');
+    Route::put('/rising-ascendant-calculator/report/update', [RisingAscendantCalculatorContentController::class, 'reportUpdate'])->name('rising-ascendant-calculator.report.update');
+
+
+    //Dasha Calculator Page Routes
+    Route::get('/dasha-calculator/content', [DashaCalculatorContentController::class, 'edit'])->name('dasha-calculator.content.edit');
+    Route::put('/dasha-calculator/content/update', [DashaCalculatorContentController::class, 'update'])->name('dasha-calculator.content.update');
+    Route::get('/dasha-calculator/report', [DashaCalculatorContentController::class, 'reportEdit'])->name('dasha-calculator.report.edit');
+    Route::put('/dasha-calculator/report/update', [DashaCalculatorContentController::class, 'reportUpdate'])->name('dasha-calculator.report.update');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // Chat with Astrologers / Talk to Astrologers Page Routes ({page} = chat | talk)
     Route::prefix('astrologer-page/{page}')->name('astrologer_page.')->where([

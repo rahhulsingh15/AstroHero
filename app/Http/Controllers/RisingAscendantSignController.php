@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Helpers\AscendantHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\RisingAscendantCalculatorContent;
+use App\Models\RisingAscendantReportContent;
 
 class RisingAscendantSignController extends Controller
 {
     public function index()
     {
-        return view('rising-ascendant-sign-calculator');
+        $content =RisingAscendantCalculatorContent::first();        
+        return view('rising-ascendant-sign-calculator', compact('content'));
     }
 
     // Place suggestions for the birth-place box
@@ -66,6 +69,7 @@ class RisingAscendantSignController extends Controller
             'lat'         => (float) $data['lat'],
             'lng'         => (float) $data['lng'],
             'timeUnknown' => $timeUnknown,
+            'content'     => RisingAscendantReportContent::firstOrNew([]),
             'report'      => AscendantHelper::report($birth, (float) $data['lat'], (float) $data['lng']),
         ]);
     }
