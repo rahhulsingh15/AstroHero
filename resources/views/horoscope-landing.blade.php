@@ -38,6 +38,7 @@
         ['route' => 'mangal-dosha-calculator', 'icon' => '🔥', 'name' => 'Mangal Dosha Calculator', 'text' => 'See whether Mars affects your marriage chart.'],
         ['route' => 'dasha-calculator', 'icon' => '🪐', 'name' => 'Dasha Calculator', 'text' => 'Know which planetary period you are running.'],
         ['route' => 'moon-phase-calculator', 'icon' => '🌗', 'name' => 'Moon Phase Calculator', 'text' => 'Find the Moon phase on any date.'],
+        ['route' => 'flames-calculator', 'icon' => '🔥', 'name' => 'FLAMES Calculator', 'text' => 'Find the bond between two names.'],
         ['route' => 'rising-ascendant-sign-calculator', 'icon' => '🌅', 'name' => 'Rising Sign Calculator', 'text' => 'Discover your ascendant (lagna).'],
     ];
 

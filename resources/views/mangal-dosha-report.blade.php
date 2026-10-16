@@ -12,7 +12,7 @@
             <!-- Main Dashboard Card -->
             <div class="md-dashboard">
                 <div class="md-header-main">
-                    <h2>{{ $name }}'s Mangal Dosha Analysis</h2>
+                    <h2>{{ strtr($content->heading ?: "{name}'s Mangal Dosha Analysis", ['{name}' => $name]) }}</h2>
                     <div class="md-status-badge {{ $report['safe'] ? 'safe' : 'danger' }}">
                         @if ($report['safe'])
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -163,58 +163,11 @@
             </div>
 
             <!-- Content Article -->
-            <div class="md-article">
-                <h2>What Does Manglik Dosha Mean?</h2>
-                <p>Manglik dosha is when Mars is placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house from the ascendant, moon, and Venus chart. As Mars represents drive, passion, energy, and aggression, its placement in these houses in a Kundli (birth chart) can profoundly affect marital life, professional life, and physical endurance. Mars is known to naturally bring a fiery or aggressive aura.</p>
-                <p>High Manglik (Purna Manglik Dosha) is formed when Mars is placed in any of these houses from the Ascendant (Lagna) and the Moon chart. Double Manglik Dosha is when Mars is in the 1st, 2nd, 4th, 7th, 8th, or 12th house in both the ascendant and the Moon chart.</p>
-                
-                <h2>What Are the Effects of Mangal in Different Houses?</h2>
-                <p>The effects of Manglik Dosha in every house are different. Analyze Mars placement by using our Mangal Dosha calculator. First, let's look at the houses where Mars is placed and see how it works out for the native if you are finding it in your chart.</p>
-                
-                <div class="houses-grid">
-                    <div class="house-card">
-                        <h4>Mangal in 1st House</h4>
-                        <p>Aggressive nature, dominating behaviour, and ego clashes in relationships.</p>
-                    </div>
-                    <div class="house-card">
-                        <h4>Mangal in 2nd House</h4>
-                        <p>Family disputes, harsh speech, and potential financial turbulence.</p>
-                    </div>
-                    <div class="house-card">
-                        <h4>Mangal in 4th House</h4>
-                        <p>Lack of mental peace, domestic instability, and career issues.</p>
-                    </div>
-                    <div class="house-card">
-                        <h4>Mangal in 7th House</h4>
-                        <p>Marriage delays, high friction with partners, and severe compatibility issues.</p>
-                    </div>
-                    <div class="house-card">
-                        <h4>Mangal in 8th House</h4>
-                        <p>Financial hurdles, health issues, and potential delays in career paths.</p>
-                    </div>
-                    <div class="house-card">
-                        <h4>Mangal in 12th House</h4>
-                        <p>Hidden enemies, sudden financial losses, and disrupted peace of mind.</p>
-                    </div>
+            @if($content->main_content)
+                <div class="md-article">
+                    {!! $content->main_content !!}
                 </div>
-
-                <h3>Manglik Dosha Remedies</h3>
-                <p>Due to the effects of Mars, it can instigate Manglik Dosha inside you. To lessen the intensity of the dosha, especially for double Manglik or partial Manglik, you should perform certain astrological remedies based on whether you are male or female.</p>
-                
-                <h4>Remedies for Male</h4>
-                <ul>
-                    <li>Wearing red coral (Moonga) in a copper or gold ring on the ring finger.</li>
-                    <li>Fasting on Tuesdays and donating blood to reduce aggressive energy.</li>
-                    <li>Worshiping Lord Hanuman and reciting the Hanuman Chalisa daily.</li>
-                </ul>
-
-                <h4>Remedies for Female</h4>
-                <ul>
-                    <li>Kumbh Vivah (a symbolic marriage ritual with a clay pot) before actual marriage.</li>
-                    <li>Donating red clothes and masoor dal (red lentils) on Tuesdays.</li>
-                    <li>Regular chanting of the Mangal Gayatri Mantra or Navagraha Stotra.</li>
-                </ul>
-            </div>
+            @endif
 
             <!-- Discover More Tools -->
             <div class="discover-more" style="margin-bottom: 60px;">
@@ -246,74 +199,11 @@
         </div>
     </section>
     <!-- FAQs -->
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>How do I know my Mangal Dosha?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>To check Manglik Dosha, you need to calculate the position of Mars in the 1st, 2nd, 4th, 7th, 8th, or 12th house from the Ascendant chart or Moon chart. You can use our free Mangal Dosha Calculator for an accurate result.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Which god can control Mangal?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Lord Hanuman is considered the ruling deity for Mars. Worshipping Lord Hanuman regularly and reciting the Hanuman Chalisa helps mitigate the negative effects of Mangal.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Which dosha is bad for marriage?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Mangal Dosha is highly significant for marriage compatibility. A severe mismatch between a Manglik and a Non-Manglik can lead to disputes and marital discord, which is why matching Kundlis is crucial.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>In which house is Mars bad for marriage?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Mars placed in the 7th House (house of marriage) and the 8th House (house of longevity and sudden events) are generally considered the most challenging for marital harmony.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    @if($content->faq_content)
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
     <script>
         const topTicker = document.getElementById('top-ticker');
         if (topTicker) {

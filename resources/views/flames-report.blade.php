@@ -8,7 +8,7 @@
             <!-- Result card -->
             <div class="calc-result">
                 <div class="calc-result-head">
-                    <h2>FLAMES Result</h2>
+                    <h2>{{ strtr($content->heading ?: 'FLAMES Result for {name1} and {name2}', ['{name1}' => $name1, '{name2}' => $name2]) }}</h2>
                     <p>{{ $name1 }} 🔥 {{ $name2 }}</p>
                 </div>
                 <div class="calc-result-body">
@@ -56,13 +56,17 @@
                     </tbody>
                 </table>
 
-                <h3>What each letter means</h3>
-                <ul>
-                    @foreach (\App\Helpers\NumerologyHelper::FLAMES as $letter => $meaning)
-                        <li><strong>{{ $meaning['emoji'] }} {{ $letter }} - {{ $meaning['title'] }}</strong>{{ $letter === $report['letter'] ? ' (your result)' : '' }}</li>
-                    @endforeach
-                </ul>
-                <p>FLAMES is a game played for fun and has no basis in astrology. For a real compatibility check, try <a href="{{ route('kundli-matching') }}">Kundli Matching</a> or the <a href="{{ route('name-compatibility-calculator') }}">Name Compatibility Calculator</a>.</p>
+                @if(!empty($content->main_content))
+                    {!! strtr($content->main_content, ['{name1}' => $name1, '{name2}' => $name2]) !!}
+                @else
+                    <h3>What each letter means</h3>
+                    <ul>
+                        @foreach (\App\Helpers\NumerologyHelper::FLAMES as $letter => $meaning)
+                            <li><strong>{{ $meaning['emoji'] }} {{ $letter }} - {{ $meaning['title'] }}</strong>{{ $letter === $report['letter'] ? ' (your result)' : '' }}</li>
+                        @endforeach
+                    </ul>
+                    <p>FLAMES is a game played for fun and has no basis in astrology. For a real compatibility check, try <a href="{{ route('kundli-matching') }}">Kundli Matching</a> or the <a href="{{ route('name-compatibility-calculator') }}">Name Compatibility Calculator</a>.</p>
+                @endif
             </div>
 
             <!-- Banner / Action Card -->
@@ -78,6 +82,12 @@
             </div>
         </div>
     </section>
+
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         // Share: phone share sheet where available, otherwise copy the report link
@@ -96,5 +106,15 @@
                 } catch (e) {}
             });
         }
+
+        // Accordion FAQ Logic
+        document.querySelectorAll('.acord-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.acord-item').forEach(other => other.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
     </script>
 @endsection

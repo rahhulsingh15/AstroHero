@@ -7,7 +7,7 @@
             <a href="{{ route('moon-phase-calculator') }}" class="num-back-link">‹ Back to Calculator</a>
 
             <div class="moon-report-header">
-                <h2>{{ $name }}'s <span class="highlight">Moon Phase Report</span></h2>
+                <h2>{!! strtr($content->heading ?: "{name}'s <span class=\"highlight\">Moon Phase Report</span>", ['{name}' => $name, '{phase}' => $report['name']]) !!}</h2>
             </div>
 
             @if ($timeUnknown)
@@ -95,9 +95,9 @@
                 <h4>Challenges</h4>
                 <p>{{ $report['challenges'] }}</p>
 
-                <h3>What Are Moon Phases?</h3>
-                <p>The moon phases, or lunar phases, refer to the shape of the moon's directly sunlit portion as viewed from Earth. As the moon orbits the Earth, its position relative to the Earth and Sun changes, causing it to go through a cycle of phases over approximately 29.5 days.</p>
-                <p>Your natal moon phase (the phase the moon was in when you were born) is believed to deeply influence your core personality, emotional needs, and how you naturally process life's challenges. It provides a blueprint of your inner psychological landscape.</p>
+                @if(!empty($content->main_content))
+                    {!! strtr($content->main_content, ['{name}' => $name, '{phase}' => $report['name']]) !!}
+                @endif
             </div>
 
             <!-- Discover More Tools -->
@@ -130,80 +130,11 @@
         </div>
     </section>
 
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Is my moon phase the same as my Moon Sign?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>No, they are different. Your Moon Sign indicates which zodiac constellation the moon was passing through when you were born. Your Moon Phase indicates the angle between the Sun and the Moon (how illuminated the moon was).</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Can moon phases affect my mood?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Astrologically and culturally, it is widely believed that the moon impacts human emotions. Full moons are often associated with heightened emotions and climax, while new moons are associated with low energy and introspection.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Which moon phase is best for starting something new?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>The New Moon phase is considered the best time for setting intentions, starting new projects, or beginning a new chapter in your life, as it represents a fresh cycle of energy.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Why do I need to enter my time of birth?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Because the moon moves very quickly (changing signs every 2.5 days and phases continuously), an exact time is necessary to calculate the precise angle between the Sun and Moon at the moment you were born.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
     <script>
         const topTicker = document.getElementById('top-ticker');
         if (topTicker) {

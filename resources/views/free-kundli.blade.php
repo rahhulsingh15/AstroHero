@@ -256,6 +256,8 @@
                 <a href="{{ route('dasha-calculator') }}"><span>🪐</span> Dasha Calculator</a>
                 <a href="{{ route('numerology-calculator') }}"><span>🔢</span> Numerology Calculator</a>
                 <a href="{{ route('rising-ascendant-sign-calculator') }}"><span>🌅</span> Rising Sign Calculator</a>
+                <a href="{{ route('moon-phase-calculator') }}"><span>🌗</span> Moon Phase Calculator</a>
+                <a href="{{ route('flames-calculator') }}"><span>🔥</span> FLAMES Calculator</a>
             </div>
         </div>
     </section>

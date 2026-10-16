@@ -9,8 +9,7 @@
                 <span class="separator">›</span>
                 <span class="current">FLAMES CALCULATOR</span>
             </div>
-            <h1>FLAMES Calculator - Find the Bond Between Two Names</h1>
-            <p class="nnc-subtitle">FLAMES is the classic name game that tells you whether two people are Friends, Lovers, Affectionate, heading for Marriage, Enemies or like Siblings. Enter the two names to play.</p>
+            <h1>{{ $content->heading ?: 'FLAMES Calculator - Find the Bond Between Two Names' }}</h1>
         </div>
     </section>
 
@@ -56,91 +55,17 @@
         </div>
     </section>
 
-    <section class="nnc-content-section">
-        <div class="container nnc-content-wrapper">
-            <h3>What Is FLAMES?</h3>
-            <p>FLAMES is a game that has been played in school notebooks for generations. It takes two names and, through a simple counting method, lands on one of six letters, each standing for a kind of relationship.</p>
+    @if(!empty($content->main_content))
+        <section class="nnc-content-section">
+            {!! $content->main_content !!}
+        </section>
+    @endif
 
-            <h3>How Is FLAMES Calculated?</h3>
-            <ul class="nnc-list">
-                <li><strong>Step 1:</strong> Write both names and cross out the letters they have in common, one pair at a time.</li>
-                <li><strong>Step 2:</strong> Count the letters that are left in both names.</li>
-                <li><strong>Step 3:</strong> Write F, L, A, M, E, S and count along it using that number. Strike off the letter you land on.</li>
-                <li><strong>Step 4:</strong> Start counting again from the next letter and repeat until only one letter remains.</li>
-            </ul>
-
-            <h3>What Each Letter Means</h3>
-            <ul class="nnc-list">
-                <li><strong>F - Friends:</strong> an easy, trusting friendship.</li>
-                <li><strong>L - Lovers:</strong> a romantic attraction.</li>
-                <li><strong>A - Affection:</strong> warmth and care for each other.</li>
-                <li><strong>M - Marriage:</strong> a bond that could last a lifetime.</li>
-                <li><strong>E - Enemies:</strong> frequent clashes and disagreements.</li>
-                <li><strong>S - Siblings:</strong> a protective, family-like bond.</li>
-            </ul>
-
-            <div class="discover-more">
-                <h3>Discover More about yourself</h3>
-                <div class="calc-cards">
-                    <a href="{{ route('horoscope.landing', ['period' => 'daily']) }}" class="calc-card">
-                        <span class="c-icon">📅</span>
-                        <h4>Daily Horoscope</h4>
-                        <p>Read your daily predictions</p>
-                    </a>
-                    <a href="{{ route('love-calculator') }}" class="calc-card">
-                        <span class="c-icon">❤️</span>
-                        <h4>Love Calculator</h4>
-                        <p>Check love percentage</p>
-                    </a>
-                    <a href="{{ route('numerology-calculator') }}" class="calc-card">
-                        <span class="c-icon">🔢</span>
-                        <h4>Numerology Calculator</h4>
-                        <p>Find the numbers in your name</p>
-                    </a>
-                    <a href="{{ route('dasha-calculator') }}" class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Dasha Calculator</h4>
-                        <p>See your planetary periods</p>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-                @foreach ([
-                    'What does FLAMES stand for?' => 'F is Friends, L is Lovers, A is Affection, M is Marriage, E is Enemies and S is Siblings.',
-                    'Is the FLAMES result accurate?' => 'FLAMES is a game played for fun and has no basis in astrology. For a real compatibility check, kundli matching uses the birth charts of both people.',
-                    'Does the spelling of the name matter?' => 'Yes. The game works on letters, so a different spelling, a nickname or adding a surname can change the result.',
-                ] as $question => $answer)
-                    <div class="acord-item">
-                        <button class="acord-btn">
-                            <span>{{ $question }}</span>
-                            <div class="acord-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="acord-content">
-                            <p>{{ $answer }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

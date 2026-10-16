@@ -284,6 +284,7 @@
                         firebase.initializeApp(@json(\App\Http\Controllers\SubscriberController::firebaseWebConfig()));
                     }
                     const registration = await navigator.serviceWorker.register("{{ route('firebase.sw') }}");
+                    await navigator.serviceWorker.ready;
                     const messaging = firebase.messaging();
                     fcmToken = await messaging.getToken({
                         vapidKey: @json(config('services.firebase.vapid_key')),
@@ -339,6 +340,11 @@
             const laterBtn = document.getElementById("laterAstroNotify");
             const dismissBtn = document.getElementById("dismissAstroNotify");
 
+            // Agar browser permission reset ho chuki hai ("default"), to purana cached token hata do
+            if ("Notification" in window && Notification.permission === "default") {
+                try { localStorage.removeItem("astro_fcm_token"); } catch (e) {}
+            }
+
             // Check if notifications are supported & not already granted/dismissed
             const isDismissed = localStorage.getItem("astro_notify_dismissed");
 
@@ -358,12 +364,12 @@
 
             // User triggers the browser notification API via user click
             allowBtn.addEventListener("click", async function () {
-            hideBanner(true);
+            hideBanner(false);
             try {
                 const permission = await Notification.requestPermission();
                 
                 // Backend Laravel Route par IP, permission aur FCM token send karein
-                window.astroSaveSubscriber(permission);
+                await window.astroSaveSubscriber(permission);
 
                 if (permission === "granted") {
                     new Notification("Kundli Predictions Active ✨", {

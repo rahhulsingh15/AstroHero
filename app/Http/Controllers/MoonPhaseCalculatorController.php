@@ -6,12 +6,15 @@ use App\Helpers\AscendantHelper;
 use App\Helpers\MoonPhaseHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\MoonPhaseCalculatorContent;
+use App\Models\MoonPhaseReportContent;
 
 class MoonPhaseCalculatorController extends Controller
 {
     public function index()
     {
-        return view('moon-phase-calculator');
+        $content = MoonPhaseCalculatorContent::firstOrNew([]);
+        return view('moon-phase-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -47,6 +50,7 @@ class MoonPhaseCalculatorController extends Controller
             'birth'       => $birth,
             'place'       => $data['place'],
             'timeUnknown' => $timeUnknown,
+            'content'     => MoonPhaseReportContent::firstOrNew([]),
             'report'      => MoonPhaseHelper::report($birth),
         ]);
     }

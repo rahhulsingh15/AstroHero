@@ -14,6 +14,9 @@ use App\Http\Controllers\Admin\NumerologyCalculatorContentController;
 use App\Http\Controllers\Admin\NumerologyCalculatorFaqController;
 use App\Http\Controllers\Admin\RisingAscendantCalculatorContentController;
 use App\Http\Controllers\Admin\DashaCalculatorContentController;
+use App\Http\Controllers\Admin\MangalDoshaCalculatorContentController;
+use App\Http\Controllers\Admin\MoonPhaseCalculatorContentController;
+use App\Http\Controllers\Admin\FlamesCalculatorContentController;
 use App\Models\AstrologerPage;
 use App\Models\AstrologerPageItem;
 use App\Helpers\CompatibilityHelper;
@@ -134,7 +137,7 @@ Route::view('/ishta-devata-calculator', 'ishta-devata-calculator')->name('ishta-
 Route::get('/ishta-devata-report', [KundliCalculatorController::class, 'ishtaDevata'])->name('ishta-devata-report');
 
 // Name and number calculators: form page + report page
-Route::view('/flames-calculator', 'flames-calculator')->name('flames-calculator');
+Route::get('/flames-calculator', [NumerologyToolsController::class, 'flamesCalculator'])->name('flames-calculator');
 Route::get('/flames-report', [NumerologyToolsController::class, 'flames'])->name('flames-report');
 Route::view('/friendship-calculator', 'friendship-calculator')->name('friendship-calculator');
 Route::get('/friendship-report', [NumerologyToolsController::class, 'friendship'])->name('friendship-report');
@@ -234,6 +237,24 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/dasha-calculator/content/update', [DashaCalculatorContentController::class, 'update'])->name('dasha-calculator.content.update');
     Route::get('/dasha-calculator/report', [DashaCalculatorContentController::class, 'reportEdit'])->name('dasha-calculator.report.edit');
     Route::put('/dasha-calculator/report/update', [DashaCalculatorContentController::class, 'reportUpdate'])->name('dasha-calculator.report.update');
+
+    //Mangal Dosha Calculator Page Routes
+    Route::get('/mangal-dosha-calculator/content', [MangalDoshaCalculatorContentController::class, 'edit'])->name('mangal-dosha-calculator.content.edit');
+    Route::put('/mangal-dosha-calculator/content/update', [MangalDoshaCalculatorContentController::class, 'update'])->name('mangal-dosha-calculator.content.update');
+    Route::get('/mangal-dosha-calculator/report', [MangalDoshaCalculatorContentController::class, 'reportEdit'])->name('mangal-dosha-calculator.report.edit');
+    Route::put('/mangal-dosha-calculator/report/update', [MangalDoshaCalculatorContentController::class, 'reportUpdate'])->name('mangal-dosha-calculator.report.update');
+
+    //Moon Phase Calculator Page Routes
+    Route::get('/moon-phase-calculator/content', [MoonPhaseCalculatorContentController::class, 'edit'])->name('moon-phase-calculator.content.edit');
+    Route::put('/moon-phase-calculator/content/update', [MoonPhaseCalculatorContentController::class, 'update'])->name('moon-phase-calculator.content.update');
+    Route::get('/moon-phase-calculator/report', [MoonPhaseCalculatorContentController::class, 'reportEdit'])->name('moon-phase-calculator.report.edit');
+    Route::put('/moon-phase-calculator/report/update', [MoonPhaseCalculatorContentController::class, 'reportUpdate'])->name('moon-phase-calculator.report.update');
+
+    //FLAMES Calculator Page Routes
+    Route::get('/flames-calculator/content', [FlamesCalculatorContentController::class, 'edit'])->name('flames-calculator.content.edit');
+    Route::put('/flames-calculator/content/update', [FlamesCalculatorContentController::class, 'update'])->name('flames-calculator.content.update');
+    Route::get('/flames-calculator/report', [FlamesCalculatorContentController::class, 'reportEdit'])->name('flames-calculator.report.edit');
+    Route::put('/flames-calculator/report/update', [FlamesCalculatorContentController::class, 'reportUpdate'])->name('flames-calculator.report.update');
 
 
 

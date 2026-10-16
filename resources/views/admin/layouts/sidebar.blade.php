@@ -303,5 +303,113 @@
         </div>
 
     </div>
+
+    <!-- Mangal Dosha Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.mangal-dosha-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-fire"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Mangal Dosha Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.mangal-dosha-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.mangal-dosha-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.mangal-dosha-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.mangal-dosha-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Moon Phase Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.moon-phase-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-moon-stars"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Moon Phase Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.moon-phase-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.moon-phase-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.moon-phase-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.moon-phase-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- FLAMES Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.flames-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-heart-half"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    FLAMES Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.flames-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.flames-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.flames-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.flames-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
 </nav>
 </aside>

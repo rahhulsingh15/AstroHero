@@ -6,12 +6,15 @@ use App\Helpers\AscendantHelper;
 use App\Helpers\MangalDoshaHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\MangalDoshaCalculatorContent;
+use App\Models\MangalDoshaReportContent;
 
 class MangalDoshaCalculatorController extends Controller
 {
     public function index()
     {
-        return view('mangal-dosha-calculator');
+        $content = MangalDoshaCalculatorContent::firstOrNew([]);
+        return view('mangal-dosha-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -59,6 +62,7 @@ class MangalDoshaCalculatorController extends Controller
             'birth'       => $birth,
             'place'       => $data['place'],
             'timeUnknown' => $timeUnknown,
+            'content'     => MangalDoshaReportContent::firstOrNew([]),
             'report'      => MangalDoshaHelper::report($birth, (float) $data['lat'], (float) $data['lng']),
         ]);
     }

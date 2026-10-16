@@ -6,6 +6,8 @@ use App\Helpers\NumerologyHelper;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Models\FlamesCalculatorContent;
+use App\Models\FlamesReportContent;
 
 /**
  * Report pages of the calculators that work from names, numbers and the date of birth.
@@ -19,6 +21,12 @@ class NumerologyToolsController extends Controller
         'month' => 'required|integer|between:1,12',
     ];
 
+    public function flamesCalculator()
+    {
+        $content = FlamesCalculatorContent::firstOrNew([]);
+        return view('flames-calculator', compact('content'));
+    }
+
     public function flames(Request $request)
     {
         [$name1, $name2] = $this->twoNames($request);
@@ -28,7 +36,8 @@ class NumerologyToolsController extends Controller
             throw ValidationException::withMessages(['name2' => 'Both names have exactly the same letters, so nothing is left to count. Try adding a surname.']);
         }
 
-        return view('flames-report', compact('name1', 'name2', 'report'));
+        $content = FlamesReportContent::firstOrNew([]);
+        return view('flames-report', compact('name1', 'name2', 'report', 'content'));
     }
 
     public function friendship(Request $request)

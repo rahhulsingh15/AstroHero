@@ -8,8 +8,8 @@
                 <span class="separator">›</span>
                 <span class="current">MANGAL DOSHA CALCULATOR</span>
             </div>
-            <h1>Mangal Dosha Calculator – Check Manglik Dosh Online</h1>
-            <p class="ras-subtitle">Mangal Dosha could be the hidden reason behind your delayed or troubled marriage. Find out instantly with our free Mangal Dosha Calculator. Just enter your birth details and discover the intensity of Mars dosha in your kundali, so you can take corrective action before it's too late.</p>
+            <h1>{{ $content->heading ?: 'Mangal Dosha Calculator – Check Manglik Dosh Online' }}</h1>
+            <p class="ras-subtitle">{{ $content->description ?? '' }}</p>
         </div>
     </section>
     <section class="ras-form-section">
@@ -97,148 +97,10 @@
         </div>
     </section>
     <section class="ras-content-section">
-        <div class="container ras-content-wrapper">
-            <h3>What is Mangal Dosha?</h3>
-            <p>Mangal Dosha, also known as Kuja Dosha or Bhom Dosha, occurs when Mars (Mangal) is placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house of a person's Kundli. This planetary alignment is believed to bring challenges in marital harmony and relationships.</p>
-
-            <h3>Impact of Mangal Dosha</h3>
-            <div class="signs-list">
-                <div class="sign-item">
-                    <h4><span class="sign-icon">❤️</span> Delayed Marriage</h4>
-                    <p>One of the most common effects of Mangal Dosha is a delay in marriage. It is believed to create obstacles in finding the right partner.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">⚔️</span> Marital Discord</h4>
-                    <p>Mars is a fiery planet, representing aggression. Its influence can cause misunderstandings, arguments, and tension between partners.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">💼</span> Professional Challenges</h4>
-                    <p>In some cases, Manglik individuals may face hurdles in their career or financial stability, though Mars can also give immense energy to overcome them.</p>
-                </div>
-                <div class="sign-item">
-                    <h4><span class="sign-icon">🛡️</span> Remedies and Solutions</h4>
-                    <p>Various remedies like Kumbh Vivah, chanting Mangal mantras, and wearing specific gemstones can help nullify the negative effects.</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 40px;">Conclusion</h3>
-            <p>While Mangal Dosha can seem daunting, it is a very common placement. Understanding its presence in your chart is the first step towards mitigating its effects and leading a harmonious life. Consulting an expert astrologer can provide personalized remedies.</p>
-
-            <div class="discover-more">
-                <h3>Explore More Astrology Tools</h3>
-                <div class="calc-cards">
-                    <div class="calc-card">
-                        <span class="c-icon">⏱️</span>
-                        <h4>Dasha Calculator</h4>
-                        <p>Find your Mahadasha</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">📜</span>
-                        <h4>Free Kundli (Birth Chart)</h4>
-                        <p>Detailed astrological profile</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Sade Sati Calculator</h4>
-                        <p>Check Saturn's impact</p>
-                    </div>
-                    <div class="calc-card">
-                        <span class="c-icon">💞</span>
-                        <h4>Kundli Matching</h4>
-                        <p>Check marriage compatibility</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {!! $content->main_content ?? '' !!}
     </section>
     <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>What is a Manglik?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>A Manglik is a person whose Kundli has Mars placed in the 1st, 2nd, 4th, 7th, 8th, or 12th house, creating Mangal Dosha. This position of Mars can affect marriage and relationships.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>Can a Manglik marry a Non-Manglik?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Yes, a Manglik can marry a non-Manglik if certain astrological remedies are performed or if there are specific planetary cancellations (Dosha Parihara) in their respective birth charts.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>At what age does Mangal Dosha end?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Astrologically, it is believed that the intensity of Mangal Dosha reduces significantly after the age of 28, bringing more maturity and stability to the individual.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>What happens if Mangal is in the 7th house?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>The 7th house governs marriage. Mars placed here can cause high expectations, ego clashes, and potential discord if not properly matched with a compatible partner or remedied.</p>
-                    </div>
-                </div>
-
-                <div class="acord-item">
-                    <button class="acord-btn">
-                        <span>How can I cancel Mangal Dosha?</span>
-                        <div class="acord-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </button>
-                    <div class="acord-content">
-                        <p>Mangal Dosha can be canceled or its effects reduced through specific remedies like Kumbh Vivah, fasting on Tuesdays, chanting the Hanuman Chalisa, or matching charts correctly.</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        {!! $content->faq_content ?? '' !!}
     </section>
     <script>
 
