@@ -186,12 +186,29 @@
             </div>
 
             <div class="num-seo-content calc-reading">
-                <h3>Remedies traditionally followed</h3>
+                <h3>Vedic Remedies & Astrological Guidance for Shani Sade Sati</h3>
+                <p>Lord Saturn (Shani Dev) is the cosmic administrator of divine justice (<em>Karma Phaldata</em>). The following authentic Vedic practices help soften the severity of challenging transits and channel Saturn’s grounding energy toward constructive growth:</p>
+
+                <h4>1. Daily & Weekly Spiritual Upasana</h4>
                 <ul>
-                    <li>Light a sesame oil lamp under a peepal tree on Saturdays.</li>
-                    <li>Recite the Hanuman Chalisa or the Shani mantra: Om Sham Shanaishcharaya Namah.</li>
-                    <li>Donate black sesame, black cloth or food to those in need on Saturdays.</li>
-                    <li>Be honest, disciplined and kind to workers and elders.</li>
+                    <li><strong>Lord Hanuman Sadhana:</strong> Recite the <em>Hanuman Chalisa</em> daily, and read the <em>Sundarkand</em> or visit a Hanuman temple every Tuesday and Saturday. Traditional Vedic lore holds that Lord Hanuman grants shelter against malefic Saturn influences.</li>
+                    <li><strong>Mantra Japa:</strong> Chant the Shani Beej Mantra 108 times using a Rudraksha mala on Saturdays:
+                        <br><strong style="color: #1e293b; display:inline-block; margin: 4px 0;">"ॐ शं शनैश्चराय नमः"</strong> (<em>Om Sham Shanaishcharaya Namah</em>) or <strong style="color: #1e293b;">"ॐ प्रां प्रीं प्रौं सः शनैश्चराय नमः"</strong>.</li>
+                    <li><strong>Peepal Tree Offering:</strong> Light an earthen lamp (<em>Diya</em>) with pure mustard or sesame oil under a Peepal tree on Saturday evenings after dusk. Circumambulate the tree clockwise 7 times if possible.</li>
+                </ul>
+
+                <h4>2. Compassionate Daan (Charity & Karma Alignment)</h4>
+                <ul>
+                    <li><strong>Saturday Donations:</strong> Donate black mustard oil, whole black urad dal, black sesame seeds, iron cookware (tawa/chimta), or dark blankets to elderly, impoverished, or physically challenged individuals.</li>
+                    <li><strong>Seva to the Working Class:</strong> Saturn governs laborers, street sweepers, daily-wage workers, and subordinates. Treat them with respect, pay them promptly, and offer them warm meals or tea on Saturdays.</li>
+                    <li><strong>Feeding Animals:</strong> Feed black stray dogs with bread/roti coated in mustard oil, and offer seeds or cooked rice to crows in the early morning.</li>
+                </ul>
+
+                <h4>3. Conduct & Lifestyle Principles (Karmic Discipline)</h4>
+                <ul>
+                    <li>Avoid hasty, speculative financial decisions, gambling, and unverified partnerships during active Sade Sati or Dhaiya periods.</li>
+                    <li>Cultivate patience, humility, and disciplined punctuality. Saturn punishes deceit, arrogance, and corner-cutting, but showers long-lasting rewards on honest, diligent effort.</li>
+                    <li>Maintain clean speech (<em>Vani Sanyam</em>), particularly within family circles, to prevent preventable domestic misunderstandings.</li>
                 </ul>
             </div>
 

@@ -17,6 +17,11 @@ use App\Http\Controllers\Admin\DashaCalculatorContentController;
 use App\Http\Controllers\Admin\MangalDoshaCalculatorContentController;
 use App\Http\Controllers\Admin\MoonPhaseCalculatorContentController;
 use App\Http\Controllers\Admin\FlamesCalculatorContentController;
+use App\Http\Controllers\Admin\FriendshipCalculatorContentController;
+use App\Http\Controllers\Admin\IshtaDevataCalculatorContentController;
+use App\Http\Controllers\Admin\TransitChartCalculatorContentController;
+use App\Http\Controllers\Admin\MulankCalculatorContentController;
+use App\Http\Controllers\Admin\AgeCalculatorContentController;
 use App\Models\AstrologerPage;
 use App\Models\AstrologerPageItem;
 use App\Helpers\CompatibilityHelper;
@@ -133,13 +138,13 @@ Route::view('/birth-chart-calculator', 'birth-chart-calculator')->name('birth-ch
 Route::get('/birth-chart-report', [KundliCalculatorController::class, 'birthChart'])->name('birth-chart-report');
 Route::view('/kaal-sarp-dosh-calculator', 'kaal-sarp-dosh-calculator')->name('kaal-sarp-dosh-calculator');
 Route::get('/kaal-sarp-dosh-report', [KundliCalculatorController::class, 'kaalSarpDosh'])->name('kaal-sarp-dosh-report');
-Route::view('/ishta-devata-calculator', 'ishta-devata-calculator')->name('ishta-devata-calculator');
+Route::get('/ishta-devata-calculator', [KundliCalculatorController::class, 'ishtaDevataCalculator'])->name('ishta-devata-calculator');
 Route::get('/ishta-devata-report', [KundliCalculatorController::class, 'ishtaDevata'])->name('ishta-devata-report');
 
 // Name and number calculators: form page + report page
 Route::get('/flames-calculator', [NumerologyToolsController::class, 'flamesCalculator'])->name('flames-calculator');
 Route::get('/flames-report', [NumerologyToolsController::class, 'flames'])->name('flames-report');
-Route::view('/friendship-calculator', 'friendship-calculator')->name('friendship-calculator');
+Route::get('/friendship-calculator', [NumerologyToolsController::class, 'friendshipCalculator'])->name('friendship-calculator');
 Route::get('/friendship-report', [NumerologyToolsController::class, 'friendship'])->name('friendship-report');
 Route::view('/name-compatibility-calculator', 'name-compatibility-calculator')->name('name-compatibility-calculator');
 Route::get('/name-compatibility-report', [NumerologyToolsController::class, 'nameCompatibility'])->name('name-compatibility-report');
@@ -255,6 +260,36 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::put('/flames-calculator/content/update', [FlamesCalculatorContentController::class, 'update'])->name('flames-calculator.content.update');
     Route::get('/flames-calculator/report', [FlamesCalculatorContentController::class, 'reportEdit'])->name('flames-calculator.report.edit');
     Route::put('/flames-calculator/report/update', [FlamesCalculatorContentController::class, 'reportUpdate'])->name('flames-calculator.report.update');
+
+    // Friendship Calculator Page Routes
+    Route::get('/friendship-calculator/content', [FriendshipCalculatorContentController::class, 'edit'])->name('friendship-calculator.content.edit');
+    Route::put('/friendship-calculator/content/update', [FriendshipCalculatorContentController::class, 'update'])->name('friendship-calculator.content.update');
+    Route::get('/friendship-calculator/report', [FriendshipCalculatorContentController::class, 'reportEdit'])->name('friendship-calculator.report.edit');
+    Route::put('/friendship-calculator/report/update', [FriendshipCalculatorContentController::class, 'reportUpdate'])->name('friendship-calculator.report.update');
+
+    // Ishta Devata Calculator Page Routes
+    Route::get('/ishta-devata-calculator/content', [IshtaDevataCalculatorContentController::class, 'edit'])->name('ishta-devata-calculator.content.edit');
+    Route::put('/ishta-devata-calculator/content/update', [IshtaDevataCalculatorContentController::class, 'update'])->name('ishta-devata-calculator.content.update');
+    Route::get('/ishta-devata-calculator/report', [IshtaDevataCalculatorContentController::class, 'reportEdit'])->name('ishta-devata-calculator.report.edit');
+    Route::put('/ishta-devata-calculator/report/update', [IshtaDevataCalculatorContentController::class, 'reportUpdate'])->name('ishta-devata-calculator.report.update');
+
+    // Transit Chart Calculator Page Routes
+    Route::get('/transit-chart-calculator/content', [TransitChartCalculatorContentController::class, 'edit'])->name('transit-chart-calculator.content.edit');
+    Route::put('/transit-chart-calculator/content/update', [TransitChartCalculatorContentController::class, 'update'])->name('transit-chart-calculator.content.update');
+    Route::get('/transit-chart-calculator/report', [TransitChartCalculatorContentController::class, 'reportEdit'])->name('transit-chart-calculator.report.edit');
+    Route::put('/transit-chart-calculator/report/update', [TransitChartCalculatorContentController::class, 'reportUpdate'])->name('transit-chart-calculator.report.update');
+
+    // Mulank Calculator Page Routes
+    Route::get('/mulank-calculator/content', [MulankCalculatorContentController::class, 'edit'])->name('mulank-calculator.content.edit');
+    Route::put('/mulank-calculator/content/update', [MulankCalculatorContentController::class, 'update'])->name('mulank-calculator.content.update');
+    Route::get('/mulank-calculator/report', [MulankCalculatorContentController::class, 'reportEdit'])->name('mulank-calculator.report.edit');
+    Route::put('/mulank-calculator/report/update', [MulankCalculatorContentController::class, 'reportUpdate'])->name('mulank-calculator.report.update');
+
+    // Age Calculator Page Routes
+    Route::get('/age-calculator/content', [AgeCalculatorContentController::class, 'edit'])->name('age-calculator.content.edit');
+    Route::put('/age-calculator/content/update', [AgeCalculatorContentController::class, 'update'])->name('age-calculator.content.update');
+    Route::get('/age-calculator/report', [AgeCalculatorContentController::class, 'reportEdit'])->name('age-calculator.report.edit');
+    Route::put('/age-calculator/report/update', [AgeCalculatorContentController::class, 'reportUpdate'])->name('age-calculator.report.update');
 
 
 

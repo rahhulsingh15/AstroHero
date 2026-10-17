@@ -67,6 +67,10 @@
                         <input class="form-control" name="heading" type="text"
                             value="{{ old('heading', $content->heading ?? '') }}" required>
                     </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="3">{{ old('description', $content->description ?? '') }}</textarea>
+                    </div>
 
                     <div class="col-12"><hr class="my-2"></div>
 

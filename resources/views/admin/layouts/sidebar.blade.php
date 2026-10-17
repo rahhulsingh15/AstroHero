@@ -411,5 +411,185 @@
         </div>
 
     </div>
+
+    <!-- Friendship Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.friendship-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-people"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Friendship Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.friendship-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.friendship-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.friendship-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.friendship-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Ishta Devata Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.ishta-devata-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-star"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Ishta Devata Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.ishta-devata-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.ishta-devata-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.ishta-devata-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.ishta-devata-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Transit Chart Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.transit-chart-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-compass"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Transit Chart Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.transit-chart-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.transit-chart-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.transit-chart-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.transit-chart-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Mulank Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.mulank-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-hash"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Mulank Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.mulank-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.mulank-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.mulank-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.mulank-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Age Calculator Page Dropdown -->
+    <div class="cms-dropdown {{ request()->routeIs('admin.age-calculator.*') ? 'active' : '' }}">
+
+        <button class="cms-dropdown-btn hytyt" type="button">
+
+            <div class="my_flex">
+
+                <span class="nav-icon">
+                    <i class="bi bi-calendar3"></i>
+                </span>
+
+                <span class="nav-text yyyyold">
+                    Age Calculator
+                </span>
+
+            </div>
+
+            <i class="bi bi-chevron-down dropdown-arrow"></i>
+
+        </button>
+
+        <div class="cms-dropdown-menu">
+
+            <a class="nav-link {{ request()->routeIs('admin.age-calculator.content.*') ? 'active' : '' }}" href="{{ route('admin.age-calculator.content.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Page Content</span>
+            </a>
+            <a class="nav-link {{ request()->routeIs('admin.age-calculator.report.*') ? 'active' : '' }}" href="{{ route('admin.age-calculator.report.edit') }}">
+                <span class="nav-icon"><i class="bi bi-file-earmark"></i></span>
+                <span class="nav-text">Report Page</span>
+            </a>
+
+        </div>
+
+    </div>
 </nav>
 </aside>

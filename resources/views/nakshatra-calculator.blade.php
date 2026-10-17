@@ -115,36 +115,92 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Is a Nakshatra?</h3>
-            <p>The Moon takes about 27 days to go once around the zodiac, spending roughly a day in each nakshatra. The ancient astronomers used these 27 star groups to track the Moon's path, and Vedic astrology still reads them to describe a person's mind and nature.</p>
+            <h3>What Is a Nakshatra? The 27 Celestial Mansions of the Vedic Cosmos</h3>
+            <p>In Vedic astronomy and astrology (<em>Jyotish</em>), the <strong>Nakshatras</strong> are the 27 sacred lunar mansions that form the profound celestial backdrop to the 12 zodiac signs. The Moon takes approximately <strong>27.3 days</strong> to complete a full sidereal orbit around Earth, traversing through roughly one Nakshatra every single day.</p>
+            <p>While the 12 signs (<em>Rashis</em>) span 30 degrees each, the ancient Vedic seers divided the 360-degree zodiac wheel into <strong>27 equal sectors of 13° 20′ (13 degrees and 20 arcminutes)</strong>. Each Nakshatra is overseen by a specific ruling planet (<em>Graha Swami</em>), a patron Vedic divinity (<em>Devata</em>), and an archetypal spiritual symbol. Your <strong>Janma Nakshatra</strong> (the star occupied by the Moon at birth) is the ultimate key to understanding your subconscious conditioning, your instinctual behavioral patterns, and your soul’s karmic blueprint.</p>
 
-            <h3>The 27 Nakshatras and Their Ruling Planets</h3>
+            <h3>The Four Padas: The Sacred 108 Cosmic Steps</h3>
+            <p>Every single Nakshatra is further subdivided into <strong>four equal quarters called Padas (or Charans)</strong>, spanning exactly <strong>3° 20′ each</strong>:</p>
+            <ul class="nnc-list">
+                <li><strong>The Sacred Number 108:</strong> With 27 Nakshatras containing 4 Padas each, the entire zodiac comprises <strong>108 Padas (27 × 4 = 108)</strong>. This is the exact astronomical reason why 108 is considered the holiest number in Hinduism and japa malas contain 108 beads.</li>
+                <li><strong>Direct Link to Navamsha (D9 Chart):</strong> Each 3° 20′ Pada directly corresponds to one sign in the 9th harmonic divisional chart (Navamsha). Your birth Pada determines your D9 Lagna and planetary positions in the chart of destiny and marriage.</li>
+                <li><strong>Naming Syllables (Janma Akshara):</strong> Each Pada carries an assigned Sanskrit phonetic sound (syllable). Naming a child using this sound aligns the individual's auric vibration with their guiding birth star.</li>
+            </ul>
+
+            <h3>The Three Primary Ganas (Soul Temperaments)</h3>
+            <p>In classical Vedic compatibility (<em>Gana Milan</em>), every Nakshatra belongs to one of three universal energetic archetypes:</p>
             <div class="table-responsive">
                 <table class="nnc-table">
                     <thead>
-                        <tr><th>Ruling Planet</th><th>Nakshatras</th></tr>
+                        <tr>
+                            <th>Gana (Nature)</th>
+                            <th>Guiding Principles & Traits</th>
+                            <th>Representative Nakshatras</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Ketu</td><td>Ashwini, Magha, Mula</td></tr>
-                        <tr><td>Venus</td><td>Bharani, Purva Phalguni, Purva Ashadha</td></tr>
-                        <tr><td>Sun</td><td>Krittika, Uttara Phalguni, Uttara Ashadha</td></tr>
-                        <tr><td>Moon</td><td>Rohini, Hasta, Shravana</td></tr>
-                        <tr><td>Mars</td><td>Mrigashira, Chitra, Dhanishta</td></tr>
-                        <tr><td>Rahu</td><td>Ardra, Swati, Shatabhisha</td></tr>
-                        <tr><td>Jupiter</td><td>Punarvasu, Vishakha, Purva Bhadrapada</td></tr>
-                        <tr><td>Saturn</td><td>Pushya, Anuradha, Uttara Bhadrapada</td></tr>
-                        <tr><td>Mercury</td><td>Ashlesha, Jyeshtha, Revati</td></tr>
+                        <tr>
+                            <td><strong>Deva Gana (Divine)</strong></td>
+                            <td>Virtuous, generous, compassionate, calm, spiritually inclined, peaceful conflict resolution.</td>
+                            <td>Ashwini, Mrigashira, Punarvasu, Pushya, Hasta, Swati, Anuradha, Shravana, Revati.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manushya Gana (Human)</strong></td>
+                            <td>Industrious, relationship-oriented, socially grounded, pragmatic, motivated by community and family duty.</td>
+                            <td>Bharani, Rohini, Ardra, Purva Phalguni, Uttara Phalguni, Purva Ashadha, Uttara Ashadha, Purva Bhadrapada, Uttara Bhadrapada.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rakshasa Gana (Fierce)</strong></td>
+                            <td>Intuitive, intensely perceptive, fearless, strong-willed, penetrating insight, intolerance of superficiality.</td>
+                            <td>Krittika, Ashlesha, Magha, Chitra, Vishakha, Jyeshtha, Mula, Dhanishta, Shatabhisha.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3>What Is the Nakshatra Used For?</h3>
-            <ul class="nnc-list">
-                <li>finding the dasha running at birth and the ones that follow</li>
-                <li>matching horoscopes for marriage</li>
-                <li>choosing a name for a newborn</li>
-                <li>selecting auspicious days for important work</li>
-            </ul>
+            <h3>The 27 Nakshatras, Planetary Lords & Cosmic Symbols</h3>
+            <div class="table-responsive">
+                <table class="nnc-table">
+                    <thead>
+                        <tr>
+                            <th>Nakshatra</th>
+                            <th>Ruling Planet</th>
+                            <th>Patron Divinity (Devata)</th>
+                            <th>Cosmic Symbol</th>
+                            <th>Core Life Orientation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Ashwini</strong></td><td>Ketu</td><td>Ashwini Kumaras</td><td>Horse's Head</td><td>Miraculous healing, quick speed, pioneer energy.</td></tr>
+                        <tr><td><strong>Bharani</strong></td><td>Venus</td><td>Lord Yama</td><td>Yoni (Vessel of Life)</td><td>Sacred creation, transformative endurance, truth.</td></tr>
+                        <tr><td><strong>Krittika</strong></td><td>Sun</td><td>Agni Deva</td><td>Razor / Flame</td><td>Penetrating sharpness, purifying digestion, courage.</td></tr>
+                        <tr><td><strong>Rohini</strong></td><td>Moon</td><td>Lord Brahma / Prajapati</td><td>Chariot / Temple</td><td>Sensual beauty, fertile creativity, material abundance.</td></tr>
+                        <tr><td><strong>Mrigashira</strong></td><td>Mars</td><td>Soma (Moon)</td><td>Deer's Head</td><td>Inquisitive searching, gentle agility, truth-seeking.</td></tr>
+                        <tr><td><strong>Ardra</strong></td><td>Rahu</td><td>Rudra (Shiva)</td><td>Teardrop / Diamond</td><td>Stormy emotional catharsis, genius breakthroughs.</td></tr>
+                        <tr><td><strong>Punarvasu</strong></td><td>Jupiter</td><td>Aditi (Cosmic Mother)</td><td>Bow & Quiver</td><td>Renewal, homecoming, benevolent restoration.</td></tr>
+                        <tr><td><strong>Pushya</strong></td><td>Saturn</td><td>Brihaspati</td><td>Cow's Udder / Lotus</td><td>Supreme spiritual nourishment, wisdom, auspiciousness.</td></tr>
+                        <tr><td><strong>Ashlesha</strong></td><td>Mercury</td><td>Sarpas (Nagas)</td><td>Coiled Serpent</td><td>Kundalini power, psychological depth, hypnotic wit.</td></tr>
+                        <tr><td><strong>Magha</strong></td><td>Ketu</td><td>Pitris (Ancestors)</td><td>Royal Throne</td><td>Ancestral legacy, regal leadership, high honour.</td></tr>
+                        <tr><td><strong>Purva Phalguni</strong></td><td>Venus</td><td>Bhaga (Fortune)</td><td>Front Legs of Couch</td><td>Romantic bliss, creative relaxation, prosperity.</td></tr>
+                        <tr><td><strong>Uttara Phalguni</strong></td><td>Sun</td><td>Aryaman (Friendship)</td><td>Back Legs of Couch</td><td>Patronage, durable alliances, selfless service.</td></tr>
+                        <tr><td><strong>Hasta</strong></td><td>Moon</td><td>Savitur (Sun)</td><td>Open Hand</td><td>Artisanal skill, dexterity, healing touch, manifest craft.</td></tr>
+                        <tr><td><strong>Chitra</strong></td><td>Mars</td><td>Vishwakarma</td><td>Bright Pearl / Jewel</td><td>Architectural elegance, artistic design, visual charm.</td></tr>
+                        <tr><td><strong>Swati</strong></td><td>Rahu</td><td>Vayu Deva</td><td>Young Shoot in Wind</td><td>Flexibility, independence, trade, intellectual freedom.</td></tr>
+                        <tr><td><strong>Vishakha</strong></td><td>Jupiter</td><td>Indra & Agni</td><td>Triumphal Archway</td><td>Focused ambition, purposeful triumph, dual drive.</td></tr>
+                        <tr><td><strong>Anuradha</strong></td><td>Saturn</td><td>Mitra (Divine Friend)</td><td>Lotus Flower</td><td>Devotional brotherhood, organizational mastery, loyalty.</td></tr>
+                        <tr><td><strong>Jyeshtha</strong></td><td>Mercury</td><td>Lord Indra</td><td>Circular Amulet</td><td>Seniority, protective vigilance, intellectual authority.</td></tr>
+                        <tr><td><strong>Mula</strong></td><td>Ketu</td><td>Nirriti (Goddess of Dissolution)</td><td>Tied Roots</td><td>Root exploration, dismantling illusion, spiritual research.</td></tr>
+                        <tr><td><strong>Purva Ashadha</strong></td><td>Venus</td><td>Apas (Water Goddess)</td><td>Winnowing Basket / Fan</td><td>Invincible victory, purity, philosophical discernment.</td></tr>
+                        <tr><td><strong>Uttara Ashadha</strong></td><td>Sun</td><td>Vishvadevas (Universal Gods)</td><td>Elephant Tusk</td><td>Permanent victory, ethical leadership, collective duty.</td></tr>
+                        <tr><td><strong>Shravana</strong></td><td>Moon</td><td>Lord Vishnu</td><td>Three Footprints / Ear</td><td>Active listening, oral Vedic tradition, scholarly wisdom.</td></tr>
+                        <tr><td><strong>Dhanishta</strong></td><td>Mars</td><td>Ashta Vasus</td><td>Musical Drum (Mridangam)</td><td>Rhythmic wealth, musical resonance, universal harmony.</td></tr>
+                        <tr><td><strong>Shatabhisha</strong></td><td>Rahu</td><td>Lord Varuna</td><td>Hundred Physicians / Circle</td><td>Mystic healing, cosmic medicine, esoteric vision.</td></tr>
+                        <tr><td><strong>Purva Bhadrapada</strong></td><td>Jupiter</td><td>Aja Ekapada</td><td>Two-Faced Sword</td><td>Spiritual tapas, fiery transformation, ascetic depth.</td></tr>
+                        <tr><td><strong>Uttara Bhadrapada</strong></td><td>Saturn</td><td>Ahirbudhnya</td><td>Twin Back-Legs of Cot</td><td>Deep meditation, ocean calm, stability, Kundalini wisdom.</td></tr>
+                        <tr><td><strong>Revati</strong></td><td>Mercury</td><td>Pushan (Nourisher)</td><td>Pair of Fish</td><td>Safe spiritual journey, gentle completion, boundless empathy.</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="discover-more">
                 <h3>Discover More about yourself</h3>
@@ -186,9 +242,11 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is a nakshatra?' => 'The zodiac is divided into 27 nakshatras of 13°20′ each. The one that held the Moon at your birth is your birth star.',
-                    'What is a pada?' => 'Each nakshatra has four equal quarters of 3°20′ called padas. The pada decides the starting sound traditionally suggested for a name.',
-                    'Why is the nakshatra important?' => 'It decides which Vimshottari dasha your life starts with, it is used in kundli matching, and it is consulted when choosing a muhurat.',
+                    'What is my Janma Nakshatra and why is it so important?' => 'Your Janma Nakshatra is the specific lunar constellation occupied by the Moon at your birth. It determines the beginning Mahadasha of your life, defines your subconscious mindset, and serves as the foundation for wedding compatibility (Ashtakoota Milan) and auspicious naming.',
+                    'How are Nakshatras used in Kundli matching for marriage?' => 'In the classical 36-Guna matching system, nearly all critical factors—including Nadi (8 points), Gana (6 points), Yoni (4 points), and Tara (3 points)—are calculated directly by comparing the birth Nakshatras and Padas of the bride and groom.',
+                    'What is a Pada (quarter) of a Nakshatra?' => 'Every Nakshatra is divided into four equal divisions of 3 degrees 20 minutes each, called Padas. The 4 Padas connect the 27 Nakshatras with the Navamsha (D9) chart and provide the authentic Sanskrit starting sound for naming an infant.',
+                    'What does my Gana (Deva, Manushya, Rakshasa) signify?' => 'Gana describes your instinctual behavioral temperament. Deva Gana natives are gentle and principled; Manushya Gana natives are practical and family-oriented; Rakshasa Gana natives possess penetrating intuition, fierce determination, and unconventional insight.',
+                    'Can two people with the same Nakshatra get married?' => 'Marriage between partners having the identical Nakshatra (Eka Nakshatra) is often permissible and auspicious, provided their birth Padas or Moon signs are different, or when the Nakshatra is one of the designated exceptions in classical texts (like Rohini, Pushya, Magha, or Anuradha).',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

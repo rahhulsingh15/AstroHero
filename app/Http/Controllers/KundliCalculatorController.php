@@ -65,11 +65,21 @@ class KundliCalculatorController extends Controller
         return view('kaal-sarp-dosh-report', $input + ['report' => DoshaHelper::kaalSarp($input['birth'], $input['lat'], $input['lng'])]);
     }
 
+    public function ishtaDevataCalculator()
+    {
+        $content = \App\Models\IshtaDevataCalculatorContent::firstOrNew([]);
+        return view('ishta-devata-calculator', compact('content'));
+    }
+
     public function ishtaDevata(Request $request)
     {
         $input = $this->birthInput($request);
+        $content = \App\Models\IshtaDevataReportContent::firstOrNew([]);
 
-        return view('ishta-devata-report', $input + ['report' => JaiminiHelper::ishtaDevata($input['birth'])]);
+        return view('ishta-devata-report', $input + [
+            'content' => $content,
+            'report'  => JaiminiHelper::ishtaDevata($input['birth']),
+        ]);
     }
 
     /**

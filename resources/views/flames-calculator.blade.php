@@ -10,6 +10,9 @@
                 <span class="current">FLAMES CALCULATOR</span>
             </div>
             <h1>{{ $content->heading ?: 'FLAMES Calculator - Find the Bond Between Two Names' }}</h1>
+            @if(!empty($content->description))
+                <p class="nnc-subtitle">{{ $content->description }}</p>
+            @endif
         </div>
     </section>
 

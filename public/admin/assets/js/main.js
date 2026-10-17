@@ -119,6 +119,24 @@
             });
         }
 
+        function syncJoditTheme(theme) {
+            var isDark = theme === "dark";
+            var joditContainers = document.querySelectorAll(".jodit-container");
+            Array.prototype.forEach.call(joditContainers, function(container) {
+                if (isDark) {
+                    container.classList.remove("jodit_theme_default");
+                    container.classList.add("jodit_theme_dark");
+                } else {
+                    container.classList.remove("jodit_theme_dark");
+                    container.classList.add("jodit_theme_default");
+                }
+            });
+
+            if (window.Jodit && window.Jodit.defaultOptions) {
+                window.Jodit.defaultOptions.theme = isDark ? "dark" : "default";
+            }
+        }
+
         function applyTheme(theme) {
             document.documentElement.setAttribute("data-theme", theme);
             document.documentElement.setAttribute("data-bs-theme", theme);
@@ -128,6 +146,7 @@
             }
 
             updateThemeControls(theme);
+            syncJoditTheme(theme);
         }
 
         function initThemeToggle() {
@@ -144,6 +163,15 @@
         initValidation();
         initTableSearch();
         initThemeToggle();
+
+        // Automatically sync newly mounted Jodit editor instances
+        if (window.MutationObserver) {
+            var joditObserver = new MutationObserver(function() {
+                var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+                syncJoditTheme(currentTheme);
+            });
+            joditObserver.observe(body, { childList: true, subtree: true });
+        }
 
         // Initialize user profile values in UI. Provide a window.adminHMDUser object to override defaults.
         function initUserProfile() {

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Models\FlamesCalculatorContent;
 use App\Models\FlamesReportContent;
+use App\Models\FriendshipCalculatorContent;
+use App\Models\FriendshipReportContent;
 
 /**
  * Report pages of the calculators that work from names, numbers and the date of birth.
@@ -40,11 +42,18 @@ class NumerologyToolsController extends Controller
         return view('flames-report', compact('name1', 'name2', 'report', 'content'));
     }
 
+    public function friendshipCalculator()
+    {
+        $content = FriendshipCalculatorContent::firstOrNew([]);
+        return view('friendship-calculator', compact('content'));
+    }
+
     public function friendship(Request $request)
     {
         [$name1, $name2] = $this->twoNames($request);
+        $content = FriendshipReportContent::firstOrNew([]);
 
-        return view('friendship-report', compact('name1', 'name2') + ['report' => NumerologyHelper::friendship($name1, $name2)]);
+        return view('friendship-report', compact('name1', 'name2', 'content') + ['report' => NumerologyHelper::friendship($name1, $name2)]);
     }
 
     public function nameCompatibility(Request $request)

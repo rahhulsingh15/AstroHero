@@ -9,8 +9,8 @@
                 <span class="separator">›</span>
                 <span class="current">AGE CALCULATOR</span>
             </div>
-            <h1>Age Calculator - Find Your Exact Age in Years, Months and Days</h1>
-            <p class="nnc-subtitle">Enter your date of birth to know your exact age in years, months and days, along with the number of days left until your next birthday.</p>
+            <h1>{{ $content->heading ?: 'Age Calculator - Find Your Exact Age in Years, Months and Days' }}</h1>
+            <p class="nnc-subtitle">{{ $content->description ?: 'Enter your date of birth to know your exact age in years, months and days, along with the number of days left until your next birthday.' }}</p>
         </div>
     </section>
 
@@ -94,90 +94,17 @@
         </div>
     </section>
 
-    <section class="nnc-content-section">
-        <div class="container nnc-content-wrapper">
-            <h3>What Is an Age Calculator?</h3>
-            <p>An age calculator tells you exactly how old you are on a given day. It saves you from counting months of different lengths and leap years by hand, which is where most mistakes happen.</p>
+    @if(!empty($content->main_content))
+        <section class="nnc-content-section">
+            {!! $content->main_content !!}
+        </section>
+    @endif
 
-            <h3>How Is Age Calculated?</h3>
-            <p>Take someone born on <strong>15 August 1990</strong>, with age needed on <strong>7 October 2026</strong>:</p>
-            <ul class="nnc-list">
-                <li>From 15 August 1990 to 15 August 2026 is 36 completed years.</li>
-                <li>From 15 August 2026 to 15 September 2026 is 1 completed month.</li>
-                <li>From 15 September 2026 to 7 October 2026 is 22 days.</li>
-                <li>The age is <strong>36 years, 1 month and 22 days</strong>.</li>
-            </ul>
-
-            <h3>Where Do You Need Your Exact Age?</h3>
-            <ul class="nnc-list">
-                <li>filling forms for government jobs and competitive exams with age limits</li>
-                <li>school and college admissions</li>
-                <li>insurance, pension and retirement planning</li>
-                <li>finding the dasha and antardasha running at your current age</li>
-            </ul>
-
-            <div class="discover-more">
-                <h3>Discover More about yourself</h3>
-                <div class="calc-cards">
-                    <a href="{{ route('horoscope.landing', ['period' => 'daily']) }}" class="calc-card">
-                        <span class="c-icon">📅</span>
-                        <h4>Daily Horoscope</h4>
-                        <p>Read your daily predictions</p>
-                    </a>
-                    <a href="{{ route('love-calculator') }}" class="calc-card">
-                        <span class="c-icon">❤️</span>
-                        <h4>Love Calculator</h4>
-                        <p>Check love percentage</p>
-                    </a>
-                    <a href="{{ route('numerology-calculator') }}" class="calc-card">
-                        <span class="c-icon">🔢</span>
-                        <h4>Numerology Calculator</h4>
-                        <p>Find the numbers in your name</p>
-                    </a>
-                    <a href="{{ route('dasha-calculator') }}" class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Dasha Calculator</h4>
-                        <p>See your planetary periods</p>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-                @foreach ([
-                    'How is age calculated?' => 'The date of birth is subtracted from today\'s date. Completed years are counted first, then the remaining months, then the remaining days.',
-                    'Does the calculator handle leap years?' => 'Yes. February is counted with 29 days in a leap year and 28 days otherwise.',
-                    'Can I find my age on a past or future date?' => 'Yes. Change the "Age as on" date to any day and the age will be worked out for that day.',
-                ] as $question => $answer)
-                    <div class="acord-item">
-                        <button class="acord-btn">
-                            <span>{{ $question }}</span>
-                            <div class="acord-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="acord-content">
-                            <p>{{ $answer }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

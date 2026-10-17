@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\NumerologyHelper;
+use App\Models\MulankCalculatorContent;
+use App\Models\MulankReportContent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -10,7 +12,8 @@ class MulankCalculatorController extends Controller
 {
     public function index()
     {
-        return view('mulank-calculator');
+        $content = MulankCalculatorContent::firstOrNew([]);
+        return view('mulank-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -31,11 +34,12 @@ class MulankCalculatorController extends Controller
         $name = trim($data['name']);
 
         return view('mulank-report', [
-            'name'   => $name,
-            'birth'  => Carbon::create($data['year'], $data['month'], $data['day']),
-            'report' => NumerologyHelper::mulank((int) $data['day'], (int) $data['month'], (int) $data['year']),
+            'name'    => $name,
+            'birth'   => Carbon::create($data['year'], $data['month'], $data['day']),
+            'content' => MulankReportContent::firstOrNew([]),
+            'report'  => NumerologyHelper::mulank((int) $data['day'], (int) $data['month'], (int) $data['year']),
             // Name number (Namank) from the same Chaldean chart the Numerology Calculator uses
-            'namank' => NumerologyHelper::report($name, 'chaldean')['destiny'],
+            'namank'  => NumerologyHelper::report($name, 'chaldean')['destiny'],
         ]);
     }
 }

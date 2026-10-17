@@ -1736,3 +1736,339 @@ padding-bottom: 5px !important;
     min-width: 220px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
+
+/* ==========================================================================
+   Jodit Editor Dark Theme Support
+   ========================================================================== */
+html[data-theme="dark"] {
+    --jd-dark-background-color: #182235;
+    --jd-dark-background-darknes: #111827;
+    --jd-dark-background-ligher: #243149;
+    --jd-dark-border-color: #2f3b52;
+    --jd-dark-text-color: #e5edf7;
+    --jd-dark-icon-color: #cbd5e1;
+    --jd-dark-toolbar-color: #111827;
+}
+
+/* Jodit Main Container & Workplace */
+html[data-theme="dark"] .jodit-container,
+html[data-theme="dark"] .jodit-container.jodit_theme_default,
+html[data-theme="dark"] .jodit-container.jodit_theme_dark {
+    background-color: #182235 !important;
+    border-color: #2f3b52 !important;
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-workplace {
+    background-color: #182235 !important;
+    border-color: #2f3b52 !important;
+}
+
+/* Jodit WYSIWYG Editable Area */
+html[data-theme="dark"] .jodit-wysiwyg,
+html[data-theme="dark"] .jodit-wysiwyg_iframe {
+    background-color: #182235 !important;
+    color: #e5edf7 !important;
+    caret-color: #ffffff !important;
+}
+
+/* Editable content typography inside Jodit */
+html[data-theme="dark"] .jodit-wysiwyg h1,
+html[data-theme="dark"] .jodit-wysiwyg h2,
+html[data-theme="dark"] .jodit-wysiwyg h3,
+html[data-theme="dark"] .jodit-wysiwyg h4,
+html[data-theme="dark"] .jodit-wysiwyg h5,
+html[data-theme="dark"] .jodit-wysiwyg h6 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg p,
+html[data-theme="dark"] .jodit-wysiwyg div,
+html[data-theme="dark"] .jodit-wysiwyg span,
+html[data-theme="dark"] .jodit-wysiwyg ul,
+html[data-theme="dark"] .jodit-wysiwyg ol,
+html[data-theme="dark"] .jodit-wysiwyg li,
+html[data-theme="dark"] .jodit-wysiwyg strong,
+html[data-theme="dark"] .jodit-wysiwyg b,
+html[data-theme="dark"] .jodit-wysiwyg em,
+html[data-theme="dark"] .jodit-wysiwyg i {
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg a {
+    color: #60a5fa !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg table {
+    border-collapse: collapse !important;
+    border-color: #2f3b52 !important;
+    width: 100% !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg th,
+html[data-theme="dark"] .jodit-wysiwyg td {
+    border: 1px solid #2f3b52 !important;
+    color: #e5edf7 !important;
+    background: transparent !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg hr {
+    border-color: #2f3b52 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg blockquote {
+    border-left: 3px solid #60a5fa !important;
+    background: rgba(96, 165, 250, 0.08) !important;
+    color: #cbd5e1 !important;
+    padding: 8px 12px !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg pre,
+html[data-theme="dark"] .jodit-wysiwyg code {
+    background-color: #111827 !important;
+    color: #f8fafc !important;
+    border: 1px solid #2f3b52 !important;
+}
+
+/* ==========================================================================
+   Jodit Content - Discover More & Calculator Cards
+   ========================================================================== */
+.jodit-wysiwyg .discover-more {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed #cbd5e1;
+}
+
+.jodit-wysiwyg .calc-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+}
+
+.jodit-wysiwyg .calc-card {
+    display: block;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px 14px;
+    text-align: center;
+    text-decoration: none !important;
+    color: #1e293b !important;
+    transition: all 0.2s ease;
+}
+
+.jodit-wysiwyg .calc-card:hover {
+    border-color: #94a3b8;
+    background: #f1f5f9;
+    text-decoration: none !important;
+}
+
+.jodit-wysiwyg .calc-card .c-icon {
+    font-size: 26px;
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.jodit-wysiwyg .calc-card h4 {
+    margin: 0 0 6px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    text-decoration: none !important;
+}
+
+.jodit-wysiwyg .calc-card p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    color: #64748b !important;
+    text-decoration: none !important;
+    line-height: 1.4 !important;
+}
+
+.jodit-wysiwyg a.calc-card,
+.jodit-wysiwyg a.tool-card,
+.jodit-wysiwyg a.p-card {
+    text-decoration: none !important;
+}
+
+/* Dark mode overrides for cards */
+html[data-theme="dark"] .jodit-wysiwyg .discover-more {
+    border-top-color: #2f3b52;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg .p-card,
+html[data-theme="dark"] .jodit-wysiwyg .tool-card,
+html[data-theme="dark"] .jodit-wysiwyg .calc-card {
+    background: #111827 !important;
+    border-color: #2f3b52 !important;
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg .calc-card:hover {
+    background: #182235 !important;
+    border-color: #3b82f6 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg .calc-card h4 {
+    color: #f1f5f9 !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg .calc-card p {
+    color: #9aa8bd !important;
+}
+
+html[data-theme="dark"] .jodit-wysiwyg .p-range {
+    background: rgba(96, 165, 250, 0.2) !important;
+    color: #93c5fd !important;
+}
+
+/* Jodit Toolbar */
+html[data-theme="dark"] .jodit-toolbar__box {
+    background: #111827 !important;
+    border-color: #2f3b52 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-editor-collection_mode_horizontal,
+html[data-theme="dark"] .jodit-toolbar-collection_mode_horizontal {
+    background: transparent !important;
+    background-image: none !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-editor-collection:after,
+html[data-theme="dark"] .jodit-toolbar-collection:after {
+    background-color: #2f3b52 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button,
+html[data-theme="dark"] .jodit-toolbar-button__button,
+html[data-theme="dark"] .jodit-ui-button {
+    background: transparent !important;
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button__text,
+html[data-theme="dark"] .jodit-ui-button__text {
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button svg,
+html[data-theme="dark"] .jodit-ui-button svg,
+html[data-theme="dark"] .jodit-icon {
+    fill: #cbd5e1 !important;
+    stroke: #cbd5e1 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button__trigger svg {
+    fill: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button:hover:not([disabled]),
+html[data-theme="dark"] .jodit-toolbar-button__button:hover:not([disabled]),
+html[data-theme="dark"] .jodit-ui-button:hover:not([disabled]),
+html[data-theme="dark"] .jodit-ui-button:focus-visible:not([disabled]) {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button:hover:not([disabled]) svg,
+html[data-theme="dark"] .jodit-toolbar-button__button:hover:not([disabled]) svg,
+html[data-theme="dark"] .jodit-ui-button:hover:not([disabled]) svg {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button[aria-pressed="true"],
+html[data-theme="dark"] .jodit-toolbar-button[aria-pressed="true"] .jodit-toolbar-button__button,
+html[data-theme="dark"] .jodit-ui-button[aria-pressed="true"] {
+    background-color: rgba(96, 165, 250, 0.22) !important;
+    color: #60a5fa !important;
+}
+
+html[data-theme="dark"] .jodit-toolbar-button[aria-pressed="true"] svg,
+html[data-theme="dark"] .jodit-ui-button[aria-pressed="true"] svg {
+    fill: #60a5fa !important;
+    stroke: #60a5fa !important;
+}
+
+html[data-theme="dark"] .jodit-ui-separator,
+html[data-theme="dark"] .jodit-ui-group_separated_true:not(:last-child):after {
+    border-right-color: #2f3b52 !important;
+}
+
+/* Jodit Status Bar */
+html[data-theme="dark"] .jodit-status-bar,
+html[data-theme="dark"] .jodit-workplace + .jodit-status-bar:not(:empty) {
+    background-color: #111827 !important;
+    border-top: 1px solid #2f3b52 !important;
+    color: #9aa8bd !important;
+}
+
+html[data-theme="dark"] .jodit-status-bar__item,
+html[data-theme="dark"] .jodit-status-bar span,
+html[data-theme="dark"] .jodit-status-bar a {
+    color: #9aa8bd !important;
+}
+
+html[data-theme="dark"] .jodit-status-bar a:hover {
+    color: #ffffff !important;
+}
+
+/* Jodit Source Code View */
+html[data-theme="dark"] .jodit-source,
+html[data-theme="dark"] .jodit-source__mirror,
+html[data-theme="dark"] .jodit-source textarea {
+    background-color: #111827 !important;
+    color: #f1f5f9 !important;
+    border-color: #2f3b52 !important;
+}
+
+/* Jodit Popups, Dropdowns & Dialogs */
+html[data-theme="dark"] .jodit-popup,
+html[data-theme="dark"] .jodit-popup__content,
+html[data-theme="dark"] .jodit-dialog,
+html[data-theme="dark"] .jodit-dialog__panel,
+html[data-theme="dark"] .jodit-dialog__header,
+html[data-theme="dark"] .jodit-dialog__content,
+html[data-theme="dark"] .jodit-dialog__footer,
+html[data-theme="dark"] .jodit-dropdown,
+html[data-theme="dark"] .jodit-ui-list {
+    background-color: #182235 !important;
+    border-color: #2f3b52 !important;
+    color: #e5edf7 !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .jodit-ui-list_mode_vertical .jodit-toolbar-button__button:hover,
+html[data-theme="dark"] .jodit-popup .jodit-ui-button:hover {
+    background-color: #243149 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .jodit-ui-input__input,
+html[data-theme="dark"] .jodit-ui-input__wrapper,
+html[data-theme="dark"] .jodit-ui-select__input {
+    background-color: #111827 !important;
+    border-color: #2f3b52 !important;
+    color: #e5edf7 !important;
+}
+
+html[data-theme="dark"] .jodit-ui-label,
+html[data-theme="dark"] .jodit-ui-input__label {
+    color: #9aa8bd !important;
+}
+
+html[data-theme="dark"] .jodit-placeholder {
+    color: #9aa8bd !important;
+}
+
+html[data-theme="dark"] .jodit-tabs .jodit-tabs__buttons {
+    background-color: #111827 !important;
+    border-bottom: 1px solid #2f3b52 !important;
+}
+
+html[data-theme="dark"] .sidebar-mini .cms-dropdown-menu {
+    background: #182235 !important;
+    border: 1px solid #2f3b52 !important;
+    color: #e5edf7 !important;
+}

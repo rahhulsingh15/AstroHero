@@ -13,7 +13,7 @@
 
             <!-- Name Title -->
             <div class="num-report-header">
-                <h2>{{ $name }}'s <span class="highlight">Ishta Devata Results</span></h2>
+                <h2>{{ strtr($content->heading ?: "{name}'s Ishta Devata Results", ['{name}' => $name]) }}</h2>
                 <span class="num-system-tag">Birth Star: {{ $moon['nakshatra'] }} · Lahiri Ayanamsa</span>
             </div>
 
@@ -116,6 +116,12 @@
                 <p>The deity of the birth star and the Ishta Devata of the Jaimini method are found in two different ways, so they are often two different deities. Both are favourable for you. Different traditions also give slightly different deities for the same planet, so treat this result as a guide and follow the form of the divine you feel drawn to.</p>
             </div>
 
+            @if(!empty($content->main_content))
+                <div class="num-seo-content calc-reading">
+                    {!! strtr($content->main_content, ['{name}' => $name]) !!}
+                </div>
+            @endif
+
             <!-- Banner / Action Card -->
             <div class="num-banner-card">
                 <div class="banner-text">
@@ -129,6 +135,12 @@
             </div>
         </div>
     </section>
+
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         // Share: phone share sheet where available, otherwise copy the report link
@@ -147,5 +159,15 @@
                 } catch (e) {}
             });
         }
+
+        // Accordion FAQ Logic
+        document.querySelectorAll('.acord-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.acord-item').forEach(other => other.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
     </script>
 @endsection

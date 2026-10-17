@@ -19,6 +19,7 @@ class FlamesCalculatorContentController extends Controller
     {
         $request->validate([
             'heading' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'main_content' => 'nullable|string',
             'faq_content' => 'nullable|string',
         ]);
@@ -29,6 +30,7 @@ class FlamesCalculatorContentController extends Controller
         }
 
         $content->heading = $request->input('heading');
+        $content->description = $request->input('description');
         $content->main_content = $request->input('main_content');
         $content->faq_content = $request->input('faq_content');
         $content->save();

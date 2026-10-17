@@ -115,33 +115,123 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Is Kaal Sarp Dosh?</h3>
-            <p>Rahu and Ketu are always exactly opposite each other and divide the chart into two halves. When every other planet sits in one half, the chart is said to be hemmed in by the serpent, with Rahu as its head and Ketu as its tail. People with this yoga are often said to face delays and repeated struggle before they succeed.</p>
+            <h3>What Is Kaal Sarp Dosh? The Cosmic Serpent Yoga in Vedic Astrology</h3>
+            <p><strong>Kaal Sarp Dosh</strong> (also revered as <em>Kaal Sarp Yoga</em>) is one of the most widely discussed and intriguing planetary configurations in Vedic astrology. The Sanskrit term <em>"Kaal"</em> represents Time or Eternity, while <em>"Sarp"</em> signifies the Serpent. In the astrological birth chart (Kundli), this yoga occurs when the shadow planets <strong>Rahu (the serpent's head)</strong> and <strong>Ketu (the serpent's tail)</strong> enclose all seven classical luminaries and planets—the <strong>Sun, Moon, Mars, Mercury, Jupiter, Venus, and Saturn</strong>—within one hemisphere of the zodiac.</p>
+            <p>Because Rahu and Ketu are always placed exactly 180 degrees opposite each other, they bisect the horoscope into two equal halves. When all physical planets sit on one side of this nodal axis, the chart is described as being hemmed in or constricted by the cosmic serpent. Astrologically, this creates intense karmic momentum. While it often brings early-life hurdles, delays, and unexpected fluctuations, it also forges immense resilience, ambition, and singular focus that can propel an individual to historic heights later in life.</p>
 
-            <h3>The 12 Types of Kaal Sarp Dosh</h3>
-            <p>The type depends on the house in which Rahu is placed.</p>
+            <h3>Purna vs. Anshik (Partial) Kaal Sarp Dosh</h3>
+            <p>Classical astrologers divide Kaal Sarp Dosh into two primary categories based on the exact degrees of the planets:</p>
+            <ul class="nnc-list">
+                <li><strong>Purna Kaal Sarp Dosh (Full):</strong> Every single planet without exception lies trapped between Rahu and Ketu. The intensity of karmic trials and spiritual awakenings is at its highest during the major periods (Mahadasha/Antardasha) of Rahu or Ketu.</li>
+                <li><strong>Anshik Kaal Sarp Dosh (Partial):</strong> When six planets are caught between Rahu and Ketu, but even a single planet (often the Moon, Mars, or Jupiter) escapes outside the nodal axis, the yoga becomes partial. The severity is significantly diluted, and the lone planet acts as a divine anchor or relief valve for the entire chart.</li>
+                <li><strong>Udit vs. Anudit Golaardha:</strong> If all planets move forward toward Rahu’s mouth, it is termed <em>Udit Golaardha</em> (Ascending Kaal Sarp). If the planets move away toward Ketu’s tail, it is termed <em>Anudit Golaardha</em> (Descending Kaal Sarp), which often manifests more internally on the psychological and spiritual plane.</li>
+            </ul>
+
+            <h3>The 12 Classical Types of Kaal Sarp Dosh</h3>
+            <p>Vedic tradition categorizes Kaal Sarp Dosh into 12 distinct types, determined strictly by the house position of Rahu in the birth chart:</p>
+
             <div class="table-responsive">
                 <table class="nnc-table">
                     <thead>
-                        <tr><th>Rahu in</th><th>Type</th><th>Rahu in</th><th>Type</th></tr>
+                        <tr>
+                            <th>Type of Dosh</th>
+                            <th>Rahu Position</th>
+                            <th>Ketu Position</th>
+                            <th>Primary Areas Affected & Astrological Nature</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>1st house</td><td>Anant</td><td>7th house</td><td>Takshak</td></tr>
-                        <tr><td>2nd house</td><td>Kulik</td><td>8th house</td><td>Karkotak</td></tr>
-                        <tr><td>3rd house</td><td>Vasuki</td><td>9th house</td><td>Shankhachur</td></tr>
-                        <tr><td>4th house</td><td>Shankhpal</td><td>10th house</td><td>Ghatak</td></tr>
-                        <tr><td>5th house</td><td>Padma</td><td>11th house</td><td>Vishdhar</td></tr>
-                        <tr><td>6th house</td><td>Mahapadma</td><td>12th house</td><td>Sheshnag</td></tr>
+                        <tr>
+                            <td><strong>1. Anant Kaal Sarp</strong></td>
+                            <td>1st House (Lagna)</td>
+                            <td>7th House</td>
+                            <td>Tests personal identity, physical health, decision-making, and marital harmony. Grants sharp intellect but inner anxiety.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Kulik Kaal Sarp</strong></td>
+                            <td>2nd House (Dhana)</td>
+                            <td>8th House</td>
+                            <td>Touches accumulated savings, family legacy, dietary habits, and speech. Success comes after learning fiscal restraint.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Vasuki Kaal Sarp</strong></td>
+                            <td>3rd House (Sahaja)</td>
+                            <td>9th House</td>
+                            <td>Impacts younger siblings, courage, communications, and relations with the father. Bestows restless drive and eventual entrepreneurial success.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Shankhpal Kaal Sarp</strong></td>
+                            <td>4th House (Sukha)</td>
+                            <td>10th House</td>
+                            <td>Creates friction in domestic peace, real estate acquisitions, educational continuity, and mother's well-being.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. Padma Kaal Sarp</strong></td>
+                            <td>5th House (Putra)</td>
+                            <td>11th House</td>
+                            <td>Brings delays in higher education, speculation, childbearing, or romantic relationships. Inspires deep spiritual creativity.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. Mahapadma Kaal Sarp</strong></td>
+                            <td>6th House (Shatru)</td>
+                            <td>12th House</td>
+                            <td>Engages with secret adversaries, legal disputes, and health vitality. Over time, blesses the native with extraordinary victory over competitors.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>7. Takshak Kaal Sarp</strong></td>
+                            <td>7th House (Kalatra)</td>
+                            <td>1st House</td>
+                            <td>Affects marital alliances, business partnerships, and public image. Requires mutual compromise and transparent communication.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>8. Karkotak Kaal Sarp</strong></td>
+                            <td>8th House (Ayu)</td>
+                            <td>2nd House</td>
+                            <td>Linked with sudden life events, ancestral inheritances, hidden knowledge, and joint finances. Heightens occult interest and intuition.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>9. Shankhachur Kaal Sarp</strong></td>
+                            <td>9th House (Dharma)</td>
+                            <td>3rd House</td>
+                            <td>Brings fluctuations in fortune, higher belief systems, and paternal ties. Rewards steady virtue, pilgrimage, and ethical conduct.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10. Ghatak Kaal Sarp</strong></td>
+                            <td>10th House (Karma)</td>
+                            <td>4th House</td>
+                            <td>Challenges professional stability, authority relations, and career reputation. Creates resilient, self-made leaders who rise from humble beginnings.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>11. Vishdhar Kaal Sarp</strong></td>
+                            <td>11th House (Labha)</td>
+                            <td>5th House</td>
+                            <td>Touches large financial gains, elder siblings, and social networking. Income stabilizes remarkably after the age of 32–36.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>12. Sheshnag Kaal Sarp</strong></td>
+                            <td>12th House (Vyaya)</td>
+                            <td>6th House</td>
+                            <td>Associated with unexpected expenditures, foreign residence, secret worries, and insomnia. Highly favorable for foreign settlement and spiritual detachment.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3>Remedies Traditionally Suggested</h3>
+            <h3>Is Kaal Sarp Dosh a Curse? Dispelling the Myth</h3>
+            <p>In modern sensationalist astrology, Kaal Sarp Dosh is frequently portrayed as an insurmountable curse. In reality, history demonstrates that many world-renowned leaders, inventors, and cultural icons possessed powerful Kaal Sarp configurations in their charts—including <strong>Jawaharlal Nehru, Abraham Lincoln, Sachin Tendulkar, and Nelson Mandela</strong>.</p>
+            <p>Kaal Sarp acts like a coiled spring: the early years often feature intense friction and hurdles, but the intense karmic energy forces the native to develop extraordinary discipline, unconventional problem-solving abilities, and unmatched mental stamina. Once the native crosses the age of <strong>32 to 36</strong>, or completes the relevant planetary periods, the dosha frequently reverses into a source of spectacular social rise and public achievement.</p>
+
+            <h3>Effective Vedic Remedies for Kaal Sarp Dosh</h3>
+            <p>Vedic tradition outlines authentic, peaceful remedial measures to calm the agitated energies of Rahu and Ketu and invoke divine protection:</p>
+
             <ul class="nnc-list">
-                <li>Kaal Sarp Dosh Nivaran puja, commonly performed at Trimbakeshwar or Ujjain</li>
-                <li>worship of Lord Shiva and chanting the Maha Mrityunjaya mantra</li>
-                <li>offering milk and prayers on Nag Panchami</li>
-                <li>chanting the Rahu and Ketu mantras during their periods</li>
+                <li><strong>Worship of Lord Shiva & Rudrabhishekam:</strong> Lord Shiva is the supreme master of time (<em>Mahakal</em>) and wears snakes as ornaments. Performing regular Jalabhishekam on a Shivling with pure water, milk, and bilva leaves—especially on Mondays and Pradosh Vrat—is the highest remedy for Kaal Sarp Dosh.</li>
+                <li><strong>Maha Mrityunjaya Mantra Sadhana:</strong> Chanting the sacred Maha Mrityunjaya Mantra 108 times daily shields the physical body and mental aura from all negative planetary vibrations:
+                    <br><strong style="display:inline-block; margin: 6px 0; color: #1e293b;">"ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय मामृतात्॥"</strong></li>
+                <li><strong>Nag Panchami Rituals:</strong> On the festival of Nag Panchami, offer milk, yellow flowers, and prayers to Nag Devta. Avoid harming any reptile or serpent.</li>
+                <li><strong>Pair of Silver Serpents (Nag-Nagin Daan):</strong> Offering a consecrated pair of small silver serpents (<em>Nag-Nagin Joda</em>) into a sacred flowing river while praying to Lord Shiva helps dissolve deep-seated karmic blocks.</li>
+                <li><strong>Pilgrimage & Dosh Nivaran Puja:</strong> In cases of intense Purna Kaal Sarp Dosh, natives traditionally perform a specialized Kaal Sarp Shanti Puja at revered Shiva kshetras like <strong>Trimbakeshwar (Nashik, Maharashtra)</strong>, <strong>Mahakaleshwar (Ujjain)</strong>, or <strong>Sri Kalahasti (Andhra Pradesh)</strong>.</li>
+                <li><strong>Rahu & Ketu Beej Mantras:</strong> Recite the Rahu Beej Mantra (<em>"Om Bhram Bhreem Bhroum Sah Rahave Namah"</em>) and Ketu Beej Mantra (<em>"Om Stram Streem Stroum Sah Ketave Namah"</em>) to harmonize the lunar nodes.</li>
             </ul>
 
             <div class="discover-more">
@@ -184,9 +274,12 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is Kaal Sarp Dosh?' => 'It is a combination in which the Sun, Moon, Mars, Mercury, Jupiter, Venus and Saturn are all placed between Rahu and Ketu in the birth chart.',
-                    'What is partial Kaal Sarp Dosh?' => 'When even one planet lies outside the Rahu-Ketu axis, the yoga is called partial (Anshik) and its effect is considered much weaker.',
-                    'Does Kaal Sarp Dosh last for the whole life?' => 'The combination stays in the chart, but its effect is felt mainly during the periods of Rahu and Ketu and is said to ease with age and the right remedies.',
+                    'What is Kaal Sarp Dosh in Vedic astrology?' => 'Kaal Sarp Dosh is formed when all seven primary celestial bodies (Sun, Moon, Mars, Mercury, Jupiter, Venus, and Saturn) are positioned between the lunar nodes Rahu and Ketu in the birth chart. It signifies a chart hemmed in by the serpent axis.',
+                    'What is the difference between Purna and Anshik Kaal Sarp Dosh?' => 'When all seven planets are completely enclosed within the Rahu-Ketu axis, it is known as Purna (Full) Kaal Sarp Dosh. When six planets are caught but even one planet lies outside the axis, it is known as Anshik (Partial) Kaal Sarp Dosh, and its malefic effects are considerably reduced.',
+                    'Does Kaal Sarp Dosh ruin a person\'s entire life?' => 'No, that is a complete myth. While it often brings struggles and delays during early youth, people with Kaal Sarp Yoga frequently rise to extraordinary leadership and worldwide fame (like Sachin Tendulkar and Jawaharlal Nehru). After the age of 32 to 36, the coiled energy often brings immense success.',
+                    'Which is the most dangerous type of Kaal Sarp Dosh?' => 'There is no inherently "dangerous" type. However, Anant (1st-7th house axis), Kulik (2nd-8th house axis), and Ghatak (10th-4th house axis) are felt more intensely because they directly influence health, marital happiness, wealth, and career status.',
+                    'How long does the effect of Kaal Sarp Dosh last?' => 'The combination remains present in your birth chart for life, but its effects are felt prominently during the Mahadasha or Antardasha of Rahu and Ketu. With age, personal maturity, and appropriate spiritual remedies like Shiva worship, the negative influence diminishes significantly.',
+                    'Where is the Kaal Sarp Dosh Nivaran Puja usually conducted?' => 'The most renowned and sacred shrines for performing Kaal Sarp Shanti Puja are Trimbakeshwar Jyotirlinga (near Nashik, Maharashtra), Mahakaleshwar Jyotirlinga (Ujjain, Madhya Pradesh), and Sri Kalahasteeswara Temple (Sri Kalahasti, Andhra Pradesh).',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AgeCalculatorContent;
+use App\Models\AgeReportContent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -9,7 +11,8 @@ class AgeCalculatorController extends Controller
 {
     public function index()
     {
-        return view('age-calculator');
+        $content = AgeCalculatorContent::firstOrNew([]);
+        return view('age-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -60,6 +63,7 @@ class AgeCalculatorController extends Controller
             'next'        => $next,
             'daysToNext'  => (int) $on->diffInDays($next),
             'turning'     => $next->year - $birth->year,
+            'content'     => AgeReportContent::firstOrNew([]),
         ]);
     }
 

@@ -115,26 +115,92 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Are Atmakaraka and Darakaraka?</h3>
-            <p>Sage Jaimini gave planets their roles by degree instead of by fixed nature. The planets are arranged from the highest degree to the lowest, ignoring the sign they are in, and each position gets a title called a Chara Karaka. The first is the Atmakaraka and the last is the Darakaraka.</p>
+            <h3>What Are Atmakaraka and Darakaraka? The Jaimini Chara Karaka System</h3>
+            <p>In classical Vedic astrology, Sage <strong>Maharishi Jaimini</strong>—the revered disciple of Maharishi Parashara—introduced the profound <em>Jaimini Upadesha Sutras</em>. While Parashari astrology assigns fixed, permanent roles to planets (such as the Sun always signifying the father or Venus always signifying the spouse), the Jaimini system utilizes <strong>Chara Karakas</strong> (variable planetary significators).</p>
+            <p>In the Chara Karaka system, the planets from the Sun to Saturn (and optionally Rahu) are arranged in descending sequence based purely on their degree of advancement within their respective zodiac signs (from <strong>30° down to 0°</strong>), disregarding the sign itself. The planet holding the highest degree becomes the <strong>Atmakaraka (AK)</strong>, the sovereign king of the horoscope, while the planet with the lowest degree becomes the <strong>Darakaraka (DK)</strong>, signifying one's spouse and life partner.</p>
 
-            <h3>How Are They Calculated?</h3>
+            <h3>The Sacred Hierarchy of the 7 Chara Karakas</h3>
+            <p>Each ranking position in the degree hierarchy governs a critical sphere of human existence and karmic duty:</p>
+
+            <div class="table-responsive">
+                <table class="nnc-table">
+                    <thead>
+                        <tr>
+                            <th>Chara Karaka</th>
+                            <th>Degree Ranking</th>
+                            <th>Symbolic Cosmic Role</th>
+                            <th>Life Domain & Representation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Atmakaraka (AK)</strong></td>
+                            <td>Highest Degree</td>
+                            <td>The King (Soul)</td>
+                            <td>The true soul essence, karmic mission, core life trial, and ultimate spiritual liberation (Moksha).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Amatyakaraka (AmK)</strong></td>
+                            <td>2nd Highest</td>
+                            <td>The Chief Minister</td>
+                            <td>Career, profession, social influence, advisors, livelihood, and executive intellect.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bhratrikaraka (BK)</strong></td>
+                            <td>3rd Highest</td>
+                            <td>The Noble Sibling</td>
+                            <td>Siblings, spiritual gurus, mentors, trusted counselors, and fatherly guidance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Matrikaraka (MK)</strong></td>
+                            <td>4th Highest</td>
+                            <td>The Nurturing Mother</td>
+                            <td>Mother, emotional happiness, formal education, domestic peace, and real estate properties.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Putrakaraka (PK)</strong></td>
+                            <td>5th Highest</td>
+                            <td>The Child / Disciple</td>
+                            <td>Children, creative imagination, artistic legacy, higher knowledge, and disciples.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gnatikaraka (GK)</strong></td>
+                            <td>6th Highest</td>
+                            <td>The Challenger / Kinsman</td>
+                            <td>Rivals, competitors, disputes, debts, diseases, obstacles, and competitive stamina.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Darakaraka (DK)</strong></td>
+                            <td>Lowest Degree</td>
+                            <td>The Beloved Partner</td>
+                            <td>Spouse, matrimonial union, business partners, intimate relationships, and emotional mirror.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>The Soul's Karmic Lessons: What Each Atmakaraka Teaches</h3>
+            <p>Your Atmakaraka is the spiritual taskmaster of your incarnation. It reveals the exact karmic test you have chosen to master in this lifetime:</p>
             <ul class="nnc-list">
-                <li>The seven planets from the Sun to Saturn are taken with their degrees inside their signs (0° to 30°).</li>
-                <li>The planet with the highest degree becomes the Atmakaraka.</li>
-                <li>The planet with the lowest degree becomes the Darakaraka.</li>
-                <li>Some traditions also include Rahu, counting its degrees backwards from 30° because it always moves in reverse.</li>
+                <li><strong>Sun as Atmakaraka:</strong> The soul must conquer pride, false ego, and arrogance. The native is challenged to lead with selfless humility, practice truthfulness, and realize that true authority is rooted in service rather than domination.</li>
+                <li><strong>Moon as Atmakaraka:</strong> The soul must master emotional attachments and possessiveness. The lesson involves developing universal compassion, psychological equanimity, and nurturing others without expectation of emotional return.</li>
+                <li><strong>Mars as Atmakaraka:</strong> The soul must master impulsive aggression, temper, and anger. The life lesson centers on practicing absolute non-violence (<em>Ahimsa</em>), channeling passion into courageous protection of the vulnerable, and maintaining patience.</li>
+                <li><strong>Mercury as Atmakaraka:</strong> The soul must conquer deceptive speech, manipulation, and intellectual vanity. The lesson is to use communication strictly for truth, education, and ethical commerce, avoiding sarcastic or frivolous talk.</li>
+                <li><strong>Jupiter as Atmakaraka:</strong> The soul must cultivate profound respect for spiritual teachers, ancient wisdom, and religious beliefs. The lesson involves shedding dogmatic self-righteousness, honoring elders, and embracing lifelong learning.</li>
+                <li><strong>Venus as Atmakaraka:</strong> The soul must master sensual desires, vanity, and lust. The native is guided toward maintaining sacred purity in relationships, honoring the divine feminine, and elevating earthly love into unconditional spiritual devotion.</li>
+                <li><strong>Saturn as Atmakaraka:</strong> The soul must embrace sorrow, loneliness, and heavy responsibility without becoming bitter or resentful. The lesson is self-discipline, endurance, and selfless service to the suffering and underprivileged.</li>
             </ul>
 
-            <h3>What Does Each Atmakaraka Teach?</h3>
+            <h3>Understanding Darakaraka: The Window Into Your Soulmate</h3>
+            <p>While the 7th house in the birth chart reflects marriage contracts, the <strong>Darakaraka (DK)</strong> reveals the spiritual nature, personality, and energetic essence of your spouse:</p>
             <ul class="nnc-list">
-                <li><strong>Sun:</strong> to rise above ego and lead with humility.</li>
-                <li><strong>Moon:</strong> to care for others without becoming possessive.</li>
-                <li><strong>Mars:</strong> to master anger and use strength for protection.</li>
-                <li><strong>Mercury:</strong> to speak the truth and use intelligence honestly.</li>
-                <li><strong>Jupiter:</strong> to respect teachers, elders and knowledge.</li>
-                <li><strong>Venus:</strong> to keep desire and relationships pure.</li>
-                <li><strong>Saturn:</strong> to accept responsibility and share the sorrow of others.</li>
+                <li><strong>Sun as Darakaraka:</strong> Indicates a spouse from a respectable, dignified family who possesses natural leadership, high self-esteem, and executive ambition. Mutual respect is essential.</li>
+                <li><strong>Moon as Darakaraka:</strong> Blesses you with an empathetic, gentle, emotionally sensitive, and caring spouse with a maternal touch and romantic nature.</li>
+                <li><strong>Mars as Darakaraka:</strong> Points to an athletic, energetic, decisive, and passionate partner who is fiercely protective, proactive, and career-driven.</li>
+                <li><strong>Mercury as Darakaraka:</strong> Brings a youthful, witty, communicative, and intellectually curious spouse with strong analytical, writing, or commercial skills.</li>
+                <li><strong>Jupiter as Darakaraka:</strong> Signifies a wise, noble, spiritually inclined, and well-educated spouse who acts as a counselor, teacher, and pillar of morality in the family.</li>
+                <li><strong>Venus as Darakaraka:</strong> Endows a charming, artistically inclined, aesthetically refined, and affectionate partner who values romance, luxury, and mutual harmony.</li>
+                <li><strong>Saturn as Darakaraka:</strong> Brings a mature, grounded, hard-working, and highly dependable spouse who may be older or deeply pragmatic, ensuring enduring marital stability.</li>
             </ul>
 
             <div class="discover-more">
@@ -177,9 +243,11 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is Atmakaraka?' => 'Atmakaraka means "significator of the soul". It is the planet that has travelled the most degrees in its sign in your birth chart, and it is read to understand the deepest lesson of your life.',
-                    'What is Darakaraka?' => 'Darakaraka is the planet with the lowest degree in its sign. It describes the nature of your spouse and what you look for in a life partner.',
-                    'Why is the exact time of birth needed?' => 'Planet degrees change through the day, and the Moon moves about one degree every two hours. A wrong time can change which planet has the highest or lowest degree.',
+                    'What is the meaning of Atmakaraka in Jaimini astrology?' => 'Atmakaraka (literally "significator of the soul") is the planet holding the highest astronomical degree within its sign in your birth chart. It signifies your core identity, the primary karmic lesson you are born to overcome, and your path to spiritual awakening.',
+                    'What does the Darakaraka reveal about my future spouse?' => 'The Darakaraka is the planet holding the lowest degree in your birth chart. It acts as a cosmic mirror reflecting the physical appearance, psychological temperament, professions, and karmic dynamic of your husband or wife.',
+                    'What is Karakamsa Lagna and why is it important?' => 'The sign occupied by your Atmakaraka in the 9th harmonic divisional chart (Navamsha / D9) is designated as the Karakamsa Lagna. Analyzing planets in and around the Karakamsa reveals your highest spiritual potential, your Ishta Devata (chosen deity), and your true soul calling.',
+                    'Why is an accurate birth time necessary for calculating Chara Karakas?' => 'Planets move continuously across degrees throughout the day. Because the Moon moves approximately 1 degree every two hours, and inner planets like Mercury and Venus move fast, an inaccurate birth time can easily shift the highest or lowest degree to a different planet.',
+                    'Does Rahu count as an Atmakaraka or Darakaraka?' => 'In the 8-Karaka scheme followed by some classical Jaimini traditions, Rahu is included. Because Rahu moves in retrograde motion, its degrees are calculated in reverse (subtracting its position from 30 degrees). In the 7-Karaka scheme from the Sun to Saturn, Rahu is omitted.',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

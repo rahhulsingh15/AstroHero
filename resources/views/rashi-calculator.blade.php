@@ -115,38 +115,49 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Is Rashi?</h3>
-            <p>The zodiac is divided into twelve equal signs of 30° each. The sign holding the Moon at your birth is called your Janma Rashi. Because the Moon governs feelings, memory and habits, the rashi is read to understand how you think and react.</p>
+            <h3>What Is Janma Rashi? The Lunar Soul Mirror in Vedic Astrology</h3>
+            <p>In Vedic astrology (<em>Jyotish Shastra</em>), your <strong>Janma Rashi</strong>—commonly referred to as your <strong>Moon Sign</strong>—is the specific zodiac sign that was occupied by the Moon at the precise moment and location of your birth. The 360-degree celestial zodiac belt is partitioned into twelve equal segments of 30 degrees each, forming the 12 classical Rashis.</p>
+            <p>While Western astrology primarily centers on the Sun Sign (the conscious ego and external persona), Vedic astrology grants supreme primacy to the Moon Sign. The Moon is the fastest celestial body in our sky, spending approximately <strong>2.25 days (about 54 hours)</strong> in each zodiac sign before moving forward. Symbolizing <em>"Manas"</em> (the mind), emotions, instinctual responses, memory, and psychological resilience, your Chandra Rashi reflects your true emotional baseline—how you feel, react, love, and experience reality when the external world falls away.</p>
 
-            <h3>The 12 Rashis and Their Lords</h3>
+            <h3>The 12 Rashis: Planetary Lords, Elements & Cosmic Modalities</h3>
+            <p>Every Rashi belongs to one of four elemental energies (<em>Tatvas</em>) and one of three dynamic behavioral temperaments (<em>Gunas / Modalities</em>):</p>
+
             <div class="table-responsive">
                 <table class="nnc-table">
                     <thead>
-                        <tr><th>Rashi</th><th>English Name</th><th>Ruling Planet</th></tr>
+                        <tr>
+                            <th>Vedic Rashi</th>
+                            <th>Western Sign</th>
+                            <th>Ruling Planet (Swami)</th>
+                            <th>Element (Tatva)</th>
+                            <th>Modality (Nature)</th>
+                            <th>Core Personality Signature</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Mesh</td><td>Aries</td><td>Mars</td></tr>
-                        <tr><td>Vrishabh</td><td>Taurus</td><td>Venus</td></tr>
-                        <tr><td>Mithun</td><td>Gemini</td><td>Mercury</td></tr>
-                        <tr><td>Kark</td><td>Cancer</td><td>Moon</td></tr>
-                        <tr><td>Singh</td><td>Leo</td><td>Sun</td></tr>
-                        <tr><td>Kanya</td><td>Virgo</td><td>Mercury</td></tr>
-                        <tr><td>Tula</td><td>Libra</td><td>Venus</td></tr>
-                        <tr><td>Vrishchik</td><td>Scorpio</td><td>Mars</td></tr>
-                        <tr><td>Dhanu</td><td>Sagittarius</td><td>Jupiter</td></tr>
-                        <tr><td>Makar</td><td>Capricorn</td><td>Saturn</td></tr>
-                        <tr><td>Kumbh</td><td>Aquarius</td><td>Saturn</td></tr>
-                        <tr><td>Meen</td><td>Pisces</td><td>Jupiter</td></tr>
+                        <tr><td><strong>Mesh</strong></td><td>Aries</td><td>Mars (Mangal)</td><td>Fire (Agni)</td><td>Chara (Movable)</td><td>Dynamic initiative, bravery, pioneering drive, spontaneous passion.</td></tr>
+                        <tr><td><strong>Vrishabh</strong></td><td>Taurus</td><td>Venus (Shukra)</td><td>Earth (Prithvi)</td><td>Sthira (Fixed)</td><td>Patience, material stability, sensual refinement, steadfast loyalty.</td></tr>
+                        <tr><td><strong>Mithun</strong></td><td>Gemini</td><td>Mercury (Budh)</td><td>Air (Vayu)</td><td>Dwiswabhava (Dual)</td><td>Intellectual curiosity, linguistic charm, versatility, analytical wit.</td></tr>
+                        <tr><td><strong>Kark</strong></td><td>Cancer</td><td>Moon (Chandra)</td><td>Water (Jala)</td><td>Chara (Movable)</td><td>Deep maternal intuition, emotional empathy, protective instincts.</td></tr>
+                        <tr><td><strong>Singh</strong></td><td>Leo</td><td>Sun (Surya)</td><td>Fire (Agni)</td><td>Sthira (Fixed)</td><td>Regal dignity, generosity, innate leadership, creative flair.</td></tr>
+                        <tr><td><strong>Kanya</strong></td><td>Virgo</td><td>Mercury (Budh)</td><td>Earth (Prithvi)</td><td>Dwiswabhava (Dual)</td><td>Meticulous precision, problem-solving, selfless service, discernment.</td></tr>
+                        <tr><td><strong>Tula</strong></td><td>Libra</td><td>Venus (Shukra)</td><td>Air (Vayu)</td><td>Chara (Movable)</td><td>Diplomacy, aesthetic harmony, legal fairness, partnership orientation.</td></tr>
+                        <tr><td><strong>Vrishchik</strong></td><td>Scorpio</td><td>Mars (Mangal)</td><td>Water (Jala)</td><td>Sthira (Fixed)</td><td>Magnetic depth, intense passion, psychic resilience, transformative power.</td></tr>
+                        <tr><td><strong>Dhanu</strong></td><td>Sagittarius</td><td>Jupiter (Guru)</td><td>Fire (Agni)</td><td>Dwiswabhava (Dual)</td><td>Philosophical optimism, spiritual exploration, truth-seeking, freedom.</td></tr>
+                        <tr><td><strong>Makar</strong></td><td>Capricorn</td><td>Saturn (Shani)</td><td>Earth (Prithvi)</td><td>Chara (Movable)</td><td>Disciplined endurance, strategic ambition, institutional mastery, perseverance.</td></tr>
+                        <tr><td><strong>Kumbh</strong></td><td>Aquarius</td><td>Saturn (Shani)</td><td>Air (Vayu)</td><td>Sthira (Fixed)</td><td>Visionary innovation, humanitarian ideals, scientific detachment, uniqueness.</td></tr>
+                        <tr><td><strong>Meen</strong></td><td>Pisces</td><td>Jupiter (Guru)</td><td>Water (Jala)</td><td>Dwiswabhava (Dual)</td><td>Spiritual compassion, mystical daydreaming, artistic surrender, universal love.</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3>Where Is Rashi Used?</h3>
+            <h3>Why Vedic Astrology Values Moon Sign Over Sun Sign</h3>
+            <p>In Vedic tradition, evaluating your horoscope from the Moon (<em>Chandra Kundli</em>) is considered indispensable for four essential reasons:</p>
             <ul class="nnc-list">
-                <li>reading daily, weekly and yearly horoscopes</li>
-                <li>choosing the first letter of a baby's name</li>
-                <li>kundli matching for marriage</li>
-                <li>checking Sade Sati and other transits of Saturn and Jupiter</li>
+                <li><strong>Dynamic Planetary Transits (Gochar):</strong> Major cosmic transits—including Saturn's 7.5-year Sade Sati, Jupiter's 1-year transit, and Rahu-Ketu’s 18-month shifts—are calculated strictly from your Moon Sign.</li>
+                <li><strong>The Vimshottari Dasha System:</strong> The 120-year planetary progression timeline of your life is rooted in the exact position of the Moon within its Nakshatra at the moment of your birth.</li>
+                <li><strong>Ashtakoota Kundli Milan (Marriage Compatibility):</strong> The 36-gun matching system for marriage compatibility assesses the distance and friendship between the Moon signs and Nakshatras of both partners (evaluating Bhakoot and Nadi doshas).</li>
+                <li><strong>Mental & Emotional Health:</strong> While the Sun dictates professional ego, the Moon governs inner happiness, peace of mind (<em>Chitta</em>), emotional stability, and interpersonal relationship harmony.</li>
             </ul>
 
             <div class="discover-more">
@@ -189,9 +200,11 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is rashi?' => 'Rashi is your Moon sign (Chandra rashi): the sign of the sidereal zodiac in which the Moon was placed when you were born.',
-                    'Why do I need my time and place of birth?' => 'The Moon changes sign about every two and a quarter days. On the days it changes, the time and place of birth decide which sign it was in.',
-                    'Is rashi different from the Sun sign?' => 'Yes. The Sun sign depends only on your date of birth, while rashi depends on the Moon. Vedic astrology gives more weight to the Moon sign because the Moon rules the mind.',
+                    'What is the difference between my Moon Sign and Sun Sign?' => 'Your Sun Sign (Surya Rashi) reflects your conscious ego, vitality, and external career drive based on the Sun’s position. Your Moon Sign (Chandra Rashi) reflects your internal mind, emotional instincts, and subconscious patterns. In Vedic astrology, the Moon Sign is regarded as far more influential in day-to-day life and relationships.',
+                    'Why do I need exact birth time and place to calculate my Rashi?' => 'The Moon is very fast-moving and changes signs approximately every 2.25 days (about 54 hours). On days when the Moon transitions from one sign to another, an error of even a few minutes can assign you the wrong Moon sign. Accurate coordinates ensure correct planetary longitude calculation.',
+                    'Which horoscope should I read: Sun Sign or Moon Sign?' => 'For authentic Vedic astrological predictions, daily horoscopes, and transit forecasts (like Sade Sati or Jupiter Gochar), you should always read predictions corresponding to your Moon Sign (Janma Rashi).',
+                    'How does Janma Rashi impact marriage compatibility?' => 'In traditional 36 Guna Milan, the Moon signs and Nakshatras form the core foundation of points like Bhakoot (7 points) and Nadi (8 points). Harmonious lunar elements between prospective partners ensure emotional intimacy, psychological harmony, and healthy progeny.',
+                    'Can my Moon Sign change over my lifetime?' => 'No. Your Janma Rashi is permanently set at the exact astronomical coordinate of the Moon at the moment of your birth and never changes throughout your earthly lifetime.',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

@@ -115,33 +115,91 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Is a Birth Chart?</h3>
-            <p>The birth chart is the foundation of astrology. Every prediction, whether about career, marriage, health or wealth, starts from it. It never changes during your life, but the planets moving over it and the dasha periods running in it bring its promises to life at different times.</p>
+            <h3>What Is a Vedic Birth Chart (Janam Kundli)?</h3>
+            <p>A <strong>Vedic Birth Chart</strong>, known as <strong>Janam Kundli</strong> or <em>Horoscope</em>, is a sacred celestial snapshot of the heavens captured at the precise astronomical moment and geographical coordinates of your birth. In Vedic astrology (<em>Jyotish Shastra</em>), the chart maps the exact positions of the nine celestial bodies (<em>Navagrahas</em>) across twelve zodiac signs (<em>Rashis</em>) and twelve houses (<em>Bhavas</em>).</p>
+            <p>Your Kundli is far more than a personality summary; it is your soul’s blueprint and karmic roadmap (<em>Prarabdha Karma</em>). It reveals your innate strengths, career inclinations, relationship dynamics, financial prospects, health tendencies, and ultimate spiritual calling. While the static positions in your birth chart never change throughout your lifetime, dynamic transits (<em>Gochar</em>) and cyclical planetary periods (<em>Vimshottari Dasha</em>) trigger the latent potential of your chart at specific milestones in your life journey.</p>
 
-            <h3>What Does a Birth Chart Contain?</h3>
+            <h3>The Core Anatomical Pillars of a Birth Chart</h3>
+            <p>A comprehensive Kundli analysis rests upon four fundamental cosmic pillars:</p>
             <ul class="nnc-list">
-                <li><strong>Lagna (ascendant):</strong> the sign rising on the eastern horizon at birth. It becomes the first house.</li>
-                <li><strong>Twelve houses:</strong> each one stands for an area of life, from self and wealth to career and gains.</li>
-                <li><strong>Nine planets:</strong> the Sun, Moon, Mars, Mercury, Jupiter, Venus, Saturn, Rahu and Ketu, each placed in a sign and a house.</li>
-                <li><strong>Nakshatra:</strong> the star of the Moon, from which the dasha periods are counted.</li>
+                <li><strong>Lagna (Ascendant / Rising Sign):</strong> The exact zodiac sign rising on the eastern horizon at the moment of your birth. The Lagna determines the 1st house, defining your physical constitution, vitality, outlook on life, and personal temperament.</li>
+                <li><strong>Janma Rashi (Moon Sign):</strong> The zodiac sign occupied by the Moon at birth. Because the Moon governs the subconscious mind, emotional reactions, and memory, the Rashi is crucial for daily transits, Sade Sati, and emotional compatibility.</li>
+                <li><strong>Surya Rashi (Sun Sign):</strong> The sign holding the Sun at birth, representing your core soul vitality, professional authority, leadership drive, and conscious ego.</li>
+                <li><strong>Janma Nakshatra (Lunar Mansion):</strong> The specific star constellation of the Moon at birth out of the 27 Vedic Nakshatras. It determines your planetary Mahadasha balance at birth and auspicious naming syllables.</li>
             </ul>
 
-            <h3>What the Twelve Houses Stand For</h3>
+            <h3>The Four Sacred Purushartha Life Dimensions</h3>
+            <p>Vedic philosophy organizes the twelve houses into the four universal pursuits of human existence (<em>Purusharthas</em>):</p>
+
             <div class="table-responsive">
                 <table class="nnc-table">
                     <thead>
-                        <tr><th>House</th><th>Area of Life</th><th>House</th><th>Area of Life</th></tr>
+                        <tr>
+                            <th>Purushartha</th>
+                            <th>Associated Houses</th>
+                            <th>Core Purpose & Life Representation</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>1st</td><td>Self, body, personality</td><td>7th</td><td>Marriage, partnerships</td></tr>
-                        <tr><td>2nd</td><td>Wealth, family, speech</td><td>8th</td><td>Longevity, sudden events</td></tr>
-                        <tr><td>3rd</td><td>Courage, siblings, effort</td><td>9th</td><td>Luck, dharma, father</td></tr>
-                        <tr><td>4th</td><td>Home, mother, comfort</td><td>10th</td><td>Career, status</td></tr>
-                        <tr><td>5th</td><td>Children, love, intellect</td><td>11th</td><td>Gains, friends</td></tr>
-                        <tr><td>6th</td><td>Health, debts, enemies</td><td>12th</td><td>Expenses, foreign lands, moksha</td></tr>
+                        <tr>
+                            <td><strong>Dharma (Righteousness & Purpose)</strong></td>
+                            <td>1st, 5th, and 9th Houses (Trikona)</td>
+                            <td>Self-realization, creative intelligence, spiritual devotion, past-life merit (Purva Punya), ethical conduct, and divine guidance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Artha (Wealth & Vocational Duty)</strong></td>
+                            <td>2nd, 6th, and 10th Houses</td>
+                            <td>Accumulation of resources, ancestral wealth, daily work ethic, overcoming competition, social status, and professional achievements.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kama (Desires & Relationships)</strong></td>
+                            <td>3rd, 7th, and 11th Houses</td>
+                            <td>Courage, mental ambition, artistic passions, marital alliances, long-term friendships, and substantial monetary gains.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Moksha (Liberation & Spirituality)</strong></td>
+                            <td>4th, 8th, and 12th Houses</td>
+                            <td>Inner emotional sanctuary, motherly bond, occult wisdom, mystical transformation, foreign settlement, and eventual spiritual emancipation.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
+
+            <h3>The 12 Houses (Bhavas) of the Horoscope Detailed</h3>
+            <div class="table-responsive">
+                <table class="nnc-table">
+                    <thead>
+                        <tr>
+                            <th>House</th>
+                            <th>Sanskrit Name</th>
+                            <th>Key Life Spheres Governed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1st House</strong></td><td>Tanu Bhava</td><td>Self, physical appearance, longevity, core vitality, and overall life path.</td></tr>
+                        <tr><td><strong>2nd House</strong></td><td>Dhana Bhava</td><td>Liquid wealth, family heritage, speech, dietary habits, and early childhood values.</td></tr>
+                        <tr><td><strong>3rd House</strong></td><td>Sahaja Bhava</td><td>Younger siblings, courage, willpower, short travels, manual skills, and communication.</td></tr>
+                        <tr><td><strong>4th House</strong></td><td>Sukha Bhava</td><td>Mother, domestic happiness, home property, conveyances, mental peace, and ancestral land.</td></tr>
+                        <tr><td><strong>5th House</strong></td><td>Putra Bhava</td><td>Children, intellect, higher learning, speculative gains, romantic love, and mantra siddhi.</td></tr>
+                        <tr><td><strong>6th House</strong></td><td>Shatru Bhava</td><td>Health resilience, overcoming debt, daily workplace service, litigation, and competitors.</td></tr>
+                        <tr><td><strong>7th House</strong></td><td>Kalatra Bhava</td><td>Spouse, marital harmony, business partnerships, legal contracts, and public interactions.</td></tr>
+                        <tr><td><strong>8th House</strong></td><td>Ayu Bhava</td><td>Longevity, sudden transformations, joint assets, inheritances, occult research, and mysteries.</td></tr>
+                        <tr><td><strong>9th House</strong></td><td>Dharma Bhava</td><td>Good fortune (Bhagya), relationship with father, guru's grace, higher wisdom, and pilgrimages.</td></tr>
+                        <tr><td><strong>10th House</strong></td><td>Karma Bhava</td><td>Career, profession, reputation, leadership, public fame, and relationship with authorities.</td></tr>
+                        <tr><td><strong>11th House</strong></td><td>Labha Bhava</td><td>Fulfillment of ambitions, large wealth gains, elder siblings, social circles, and influential networks.</td></tr>
+                        <tr><td><strong>12th House</strong></td><td>Vyaya Bhava</td><td>Expenditures, foreign relocation, isolation, spiritual surrender, dreams, and subconscious release.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Crucial House Classifications: Kendra, Trikona & Dusthana</h3>
+            <p>Houses in your birth chart do not carry equal influence. Vedic astrology categorizes them into functional powerhouses:</p>
+            <ul class="nnc-list">
+                <li><strong>Kendra Houses (1, 4, 7, 10):</strong> Known as the <em>Vishnu Sthanas</em>. These are the four pillars of life representing action, stability, and societal presence. Planets placed here gain extraordinary potency to manifest their promises.</li>
+                <li><strong>Trikona Houses (1, 5, 9):</strong> Known as the <em>Lakshmi Sthanas</em>. These are the most auspicious houses in any horoscope, representing divine grace, spiritual merit, and effortless fortune.</li>
+                <li><strong>Upachaya Houses (3, 6, 10, 11):</strong> The houses of steady growth. Malefic planets like Mars, Saturn, and Rahu placed in Upachaya houses fight through obstacles and yield remarkable prosperity over time.</li>
+                <li><strong>Dusthana / Trik Houses (6, 8, 12):</strong> The challenging houses. While they test the native through diseases, obstacles, or expenses, they also forge spiritual detachment and profound wisdom when positively channeled.</li>
+            </ul>
 
             <div class="discover-more">
                 <h3>Discover More about yourself</h3>
@@ -183,9 +241,11 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is a birth chart?' => 'It is a diagram of where the Sun, Moon and planets were in the zodiac when you were born, arranged in twelve houses starting from the sign rising in the east.',
-                    'What details are needed to make a kundli?' => 'Your date of birth, exact time of birth and place of birth. The time and place fix the ascendant, which changes about every two hours.',
-                    'What if I do not know my time of birth?' => 'The planet positions can still be found, but the ascendant and houses cannot be trusted. An astrologer can estimate the time through a process called birth time rectification.',
+                    'What exact details are needed to generate a birth chart?' => 'To calculate an authentic Vedic Kundli, you need your exact date of birth, precise time of birth, and exact place of birth (city/town). The time and place establish the Ascendant (Lagna), which changes roughly every two hours.',
+                    'What happens if I do not know my exact birth time?' => 'If your exact birth time is unavailable, planetary sign placements like the Sun and slow-moving planets can still be determined. However, house boundaries and the Ascendant become approximate. A trained Vedic astrologer can perform "Birth Time Rectification" (Nashta Jataka) using key life events to narrow down your accurate rising sign.',
+                    'What is the difference between North Indian and South Indian chart formats?' => 'Both chart styles read the identical planetary positions. In the North Indian chart format, the houses are fixed with the 1st house (Lagna) always at the top center diamond, while the zodiac signs rotate. In the South Indian chart format, the zodiac signs are fixed in a clockwise square, while the Ascendant and planets change position.',
+                    'What is the D9 Navamsha chart and why is it important?' => 'The Navamsha (D9) chart is the most critical harmonic divisional chart in Vedic astrology. While the main Rashi chart (D1) represents the tree, the Navamsha represents the fruit. It is analyzed to verify the true strength of planets, assess marriage prospects, and decode life path after the age of 30-36.',
+                    'How does a birth chart predict future events?' => 'Future events are predicted by synthesizing your birth chart’s foundational promises with the Vimshottari Dasha system (planetary time cycles) and current planetary transits (Gochar). When a supportive Dasha operates in harmony with favorable transits, the events promised in your chart materialize.',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

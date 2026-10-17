@@ -10,6 +10,7 @@ class FlamesCalculatorContent extends Model
 
     protected $fillable = [
         'heading',
+        'description',
         'main_content',
         'faq_content',
     ];

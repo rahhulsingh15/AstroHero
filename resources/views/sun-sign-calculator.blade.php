@@ -115,38 +115,53 @@
 
     <section class="ras-content-section">
         <div class="container ras-content-wrapper">
-            <h3>What Is a Sun Sign?</h3>
-            <p>As the Earth goes around the Sun, the Sun appears to pass through twelve signs of the zodiac in a year. The sign it was passing through when you were born is your Sun sign. It is the sign most people mean when they ask, "What is your zodiac sign?"</p>
+            <h3>What Is a Sun Sign (Surya Rashi)? The Sovereign Light of the Soul</h3>
+            <p>Your <strong>Sun Sign</strong> represents the specific zodiac constellation transited by the Sun at the moment of your birth. As our solar system’s central luminary, the Sun stays in each zodiac sign for approximately <strong>30 to 31 days</strong>, completing its journey across all 12 signs in one solar year (365.25 days).</p>
+            <p>In Vedic astrology (<em>Jyotish</em>), the Sun is revered as <strong>Surya Deva</strong> and the supreme natural <strong>Atmakaraka</strong>—the significator of the eternal soul, life force (<em>Prana</em>), conscious willpower, paternal energy, self-respect, and executive leadership. While your Moon Sign reflects your private emotional atmosphere, your Sun Sign illuminates your outer life purpose, your professional drive, and the energetic legacy you project outward into society.</p>
 
-            <h3>Sun Sign Dates</h3>
+            <h3>Vedic Sidereal (Nirayana) vs. Western Tropical (Sayana) Zodiac</h3>
+            <p>One of the most frequent points of confusion for astrology enthusiasts is why their Vedic Sun sign often differs from their Western zodiac sign:</p>
+            <ul class="nnc-list">
+                <li><strong>Western Tropical System (Sayana):</strong> Anchored to the seasonal equinoxes (vernal equinox fixed at 0° Aries). It does not adjust for the slow astronomical wobble of Earth’s rotational axis.</li>
+                <li><strong>Vedic Sidereal System (Nirayana):</strong> Anchored to the actual observable physical star constellations in the cosmos. Vedic astrology deducts an astronomical correction angle called <strong>Ayanamsha</strong> (currently around <strong>24 degrees</strong>).</li>
+                <li><strong>The 23-Day Shift:</strong> Because of this 24-degree difference, your Sun enters each zodiac constellation roughly <strong>23 to 24 days later</strong> in the Vedic system than in Western astrology. For instance, the Sun enters sidereal Aries (Mesha Sankranti) around <strong>April 14</strong>, not March 21!</li>
+            </ul>
+
+            <h3>The 12 Sun Signs: Dates, Elements & Solar Archetypes</h3>
             <div class="table-responsive">
                 <table class="nnc-table">
                     <thead>
-                        <tr><th>Sign</th><th>Dates</th><th>Element</th></tr>
+                        <tr>
+                            <th>Sign</th>
+                            <th>Western Dates</th>
+                            <th>Vedic Transit Dates</th>
+                            <th>Element</th>
+                            <th>Core Solar Strengths & Archetype</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr><td>Aries</td><td>Mar 21 – Apr 19</td><td>Fire</td></tr>
-                        <tr><td>Taurus</td><td>Apr 20 – May 20</td><td>Earth</td></tr>
-                        <tr><td>Gemini</td><td>May 21 – Jun 20</td><td>Air</td></tr>
-                        <tr><td>Cancer</td><td>Jun 21 – Jul 22</td><td>Water</td></tr>
-                        <tr><td>Leo</td><td>Jul 23 – Aug 22</td><td>Fire</td></tr>
-                        <tr><td>Virgo</td><td>Aug 23 – Sep 22</td><td>Earth</td></tr>
-                        <tr><td>Libra</td><td>Sep 23 – Oct 22</td><td>Air</td></tr>
-                        <tr><td>Scorpio</td><td>Oct 23 – Nov 21</td><td>Water</td></tr>
-                        <tr><td>Sagittarius</td><td>Nov 22 – Dec 21</td><td>Fire</td></tr>
-                        <tr><td>Capricorn</td><td>Dec 22 – Jan 19</td><td>Earth</td></tr>
-                        <tr><td>Aquarius</td><td>Jan 20 – Feb 18</td><td>Air</td></tr>
-                        <tr><td>Pisces</td><td>Feb 19 – Mar 20</td><td>Water</td></tr>
+                        <tr><td><strong>Aries (Mesha)</strong></td><td>Mar 21 – Apr 19</td><td>Apr 14 – May 14</td><td>Fire</td><td>Dynamic trailblazer, fearless initiative, executive bravery, direct action.</td></tr>
+                        <tr><td><strong>Taurus (Vrishabh)</strong></td><td>Apr 20 – May 20</td><td>May 15 – Jun 14</td><td>Earth</td><td>Steadfast builder, financial stability, artistic taste, endurance, loyalty.</td></tr>
+                        <tr><td><strong>Gemini (Mithun)</strong></td><td>May 21 – Jun 20</td><td>Jun 15 – Jul 15</td><td>Air</td><td>Communicative genius, intellectual wit, networking talent, versatile thinker.</td></tr>
+                        <tr><td><strong>Cancer (Kark)</strong></td><td>Jun 21 – Jul 22</td><td>Jul 16 – Aug 16</td><td>Water</td><td>Nurturing protector, emotional leadership, empathetic intuition, loyalty.</td></tr>
+                        <tr><td><strong>Leo (Singh)</strong></td><td>Jul 23 – Aug 22</td><td>Aug 17 – Sep 16</td><td>Fire</td><td>Magnanimous sovereign, innate authority, creative radiance, radiant warmth.</td></tr>
+                        <tr><td><strong>Virgo (Kanya)</strong></td><td>Aug 23 – Sep 22</td><td>Sep 17 – Oct 16</td><td>Earth</td><td>Analytical strategist, precision mastery, selfless service, discernment.</td></tr>
+                        <tr><td><strong>Libra (Tula)</strong></td><td>Sep 23 – Oct 22</td><td>Oct 17 – Nov 15</td><td>Air</td><td>Harmonious diplomat, legal fairness, refined aestheticism, social balance.</td></tr>
+                        <tr><td><strong>Scorpio (Vrishchik)</strong></td><td>Oct 23 – Nov 21</td><td>Nov 16 – Dec 15</td><td>Water</td><td>Transformative mystic, emotional depth, investigative focus, resilience.</td></tr>
+                        <tr><td><strong>Sagittarius (Dhanu)</strong></td><td>Nov 22 – Dec 21</td><td>Dec 16 – Jan 13</td><td>Fire</td><td>Philosophical seeker, global vision, infectious optimism, spiritual dharma.</td></tr>
+                        <tr><td><strong>Capricorn (Makar)</strong></td><td>Dec 22 – Jan 19</td><td>Jan 14 – Feb 12</td><td>Earth</td><td>Master architect, disciplined endurance, executive ambition, long-term legacy.</td></tr>
+                        <tr><td><strong>Aquarius (Kumbh)</strong></td><td>Jan 20 – Feb 18</td><td>Feb 13 – Mar 13</td><td>Air</td><td>Visionary reformer, humanitarian ideals, intellectual independence, original mind.</td></tr>
+                        <tr><td><strong>Pisces (Meen)</strong></td><td>Feb 19 – Mar 20</td><td>Mar 14 – Apr 13</td><td>Water</td><td>Compassionate healer, boundless imagination, spiritual transcendence, empathy.</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <h3>What Does the Sun Sign Show?</h3>
+            <h3>How the Sun's Dignity Shapes Life & Destiny</h3>
+            <p>In your personal Vedic Kundli, the Sun's placement indicates how effectively you command authority, handle adversity, and shine in your career:</p>
             <ul class="nnc-list">
-                <li>your basic temperament and sense of self</li>
-                <li>what gives you confidence and energy</li>
-                <li>the way you like to lead and be recognised</li>
-                <li>the element (fire, earth, air or water) that colours your approach to life</li>
+                <li><strong>Exalted Sun (Uchcha in Aries):</strong> Bestows natural charisma, commanding administrative presence, fearless courage, high moral standards, and unshakeable self-confidence.</li>
+                <li><strong>Moolatrikona & Own Sign (Leo):</strong> Gives royal grace, generosity of spirit, organizational supremacy, creative magnetism, and deep societal respect.</li>
+                <li><strong>Debilitated Sun (Neecha in Libra):</strong> Suggests a tendency to compromise your core identity for external validation, challenges with fatherly figures, or digestive and bone vitality that requires mindful attention.</li>
             </ul>
 
             <div class="discover-more">
@@ -189,9 +204,11 @@
             <!-- Right Side: Accordion List -->
             <div class="acord-right">
                 @foreach ([
-                    'What is a Sun sign?' => 'It is the zodiac sign the Sun occupied at the time of your birth. Because the Sun stays in one sign for about a month, everyone born in that period shares the same Sun sign.',
-                    'Is my Sun sign the same as my rashi?' => 'Not always. In Vedic astrology rashi usually means the Moon sign, which depends on where the Moon was at your birth. The date ranges on this page follow the Western (tropical) zodiac.',
-                    'I was born on the day the sign changes. Which sign am I?' => 'The Sun changes sign at a specific time, and that time shifts slightly every year. If you were born on a boundary date, your time and place of birth are needed to be certain.',
+                    'What is the difference between Western and Vedic Sun Signs?' => 'Western astrology uses the Tropical zodiac based on fixed seasons, while Vedic astrology uses the Sidereal zodiac based on the actual observable constellations. Due to the astronomical phenomenon known as Ayanamsha (precession of the equinoxes, roughly 24 degrees), your Vedic Sun sign usually falls about 23-24 days later than your Western sign.',
+                    'What does my Sun sign represent in my daily life?' => 'Your Sun sign reveals your conscious ego, core character, innate leadership style, life mission, and physical vitality. It indicates where you derive true self-respect and what type of accomplishments grant you fulfillment.',
+                    'What if I was born on the borderline (cusp) of two signs?' => 'The Sun transitions between zodiac signs (called a Sankranti) at a precise minute and second that varies slightly each year. If you were born on or near a transition date, your exact time and place of birth are crucial to calculate the exact astronomical degree and determine your true sign.',
+                    'Can my Sun sign predict my marriage compatibility?' => 'While Sun sign harmony indicates mutual respect and shared lifestyle vision, Vedic astrology requires analyzing the Moon signs and Nakshatras (via Ashtakoota Milan) for genuine emotional and matrimonial compatibility.',
+                    'How can I strengthen the positive vibrations of the Sun in my life?' => 'Traditional Vedic practices include performing Surya Namaskar at sunrise, offering fresh water to the rising Sun (Arghya) in a copper vessel while reciting the Gayatri Mantra, honoring your father and elders, and maintaining a dignified, truthful daily lifestyle.',
                 ] as $question => $answer)
                     <div class="acord-item">
                         <button class="acord-btn">

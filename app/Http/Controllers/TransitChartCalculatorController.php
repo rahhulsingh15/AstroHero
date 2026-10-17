@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AscendantHelper;
 use App\Helpers\TransitHelper;
+use App\Models\TransitChartCalculatorContent;
+use App\Models\TransitChartReportContent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -40,7 +42,8 @@ class TransitChartCalculatorController extends Controller
 
     public function index()
     {
-        return view('transit-chart-calculator');
+        $content = TransitChartCalculatorContent::firstOrNew([]);
+        return view('transit-chart-calculator', compact('content'));
     }
 
     public function report(Request $request)
@@ -126,6 +129,7 @@ class TransitChartCalculatorController extends Controller
             'place'       => $data['place'],
             'timeUnknown' => $timeUnknown,
             'today'       => $today,
+            'content'     => TransitChartReportContent::firstOrNew([]),
             'moon'        => ['sign' => TransitHelper::SIGNS[$moonSign], 'hindi' => AscendantHelper::HINDI[$moonSign], 'symbol' => AscendantHelper::SYMBOLS[$moonSign]],
             'lagna'       => $lagnaSign === null ? null : ['sign' => TransitHelper::SIGNS[$lagnaSign], 'hindi' => AscendantHelper::HINDI[$lagnaSign], 'symbol' => AscendantHelper::SYMBOLS[$lagnaSign]],
             'nakshatra'   => $nakshatra,

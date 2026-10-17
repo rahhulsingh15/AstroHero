@@ -11,7 +11,7 @@
 
             <!-- Name Title -->
             <div class="num-report-header">
-                <h2>{{ $name }}'s <span class="highlight">Mulank Report</span></h2>
+                <h2>{{ strtr($content->heading ?: "{name}'s Mulank Report", ['{name}' => $name]) }}</h2>
                 <span class="num-system-tag">Born on {{ $birth->format('d F Y') }}</span>
             </div>
 
@@ -124,8 +124,19 @@
                     </tbody>
                 </table>
             </div>
+            @if(!empty($content->main_content))
+                <div class="num-seo-content">
+                    {!! strtr($content->main_content, ['{name}' => $name]) !!}
+                </div>
+            @endif
         </div>
     </section>
+
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         // Share: phone share sheet where available, otherwise copy the report link
@@ -144,5 +155,15 @@
                 } catch (e) {}
             });
         }
+
+        // Accordion FAQ Logic
+        document.querySelectorAll('.acord-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.acord-item').forEach(other => other.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
     </script>
 @endsection

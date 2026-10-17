@@ -7,7 +7,7 @@
 
             <!-- Title -->
             <div class="num-report-header">
-                <h2>Your <span class="highlight">Exact Age</span></h2>
+                <h2>{!! !empty($content->heading) ? e($content->heading) : 'Your <span class="highlight">Exact Age</span>' !!}</h2>
                 <span class="num-system-tag">As on {{ $on->format('d F Y') }}</span>
             </div>
 
@@ -80,23 +80,29 @@
                 </div>
             </div>
 
-            <!-- How it was counted -->
-            <div class="num-seo-content">
-                <h3>How this age was counted</h3>
-                <p>Completed years are counted first, then the completed months after your last birthday, and then the remaining days. Months of different lengths and leap years are taken into account, so the result matches the way age is written on official forms.</p>
-                <ul>
-                    <li><strong>Age in days</strong> is the total number of days between the two dates.</li>
-                    <li><strong>Age in weeks</strong> is the number of completed weeks in those days.</li>
-                    <li><strong>Age in hours</strong> counts 24 hours for every completed day.</li>
-                </ul>
-
-                <h4>More calculators</h4>
-                <p>
-                    <a href="{{ route('mulank-calculator') }}">Mulank Calculator</a> ·
-                    <a href="{{ route('dasha-calculator') }}">Dasha Calculator</a> ·
-                    <a href="{{ route('numerology-calculator') }}">Numerology Calculator</a>
-                </p>
-            </div>
+            @if(!empty($content->main_content))
+                <div class="num-seo-content">
+                    {!! $content->main_content !!}
+                </div>
+            @endif
         </div>
     </section>
+
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
+
+    <script>
+        // Accordion FAQ Logic
+        document.querySelectorAll('.acord-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.acord-item').forEach(other => other.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+    </script>
 @endsection

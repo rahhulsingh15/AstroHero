@@ -12,7 +12,7 @@
             <!-- Result card -->
             <div class="calc-result">
                 <div class="calc-result-head">
-                    <h2>Friendship Compatibility</h2>
+                    <h2>{{ strtr($content->heading ?: 'Friendship Compatibility for {name1} and {name2}', ['{name1}' => $name1, '{name2}' => $name2]) }}</h2>
                     <p>Your connection results</p>
                 </div>
                 <div class="calc-result-body">
@@ -72,26 +72,30 @@
                     <p>Letters your names share: {{ $report['common'] }}.</p>
                 @endif
 
-                <h3>What each score means</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Score</th>
-                            <th>Bond</th>
-                            <th>Meaning</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (array_reverse(\App\Helpers\NumerologyHelper::MATCH_BANDS, true) as $score => $band)
+                @if(!empty($content->main_content))
+                    {!! strtr($content->main_content, ['{name1}' => $name1, '{name2}' => $name2]) !!}
+                @else
+                    <h3>What each score means</h3>
+                    <table class="data-table">
+                        <thead>
                             <tr>
-                                <td>{{ $score }}%</td>
-                                <td><strong>{{ $band[0] }}</strong>{{ $score === $report['percent'] ? ' (yours)' : '' }}</td>
-                                <td>{{ $band[2] }}</td>
+                                <th>Score</th>
+                                <th>Bond</th>
+                                <th>Meaning</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <p>The score is meant for fun. Real friendship depends on trust, time and effort, which no calculator can measure.</p>
+                        </thead>
+                        <tbody>
+                            @foreach (array_reverse(\App\Helpers\NumerologyHelper::MATCH_BANDS, true) as $score => $band)
+                                <tr>
+                                    <td>{{ $score }}%</td>
+                                    <td><strong>{{ $band[0] }}</strong>{{ $score === $report['percent'] ? ' (yours)' : '' }}</td>
+                                    <td>{{ $band[2] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <p>The score is meant for fun. Real friendship depends on trust, time and effort, which no calculator can measure.</p>
+                @endif
             </div>
 
             <!-- Banner / Action Card -->
@@ -107,6 +111,12 @@
             </div>
         </div>
     </section>
+
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         // Share: phone share sheet where available, otherwise copy the report link
@@ -125,5 +135,15 @@
                 } catch (e) {}
             });
         }
+
+        // Accordion FAQ Logic
+        document.querySelectorAll('.acord-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.acord-item').forEach(other => other.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
     </script>
 @endsection

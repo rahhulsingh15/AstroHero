@@ -9,8 +9,10 @@
                 <span class="separator">›</span>
                 <span class="current">TRANSIT CHART CALCULATOR</span>
             </div>
-            <h1>Transit Chart Calculator - See Today's Planets on Your Birth Chart</h1>
-            <p class="ras-subtitle">A transit chart places the planets as they are in the sky today over the houses of your birth chart. It shows which areas of your life are active right now. Enter your birth details to see your transits.</p>
+            <h1>{{ $content->heading ?: "Transit Chart Calculator - See Today's Planets on Your Birth Chart" }}</h1>
+            @if(!empty($content->description))
+                <p class="ras-subtitle">{{ $content->description }}</p>
+            @endif
         </div>
     </section>
 
@@ -113,101 +115,17 @@
         </div>
     </section>
 
-    <section class="ras-content-section">
-        <div class="container ras-content-wrapper">
-            <h3>What Is a Transit Chart?</h3>
-            <p>Your birth chart is fixed, but the planets never stop moving. In Vedic astrology their movement over your chart is called gochar. A transit chart lets you see at a glance where each planet is today, counted from your Moon sign or your ascendant.</p>
+    @if(!empty($content->main_content))
+        <section class="ras-content-section">
+            {!! $content->main_content !!}
+        </section>
+    @endif
 
-            <h3>How Long Does Each Planet Stay in a Sign?</h3>
-            <div class="table-responsive">
-                <table class="nnc-table">
-                    <thead>
-                        <tr><th>Planet</th><th>Time in One Sign</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Moon</td><td>About 2¼ days</td></tr>
-                        <tr><td>Sun</td><td>About 1 month</td></tr>
-                        <tr><td>Mercury</td><td>About 3 to 4 weeks</td></tr>
-                        <tr><td>Venus</td><td>About 1 month</td></tr>
-                        <tr><td>Mars</td><td>About 45 days</td></tr>
-                        <tr><td>Jupiter</td><td>About 1 year</td></tr>
-                        <tr><td>Saturn</td><td>About 2½ years</td></tr>
-                        <tr><td>Rahu and Ketu</td><td>About 18 months</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p>Mercury, Venus and Mars can stay longer in a sign when they turn retrograde.</p>
-
-            <h3>What Is a Transit Chart Used For?</h3>
-            <ul class="nnc-list">
-                <li>timing events promised in the birth chart</li>
-                <li>checking Sade Sati and Jupiter's yearly transit</li>
-                <li>choosing a better period for a job change, marriage or investment</li>
-                <li>understanding why a particular area of life suddenly feels busy</li>
-            </ul>
-
-            <div class="discover-more">
-                <h3>Discover More about yourself</h3>
-                <div class="calc-cards">
-                    <a href="{{ route('horoscope.landing', ['period' => 'daily']) }}" class="calc-card">
-                        <span class="c-icon">📅</span>
-                        <h4>Daily Horoscope</h4>
-                        <p>Read your daily predictions</p>
-                    </a>
-                    <a href="{{ route('love-calculator') }}" class="calc-card">
-                        <span class="c-icon">❤️</span>
-                        <h4>Love Calculator</h4>
-                        <p>Check love percentage</p>
-                    </a>
-                    <a href="{{ route('numerology-calculator') }}" class="calc-card">
-                        <span class="c-icon">🔢</span>
-                        <h4>Numerology Calculator</h4>
-                        <p>Find the numbers in your name</p>
-                    </a>
-                    <a href="{{ route('dasha-calculator') }}" class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Dasha Calculator</h4>
-                        <p>See your planetary periods</p>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-                @foreach ([
-                    'What is a transit chart?' => 'It is your birth chart with the current positions of the planets added to it, so you can see which house each planet is passing through for you.',
-                    'How is a transit different from a dasha?' => 'A dasha is a planetary period counted from your birth star and lasts for years. A transit is the actual movement of planets in the sky. Astrologers read both together.',
-                    'Which transits matter the most?' => 'The slow planets: Saturn, Jupiter, Rahu and Ketu. They stay in a sign for a year or more and shape the longer chapters of life.',
-                ] as $question => $answer)
-                    <div class="acord-item">
-                        <button class="acord-btn">
-                            <span>{{ $question }}</span>
-                            <div class="acord-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="acord-content">
-                            <p>{{ $answer }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

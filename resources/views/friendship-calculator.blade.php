@@ -9,8 +9,10 @@
                 <span class="separator">›</span>
                 <span class="current">FRIENDSHIP CALCULATOR</span>
             </div>
-            <h1>Friendship Calculator - Test How Strong Your Friendship Is</h1>
-            <p class="nnc-subtitle">Curious how well you and your friend click? Enter both names to get a friendship score based on the numbers hidden in your names.</p>
+            <h1>{{ $content->heading ?: 'Friendship Calculator - Test How Strong Your Friendship Is' }}</h1>
+            @if(!empty($content->description))
+                <p class="nnc-subtitle">{{ $content->description }}</p>
+            @endif
         </div>
     </section>
 
@@ -56,92 +58,17 @@
         </div>
     </section>
 
-    <section class="nnc-content-section">
-        <div class="container nnc-content-wrapper">
-            <h3>What Is a Friendship Calculator?</h3>
-            <p>A friendship calculator is a light-hearted tool that gives a compatibility score for two friends. It uses name numerology: every name is reduced to a single number with the Chaldean chart, and the closer the two numbers are, the higher the score. Equal numbers give 100%, and every step between them takes away 10%, down to a minimum of 40%.</p>
+    @if(!empty($content->main_content))
+        <section class="nnc-content-section">
+            {!! $content->main_content !!}
+        </section>
+    @endif
 
-            <h3>How to Read Your Score</h3>
-            <ul class="nnc-list">
-                <li><strong>100% - Soul Friends:</strong> both names reduce to the same number. You think and feel alike.</li>
-                <li><strong>90% - Excellent Pair:</strong> a lasting friendship built on trust.</li>
-                <li><strong>80% - Strong Bond:</strong> you understand and support each other.</li>
-                <li><strong>70% - Good Match:</strong> things flow easily and you enjoy each other's company.</li>
-                <li><strong>60% - Mild Bond:</strong> you get along well, most of all over a shared interest.</li>
-                <li><strong>50% - Neutral Ground:</strong> neither a strong pull nor a clash. Respect lets it grow.</li>
-                <li><strong>40% - Fragile Tie:</strong> very different natures. Patience will matter most.</li>
-            </ul>
-
-            <h3>What Makes a Friendship Last?</h3>
-            <ul class="nnc-list">
-                <li>being honest even when it is uncomfortable</li>
-                <li>showing up in difficult times, not only the happy ones</li>
-                <li>respecting each other's space and choices</li>
-                <li>forgiving small mistakes quickly</li>
-            </ul>
-
-            <div class="discover-more">
-                <h3>Discover More about yourself</h3>
-                <div class="calc-cards">
-                    <a href="{{ route('horoscope.landing', ['period' => 'daily']) }}" class="calc-card">
-                        <span class="c-icon">📅</span>
-                        <h4>Daily Horoscope</h4>
-                        <p>Read your daily predictions</p>
-                    </a>
-                    <a href="{{ route('love-calculator') }}" class="calc-card">
-                        <span class="c-icon">❤️</span>
-                        <h4>Love Calculator</h4>
-                        <p>Check love percentage</p>
-                    </a>
-                    <a href="{{ route('numerology-calculator') }}" class="calc-card">
-                        <span class="c-icon">🔢</span>
-                        <h4>Numerology Calculator</h4>
-                        <p>Find the numbers in your name</p>
-                    </a>
-                    <a href="{{ route('dasha-calculator') }}" class="calc-card">
-                        <span class="c-icon">🪐</span>
-                        <h4>Dasha Calculator</h4>
-                        <p>See your planetary periods</p>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="acording_section">
-        <div class="acord-container">
-            <!-- Left Side: Title -->
-            <div class="acord-left">
-                <span class="acord-subtitle">FREQUENTLY ASKED</span>
-                <h2 class="acord-title">Got doubts? <span class="highlight">Find</span> your answers<br>here.</h2>
-            </div>
-
-            <!-- Right Side: Accordion List -->
-            <div class="acord-right">
-                @foreach ([
-                    'How does the friendship calculator work?' => 'Each letter of a name has a number in numerology. The numbers of both names are compared to see how naturally the two people get along.',
-                    'Is the friendship score accurate?' => 'It is meant for fun. Real friendship depends on trust, time and effort, which no calculator can measure.',
-                    'Can I check more than one friend?' => 'Yes. You can try as many names as you like.',
-                ] as $question => $answer)
-                    <div class="acord-item">
-                        <button class="acord-btn">
-                            <span>{{ $question }}</span>
-                            <div class="acord-icon">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="6 9 12 15 18 9"></polyline>
-                                </svg>
-                            </div>
-                        </button>
-                        <div class="acord-content">
-                            <p>{{ $answer }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
+    @if(!empty($content->faq_content))
+        <section class="acording_section">
+            {!! $content->faq_content !!}
+        </section>
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
