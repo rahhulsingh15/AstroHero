@@ -38,7 +38,7 @@ return [
     // Firebase Cloud Messaging (browser push notifications)
     'firebase' => [
         // Server side: service account JSON file (Firebase Console > Project settings > Service accounts)
-        'credentials' => base_path(env('FIREBASE_CREDENTIALS', 'storage/app/firebase/service-account.json')),
+        'credentials' => base_path(env('FIREBASE_CREDENTIALS', 'storage/app/firebase/firebase_credentials.json')),
 
         // Browser side: web app config (Project settings > General > Your apps)
         'api_key' => env('FIREBASE_API_KEY'),
