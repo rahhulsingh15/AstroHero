@@ -1751,6 +1751,8 @@ html[data-theme="dark"] {
 }
 
 /* Jodit Main Container & Workplace */
+.dashboard-content .jodit-container,
+.dashboard-content .jodit-workplace,
 html[data-theme="dark"] .jodit-container,
 html[data-theme="dark"] .jodit-container.jodit_theme_default,
 html[data-theme="dark"] .jodit-container.jodit_theme_dark {
@@ -1759,17 +1761,26 @@ html[data-theme="dark"] .jodit-container.jodit_theme_dark {
     color: #e5edf7 !important;
 }
 
+.dashboard-content .jodit-workplace,
 html[data-theme="dark"] .jodit-workplace {
     background-color: #182235 !important;
     border-color: #2f3b52 !important;
 }
 
 /* Jodit WYSIWYG Editable Area */
+.dashboard-content .jodit-wysiwyg,
+.dashboard-content .jodit-wysiwyg_iframe,
 html[data-theme="dark"] .jodit-wysiwyg,
 html[data-theme="dark"] .jodit-wysiwyg_iframe {
     background-color: #182235 !important;
     color: #e5edf7 !important;
     caret-color: #ffffff !important;
+}
+
+.dashboard-content .jodit-toolbar__box,
+html[data-theme="dark"] .jodit-toolbar__box {
+    background: #111827 !important;
+    border-color: #2f3b52 !important;
 }
 
 /* Editable content typography inside Jodit */

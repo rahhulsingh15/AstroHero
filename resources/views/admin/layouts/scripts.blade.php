@@ -1,5 +1,5 @@
 <script src="{{ asset('admin/assets/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('admin/assets/js/main.js') }}"></script>
+  <script src="{{ asset('admin/assets/js/main.js') }}?v={{ @filemtime(public_path('admin/assets/js/main.js')) ?: time() }}"></script>
 
  <script>
   document.addEventListener("DOMContentLoaded", function () {
