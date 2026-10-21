@@ -3,24 +3,7 @@
    Matching Screenshot Reference
    ========================================================================== */
 
-:root {
-    --navy: #0e1130;
-    --navy-deep: #080a1f;
-    --gold: #e3b568;
-    --gold-soft: #f2d9a8;
-    --lav: #b6a6ff;
-    --cream: #f3efe4;
-    --muted: #a7a4c2;
-    --line: rgba(255, 255, 255, .15);
-}
-
-body {
-    background-color: var(--navy-deep);
-    color: var(--cream);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-}
+/* Colours and body styles come from style.css (site theme + light mode) */
 
 /* Base Container */
 .free-kundli {
@@ -816,7 +799,7 @@ body {
 }
 
 .kd-report-name {
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 42px;
     font-weight: 700;
     background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-soft) 40%, var(--gold) 80%, #C48F37 100%);
@@ -2049,7 +2032,7 @@ body {
 }
 
 .kd-deeper-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 30px;
     font-weight: 700;
     background: linear-gradient(135deg, #FFFFFF 0%, var(--gold-soft) 50%, var(--gold) 100%);
@@ -2215,7 +2198,7 @@ body {
 }
 
 .fk-guide-header h1 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 36px;
     font-weight: 700;
     color: #ffffff;
@@ -2234,7 +2217,7 @@ body {
 }
 
 .fk-guide-body h2 {
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 23px;
     font-weight: 600;
     color: #ffffff;
@@ -2514,3 +2497,40 @@ body {
         text-align: center;
     }
 }
+/* =========================================
+   REPORT CHARTS: planet colours, South chart, small helpers
+   ========================================= */
+.kd-charts-south { display: none !important; }
+.kd-card.show-south .kd-charts-north { display: none !important; }
+.kd-card.show-south .kd-charts-row.kd-charts-south,
+.kd-card.show-south .kd-ashtak-grid.kd-charts-south { display: grid !important; }
+.kd-card.show-south .kd-chart-box.kd-charts-south { display: flex !important; flex-direction: column; align-items: center; }
+
+.kd-south-num { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; fill: #d4a753; }
+.kd-south-planet { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; }
+.kd-svg-small-num { font-size: 10px !important; opacity: 0.75; }
+.kd-ashtak-svg .kd-svg-planet { font-size: 13px; }
+.kd-ashtak-total { color: #9da0b8; font-weight: 500; }
+
+.kd-c-white { fill: #f0f0f5; }
+.kd-c-yellow { fill: #ffd54f; }
+.kd-c-pink { fill: #f48fb1; }
+.kd-c-peach { fill: #ffab91; }
+.kd-c-orange { fill: #ffa726; }
+.kd-c-green { fill: #81c784; }
+.kd-c-blue { fill: #90caf9; }
+.kd-c-cyan { fill: #80deea; }
+.kd-c-purple { fill: #b39ddb; }
+
+.kd-level-up-wrap { display: flex; justify-content: center; margin-top: 24px; padding: 8px 0; }
+.kd-btn-level-up {
+    background: #fae042; color: #12140a; font-size: 13.5px; font-weight: 800; letter-spacing: 0.8px;
+    padding: 10px 34px; border-radius: 9999px; border: none; cursor: pointer; text-transform: uppercase;
+    box-shadow: 0 4px 18px rgba(250, 224, 66, 0.45); transition: all 0.22s ease; font-family: inherit;
+}
+.kd-btn-level-up:hover { background: #ffd83b; transform: translateY(-2px); }
+
+.kd-subcard-h4 { font-size: 13.5px; color: #fff; margin: 14px 0 6px; }
+.kd-dosha-text { font-size: 14px; color: #e2e4f0; margin: 0 0 8px; font-weight: 500; line-height: 1.6; }
+.kd-dosha-sub { font-size: 13.5px; color: #b6b8cb; margin: 0 0 6px; line-height: 1.6; }
+.kd-chart-svg .kd-svg-planet { font-size: 10.5px; letter-spacing: -0.2px; }

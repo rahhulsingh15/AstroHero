@@ -194,7 +194,7 @@ body {
 }
 
 .pdf-doc-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 34px;
     font-weight: 700;
     color: #1a1e30;
@@ -908,4 +908,16 @@ body {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
     }
+}
+/* Planet colours, small sign numbers and the amber dosha badge */
+.pdf-svg-planet tspan { font-weight: 700; }
+.pdf-c-purple { fill: #6a4fc9; } .pdf-c-orange { fill: #c25a00; } .pdf-c-blue { fill: #2463b5; }
+.pdf-c-red { fill: #c0392b; } .pdf-c-green { fill: #2e7d32; } .pdf-c-gold { fill: #9a6a00; }
+.pdf-c-pink { fill: #b4366e; } .pdf-c-teal { fill: #0f7d83; } .pdf-c-grey { fill: #4a4a58; }
+.pdf-svg-small { font-size: 10px !important; opacity: 0.7; }
+.pdf-para { font-size: 12px; line-height: 1.6; color: var(--text-secondary, #555); margin: 0 0 10px; }
+.pdf-badge-amber {
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.4px; white-space: nowrap;
+    background: rgba(214, 140, 20, 0.12); color: #a0610a; border: 1px solid rgba(214, 140, 20, 0.35);
 }

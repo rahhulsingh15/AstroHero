@@ -1,472 +1,384 @@
 @extends('frontend.layouts.master')
-@section('title', $name . "'s Janam Kundli — Free Vedic Horoscope Report | AstroHero")
+@section('title', $name . "'s Kundli — Free Kundli Online By Date of Birth | AstroHero")
 @section('content')
 
 @php
-    $lagna = $report['lagna'];
-    $planets = $report['planets'];
-    $allPlanets = $report['allPlanets'];
-    $panchang = $report['panchang'];
-    $avakhada = $report['avakhada'];
-    $dasha = $report['dasha'];
-    $yogini = $report['yogini'];
-    $ashtak = $report['ashtakvarga'];
-    $kp = $report['kp'];
-    $doshas = $report['doshas'];
-    $rudraksha = $report['rudraksha'];
-    $gemstones = $report['gemstones'];
-    $predictions = $report['predictions'];
-    $yogas = $report['yogas'];
+    $r = $report;
+    $lagna = $r['lagna'];
+    $planets = $r['planets'];
+    $all = $r['allPlanets'];
+    $pan = $r['panchang'];
+    $ava = $r['avakhada'];
+    $charts = $r['charts'];
+    $ord = \App\Helpers\KundliHelper::ORDINALS;
+    $birthTs = $r['birth']->timestamp;
+    $tz = $r['birth']->getTimezone();
+    $dateFmt = fn (int $ts, string $f = 'd M Y') => $ts <= $birthTs ? 'Birth' : \Carbon\Carbon::createFromTimestamp($ts, $tz)->format($f);
+    $timeLabel = $r['timeUnknown'] ? 'Unknown (12:00 PM used)' : $r['birth']->format('h:i A');
 
-    $latFmt = ($lat >= 0 ? number_format($lat, 4) . '° N' : number_format(abs($lat), 4) . '° S');
-    $lngFmt = ($lng >= 0 ? number_format($lng, 4) . '° E' : number_format(abs($lng), 4) . '° W');
-
-    // North Indian diamond coordinate slots [x, y, signX, signY]
-    $slots = [
-        1  => [150, 75,  150, 38],  2  => [75, 38,   75, 24],   3  => [28, 75,   24, 75],
-        4  => [75, 150,  40, 150],  5  => [28, 225,  24, 225],  6  => [75, 260,  75, 276],
-        7  => [150, 225, 150, 260], 8  => [225, 260, 225, 276], 9  => [270, 225, 276, 225],
-        10 => [225, 150, 260, 150], 11 => [270, 75,  276, 75],  12 => [225, 38,  225, 24],
+    $colors = [
+        'Asc' => 'purple', 'Su' => 'orange', 'Mo' => 'blue', 'Ma' => 'peach', 'Me' => 'green', 'Ju' => 'yellow',
+        'Ve' => 'pink', 'Sa' => 'cyan', 'Ra' => 'cyan', 'Ke' => 'white', 'Ur' => 'white', 'Ne' => 'white', 'Pl' => 'white',
     ];
+    $label = function (array $p, bool $deg) {
+        $t = $p['abbr'];
+        if ($deg && $p['deg'] !== null) $t .= '-' . number_format($p['deg'], 2) . '°';
+        if ($p['retro'] && $p['abbr'] !== 'Asc' && !in_array($p['abbr'], ['Ra', 'Ke'])) $t .= ' R';
+        return $t;
+    };
 
-    $ashtakCoords = [
-        1 => [130, 65], 2 => [65, 24], 3 => [24, 65], 4 => [65, 130],
-        5 => [24, 195], 6 => [65, 238], 7 => [130, 195], 8 => [195, 238],
-        9 => [238, 195], 10 => [195, 130], 11 => [238, 65], 12 => [195, 24]
-    ];
+    // North Indian chart (300 x 300): sign / house number near the centre point of each house, planets at the house centre
+    $numPos = [1 => [150, 136], 2 => [79, 66], 3 => [66, 79], 4 => [136, 150], 5 => [66, 221], 6 => [79, 236],
+               7 => [150, 166], 8 => [221, 236], 9 => [236, 221], 10 => [164, 150], 11 => [236, 79], 12 => [221, 66]];
+    $center = [1 => [150, 72], 2 => [79, 30], 3 => [42, 79], 4 => [78, 150], 5 => [42, 221], 6 => [79, 270],
+               7 => [150, 228], 8 => [221, 270], 9 => [258, 221], 10 => [222, 150], 11 => [258, 79], 12 => [221, 30]];
+    $north = function (array $chart, bool $deg = true) use ($numPos, $center, $colors, $label) {
+        $s = '<rect x="8" y="8" width="284" height="284" fill="#080913" stroke="#d4a753" stroke-width="2"/>'
+            . '<line x1="8" y1="8" x2="292" y2="292" stroke="#d4a753" stroke-width="1.4"/>'
+            . '<line x1="292" y1="8" x2="8" y2="292" stroke="#d4a753" stroke-width="1.4"/>'
+            . '<polygon points="150,8 292,150 150,292 8,150" fill="none" stroke="#d4a753" stroke-width="1.5"/>';
+        foreach ($chart['houses'] as $h => $house) {
+            $num = !empty($chart['houseNumbers']) ? $h : $house['sign'] + 1;
+            $s .= '<text x="' . $numPos[$h][0] . '" y="' . $numPos[$h][1] . '" class="kd-svg-house-num">' . $num . '</text>';
+            $items = $house['planets'];
+            if (!$items) continue;
+            $useDeg = $deg && count($items) <= 4;
+            $per = count($items) > 4 ? (in_array($h, [1, 4, 7, 10]) ? 3 : 2) : 1;
+            $lines = array_chunk($items, $per);
+            $lh = 13;
+            $y0 = $center[$h][1] - (count($lines) - 1) * $lh / 2;
+            foreach ($lines as $i => $line) {
+                $s .= '<text x="' . $center[$h][0] . '" y="' . ($y0 + $i * $lh) . '" class="kd-svg-planet">';
+                foreach ($line as $j => $p) {
+                    $s .= '<tspan class="kd-c-' . ($colors[$p['abbr']] ?? 'white') . '">' . e($label($p, $useDeg)) . ($j < count($line) - 1 ? ' ' : '') . '</tspan>';
+                }
+                $s .= '</text>';
+            }
+        }
+        return '<svg class="kd-chart-svg" viewBox="0 0 300 300" role="img">' . $s . '</svg>';
+    };
 
-    // South Indian box coordinates
-    $boxCoords = [
-        12 => ['x' => 46,  'y' => 50],
-        1  => ['x' => 122, 'y' => 50],
-        2  => ['x' => 198, 'y' => 50],
-        3  => ['x' => 274, 'y' => 50],
-        4  => ['x' => 274, 'y' => 128],
-        5  => ['x' => 274, 'y' => 202],
-        6  => ['x' => 274, 'y' => 280],
-        7  => ['x' => 198, 'y' => 280],
-        8  => ['x' => 122, 'y' => 280],
-        9  => ['x' => 46,  'y' => 278],
-        10 => ['x' => 46,  'y' => 202],
-        11 => ['x' => 46,  'y' => 126],
-    ];
+    // South Indian chart (320 x 320): fixed sign boxes, Pisces top-left
+    $box = [0 => [84, 8], 1 => [160, 8], 2 => [236, 8], 3 => [236, 84], 4 => [236, 160], 5 => [236, 236],
+            6 => [160, 236], 7 => [84, 236], 8 => [8, 236], 9 => [8, 160], 10 => [8, 84], 11 => [8, 8]];
+    $south = function (array $chart, bool $deg = true) use ($box, $colors, $label) {
+        $s = '<rect x="8" y="8" width="304" height="304" fill="#090b16" stroke="#d4a753" stroke-width="2" rx="2"/>';
+        foreach ([[84, 8, 84, 312], [160, 8, 160, 84], [160, 236, 160, 312], [236, 8, 236, 312], [8, 84, 312, 84], [8, 160, 84, 160], [236, 160, 312, 160], [8, 236, 312, 236]] as [$x1, $y1, $x2, $y2]) {
+            $s .= "<line x1=\"$x1\" y1=\"$y1\" x2=\"$x2\" y2=\"$y2\" stroke=\"#d4a753\" stroke-width=\"1.6\"/>";
+        }
+        $s .= '<rect x="84" y="84" width="152" height="152" fill="#060812" stroke="#d4a753" stroke-width="1.6"/>'
+            . '<polygon points="160,116 204,160 160,204 116,160" fill="none" stroke="#d4a753" stroke-width="1.2" opacity="0.6"/>'
+            . '<polygon points="160,132 188,160 160,188 132,160" fill="none" stroke="#d4a753" stroke-width="1" opacity="0.8"/>'
+            . '<circle cx="160" cy="160" r="3.5" fill="#d4a753"/>';
+        foreach ($chart['houses'] as $h => $house) {
+            [$bx, $by] = $box[$house['sign']];
+            $num = !empty($chart['houseNumbers']) ? $h : $house['sign'] + 1;
+            $s .= '<text x="' . ($bx + 6) . '" y="' . ($by + 14) . '" class="kd-south-num">' . $num . '</text>';
+            $items = $house['planets'];
+            if (!$items) continue;
+            $useDeg = $deg && count($items) <= 3;
+            $lines = array_chunk($items, $useDeg ? 1 : (count($items) > 3 ? 2 : 1));
+            foreach ($lines as $i => $line) {
+                $s .= '<text x="' . ($bx + 38) . '" y="' . ($by + 32 + $i * 15) . '" class="kd-south-planet">';
+                foreach ($line as $j => $p) {
+                    $s .= '<tspan class="kd-c-' . ($colors[$p['abbr']] ?? 'white') . '">' . e($label($p, $useDeg)) . ($j < count($line) - 1 ? ' ' : '') . '</tspan>';
+                }
+                $s .= '</text>';
+            }
+        }
+        return '<svg class="kd-chart-svg" viewBox="0 0 320 320" role="img">' . $s . '</svg>';
+    };
+
+    // Ashtakvarga chart: bindus at house centres, sign numbers small
+    $binduPos = [1 => [150, 80], 2 => [79, 36], 3 => [36, 79], 4 => [80, 150], 5 => [36, 221], 6 => [79, 264],
+                 7 => [150, 222], 8 => [221, 264], 9 => [264, 221], 10 => [222, 150], 11 => [264, 79], 12 => [221, 36]];
+    $bindu = function (array $values) use ($binduPos, $numPos, $lagna) {
+        $s = '<rect x="8" y="8" width="284" height="284" fill="#080913" stroke="#d4a753" stroke-width="2"/>'
+            . '<line x1="8" y1="8" x2="292" y2="292" stroke="#d4a753" stroke-width="1.4"/>'
+            . '<line x1="292" y1="8" x2="8" y2="292" stroke="#d4a753" stroke-width="1.4"/>'
+            . '<polygon points="150,8 292,150 150,292 8,150" fill="none" stroke="#d4a753" stroke-width="1.5"/>';
+        foreach ($values as $h => $v) {
+            $s .= '<text x="' . $numPos[$h][0] . '" y="' . $numPos[$h][1] . '" class="kd-svg-house-num kd-svg-small-num">' . (($lagna['signIndex'] + $h - 1) % 12 + 1) . '</text>';
+            $s .= '<text x="' . $binduPos[$h][0] . '" y="' . $binduPos[$h][1] . '" class="kd-svg-bindu">' . $v . '</text>';
+        }
+        return '<svg class="kd-ashtak-svg" viewBox="0 0 300 300" role="img">' . $s . '</svg>';
+    };
+
+    $pdfQuery = request()->only(['name', 'gender', 'day', 'month', 'year', 'hour', 'minute', 'ampm', 'time_unknown', 'place', 'lat', 'lng', 'tz']);
+    $dashaJson = array_map(fn ($d) => ['p' => $d['planet'], 's' => $d['start'], 'e' => $d['end']], $r['vimshottari']);
+    $yoginiJson = array_map(fn ($y) => ['c' => $y['code'], 'n' => $y['name'], 'l' => $y['lord'], 's' => $y['start'], 'e' => $y['end']], $r['yogini']);
+    $doshaBadge = fn (bool $ok, string $text) => '<span class="kd-badge-status ' . ($ok ? 'success' : 'warning') . '"><span class="kd-badge-dot"></span>' . e($text) . '</span>';
 @endphp
 
-<link rel="stylesheet" href="{{ asset('assets/css/freekundli.css') }}?v={{ time() }}">
+<link rel="stylesheet" href="{{ asset('assets/css/freekundli.css') }}?v={{ filemtime(public_path('assets/css/freekundli.css')) }}">
 
-<section class="kd-dashboard-section">
-    <div class="container">
-
-        <!-- Breadcrumb -->
-        <nav class="fk-guide-breadcrumb" aria-label="Breadcrumb">
-            <a href="{{ route('home') }}">HOME</a>
-            <span class="sep">&gt;</span>
-            <a href="{{ route('free-kundli') }}">FREE KUNDLI</a>
-            <span class="sep">&gt;</span>
-            <span class="active">{{ strtoupper($name) }}'S REPORT</span>
-        </nav>
-
-        <!-- Top Hero Card -->
-        <div class="kd-hero-banner">
-            <div class="kd-hero-flex">
-                <div>
-                    <h1 class="kd-hero-title"><span>{{ $name }}'s</span> Janam Kundli</h1>
-                    <p class="kd-hero-meta">
-                        🗓️ {{ $birth->format('d M Y') }} &nbsp;·&nbsp;
-                        ⏰ {{ $timeUnknown ? '12:00 PM (Approx)' : $birth->format('h:i A') }} &nbsp;·&nbsp;
-                        📍 {{ $place }} ({{ $latFmt }}, {{ $lngFmt }})
-                    </p>
-                    <div class="kd-hero-tags">
-                        <span class="kd-hero-tag">Ayanamsha: Lahiri</span>
-                        <span class="kd-hero-tag">Whole-Sign Houses</span>
-                        <span class="kd-hero-tag">Vedic Astrology</span>
-                        <span class="kd-hero-tag">{{ ucfirst($gender) }}</span>
-                    </div>
-                </div>
-
-                <div class="kd-hero-actions">
-                    <a href="{{ route('free-kundli-pdf', request()->all()) }}" target="_blank" class="kd-btn-pdf" id="btn-open-pdf">
-                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                            <rect x="6" y="14" width="12" height="8"></rect>
-                        </svg>
-                        Download PDF Report
-                    </a>
-                    <a href="{{ route('free-kundli') }}" class="kd-btn-outline">
-                        + New Kundli
-                    </a>
-                </div>
-            </div>
+<section class="basic-detail">
+    <div class="fk-wrapper">
+        <div class="kd-report-header">
+            <h1 class="kd-report-name">{{ $name }}'s Kundli</h1>
+            <p class="kd-report-meta">{{ $r['birth']->format('d M Y') }} · {{ $timeLabel }} · {{ $r['place'] }}</p>
         </div>
 
-        <!-- The 3 Pillars Summary Cards -->
-        <div class="kd-summary-strip">
-            <div class="kd-pillar-card">
-                <div class="kd-pillar-icon">👑</div>
-                <div>
-                    <div class="kd-pillar-label">Lagna (Ascendant)</div>
-                    <div class="kd-pillar-val">{{ $lagna['sign'] }}</div>
-                    <div class="kd-pillar-sub">{{ $lagna['degree'] }}° {{ sprintf('%02d', $lagna['minute']) }}′ · Ruled by {{ $lagna['lord'] }}</div>
-                </div>
-            </div>
-
-            <div class="kd-pillar-card">
-                <div class="kd-pillar-icon">🌙</div>
-                <div>
-                    <div class="kd-pillar-label">Rashi (Moon Sign)</div>
-                    <div class="kd-pillar-val">{{ $avakhada['sign'] }}</div>
-                    <div class="kd-pillar-sub">Ruled by {{ $avakhada['signLord'] }} ({{ $avakhada['tatva'] }} Element)</div>
-                </div>
-            </div>
-
-            <div class="kd-pillar-card">
-                <div class="kd-pillar-icon">✨</div>
-                <div>
-                    <div class="kd-pillar-label">Nakshatra</div>
-                    <div class="kd-pillar-val">{{ $panchang['nakshatra'] }}</div>
-                    <div class="kd-pillar-sub">Lord: {{ $panchang['nakshatraLord'] }} · Pada {{ $avakhada['charan'] }}</div>
-                </div>
-            </div>
-
-            <div class="kd-pillar-card">
-                <div class="kd-pillar-icon">🪐</div>
-                <div>
-                    <div class="kd-pillar-label">Active Mahadasha</div>
-                    @php
-                        $activeDasha = collect($dasha)->firstWhere('active', true);
-                    @endphp
-                    <div class="kd-pillar-val">{{ $activeDasha['planet'] ?? 'Active' }}</div>
-                    <div class="kd-pillar-sub">Until {{ $activeDasha ? $activeDasha['end']->format('M Y') : '—' }}</div>
-                </div>
-            </div>
+        <div class="kd-tabs-nav-wrapper">
+            <nav class="kd-tabs-nav" aria-label="Kundli Sections">
+                <button class="kd-tab-btn active" data-tab="tab-basic">Basic</button>
+                <button class="kd-tab-btn" data-tab="tab-kundli">Kundli</button>
+                <button class="kd-tab-btn" data-tab="tab-kp">KP</button>
+                <button class="kd-tab-btn" data-tab="tab-ashtakvarga">Ashtakvarga</button>
+                <button class="kd-tab-btn" data-tab="tab-charts">Charts</button>
+                <button class="kd-tab-btn" data-tab="tab-dasha">Dasha</button>
+                <button class="kd-tab-btn" data-tab="tab-report">Free Report</button>
+            </nav>
         </div>
 
-        <!-- Navigation Tabs Bar -->
-        <div class="kd-tabs-wrapper">
-            <div class="kd-tabs-nav" id="kd-tabs-nav">
-                <button type="button" class="kd-tab-btn active" data-tab="tab-basic">01 Basic &amp; Panchang</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-charts">02 Kundli Charts</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-planets">03 Planetary Positions</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-kp">04 KP System</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-ashtak">05 Ashtakvarga</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-divisional">06 Divisional Charts (16)</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-dasha">07 Dasha Timeline</button>
-                <button type="button" class="kd-tab-btn" data-tab="tab-predictions">08 Predictions &amp; Remedies</button>
-            </div>
-        </div>
-
-        <!-- ==============================================
-             TAB 1: BASIC DETAILS & PANCHANG
-             ============================================== -->
-        <div class="kd-tab-content active" id="tab-basic">
-            <div class="kd-grid-2">
-                <div>
-                    <div class="kd-card">
-                        <div class="kd-card-header">
-                            <h2 class="kd-card-title">Birth Details</h2>
-                            <span class="kd-hero-tag">Almanac</span>
+        {{-- ================= TAB 1: BASIC ================= --}}
+        <div class="kd-tab-pane active" id="tab-basic">
+            <div class="kd-grid-2col">
+                <div class="kd-card">
+                    <div class="kd-card-header"><h2 class="kd-card-title">Birth Details</h2></div>
+                    <div class="kd-card-split-2">
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Name</span><span class="kd-info-value">{{ $name }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Date of Birth</span><span class="kd-info-value">{{ $r['birth']->format('d M Y') }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Place of Birth</span><span class="kd-info-value">{{ $r['place'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Longitude</span><span class="kd-info-value">{{ number_format($r['lng'], 4) }}</span></div>
                         </div>
-                        <div class="kd-info-row"><span class="kd-label">Full Name</span><span class="kd-value">{{ $name }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Gender</span><span class="kd-value">{{ ucfirst($gender) }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Date of Birth</span><span class="kd-value">{{ $birth->format('d M Y') }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Time of Birth</span><span class="kd-value">{{ $timeUnknown ? '12:00 PM (Approx)' : $birth->format('h:i A') }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Birth Place</span><span class="kd-value">{{ $place }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Latitude</span><span class="kd-value">{{ $latFmt }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Longitude</span><span class="kd-value">{{ $lngFmt }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Timezone</span><span class="kd-value">GMT +05:30</span></div>
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Gender</span><span class="kd-info-value">{{ ucfirst($r['gender']) }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Time of Birth</span><span class="kd-info-value">{{ $timeLabel }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Latitude</span><span class="kd-info-value">{{ number_format($r['lat'], 4) }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Timezone</span><span class="kd-info-value">{{ $r['timezone'] }}</span></div>
+                        </div>
                     </div>
                 </div>
 
-                <div>
-                    <div class="kd-card">
-                        <div class="kd-card-header">
-                            <h2 class="kd-card-title">Panchang Details</h2>
-                            <span class="kd-hero-tag">Cosmic Day</span>
+                <div class="kd-card">
+                    <div class="kd-card-header"><h2 class="kd-card-title">Panchang</h2></div>
+                    <div class="kd-card-split-2">
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Tithi</span><span class="kd-info-value">{{ $pan['tithi'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Yoga</span><span class="kd-info-value">{{ $pan['yoga'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Nakshatra Lord</span><span class="kd-info-value">{{ $pan['nakshatraLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Ascendant Lord</span><span class="kd-info-value">{{ $pan['ascendantLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Sunset</span><span class="kd-info-value">{{ $pan['sunset'] }}</span></div>
                         </div>
-                        <div class="kd-info-row"><span class="kd-label">Tithi</span><span class="kd-value">{{ $panchang['tithi'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Karana</span><span class="kd-value">{{ $panchang['karana'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Yoga</span><span class="kd-value">{{ $panchang['yoga'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Nakshatra</span><span class="kd-value gold">{{ $panchang['nakshatra'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Nakshatra Lord</span><span class="kd-value">{{ $panchang['nakshatraLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Ascendant (Lagna)</span><span class="kd-value gold">{{ $lagna['sign'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Ascendant Lord</span><span class="kd-value">{{ $lagna['lord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Sunrise / Sunset</span><span class="kd-value">{{ $panchang['sunrise'] }} / {{ $panchang['sunset'] }}</span></div>
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Karana</span><span class="kd-info-value">{{ $pan['karana'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Nakshatra</span><span class="kd-info-value">{{ $pan['nakshatra'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Ascendant</span><span class="kd-info-value">{{ $pan['ascendant'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Sunrise</span><span class="kd-info-value">{{ $pan['sunrise'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Day</span><span class="kd-info-value">{{ $pan['weekday'] }}</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Avakhada Chakra Details -->
+            <div class="kd-card">
+                <div class="kd-card-header"><h2 class="kd-card-title">Avakhada Details</h2></div>
+                <div class="kd-card-split-3">
+                    <div class="kd-info-grid">
+                        <div class="kd-info-row"><span class="kd-info-label">Varna</span><span class="kd-info-value">{{ $ava['varna'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Gan</span><span class="kd-info-value">{{ $ava['gan'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Sign Lord</span><span class="kd-info-value">{{ $ava['signLord'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Name Alphabet</span><span class="kd-info-value">{{ $ava['nameAlphabet'] }}</span></div>
+                    </div>
+                    <div class="kd-info-grid">
+                        <div class="kd-info-row"><span class="kd-info-label">Vashya</span><span class="kd-info-value">{{ $ava['vashya'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Nadi</span><span class="kd-info-value">{{ $ava['nadi'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Charan</span><span class="kd-info-value">{{ $ava['charan'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Paya</span><span class="kd-info-value">{{ $ava['paya'] }}</span></div>
+                    </div>
+                    <div class="kd-info-grid">
+                        <div class="kd-info-row"><span class="kd-info-label">Yoni</span><span class="kd-info-value">{{ $ava['yoni'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Sign</span><span class="kd-info-value">{{ $ava['sign'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Tatva</span><span class="kd-info-value">{{ $ava['tatva'] }}</span></div>
+                        <div class="kd-info-row"><span class="kd-info-label">Yunja</span><span class="kd-info-value">{{ $ava['yunja'] }}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ================= TAB 2: KUNDLI ================= --}}
+        <div class="kd-tab-pane" id="tab-kundli">
             <div class="kd-card">
                 <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Avakhada Chakra (अव कहड़ा चक्र)</h2>
-                        <p class="kd-card-subtitle">Essential astrological attributes calculated from your Moon's placement at birth.</p>
-                    </div>
-                </div>
-                <div class="kd-grid-3">
-                    <div>
-                        <div class="kd-info-row"><span class="kd-label">Varna</span><span class="kd-value">{{ $avakhada['varna'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Vashya</span><span class="kd-value">{{ $avakhada['vashya'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Yoni</span><span class="kd-value">{{ $avakhada['yoni'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Gan</span><span class="kd-value">{{ $avakhada['gan'] }}</span></div>
-                    </div>
-                    <div>
-                        <div class="kd-info-row"><span class="kd-label">Nadi</span><span class="kd-value">{{ $avakhada['nadi'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Moon Sign (Rashi)</span><span class="kd-value gold">{{ $avakhada['sign'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Sign Lord</span><span class="kd-value">{{ $avakhada['signLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Charan / Pada</span><span class="kd-value">{{ $avakhada['charan'] }}</span></div>
-                    </div>
-                    <div>
-                        <div class="kd-info-row"><span class="kd-label">Tatva (Element)</span><span class="kd-value">{{ $avakhada['tatva'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Name Alphabet</span><span class="kd-value gold">{{ $avakhada['nameAlphabet'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Paya</span><span class="kd-value">{{ $avakhada['paya'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Yunja</span><span class="kd-value">{{ $avakhada['yunja'] }}</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==============================================
-             TAB 2: KUNDLI CHARTS (LAGNA, NAVAMSHA & TRANSITS)
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-charts">
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Birth &amp; Harmonic Charts</h2>
-                        <p class="kd-card-subtitle">Lagna Kundli (D-1) &amp; Navamsha Kundli (D-9) representing personality, karma, and destiny.</p>
-                    </div>
+                    <h2 class="kd-card-title">Birth Charts</h2>
                     <div class="kd-toggle-group">
-                        <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North Style</button>
-                        <button type="button" class="kd-toggle-btn" data-chart-mode="south">South Style</button>
+                        <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North</button>
+                        <button type="button" class="kd-toggle-btn" data-chart-mode="south">South</button>
                     </div>
                 </div>
+                <div class="kd-charts-row kd-charts-north">
+                    <div class="kd-chart-box"><div class="kd-chart-label">Lagna Chart</div>{!! $north($charts['lagna']) !!}</div>
+                    <div class="kd-chart-box"><div class="kd-chart-label">Navamsha Chart</div>{!! $north($charts['navamsa'], false) !!}</div>
+                </div>
+                <div class="kd-charts-row kd-charts-south">
+                    <div class="kd-chart-box"><div class="kd-chart-label">Lagna Chart</div>{!! $south($charts['lagna']) !!}</div>
+                    <div class="kd-chart-box"><div class="kd-chart-label">Navamsha Chart</div>{!! $south($charts['navamsa'], false) !!}</div>
+                </div>
+            </div>
 
-                <!-- North Indian Birth Charts -->
-                <div class="kd-charts-grid-2x2 kd-charts-north">
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">Lagna Kundli (D-1 Rashi)</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 300 300">
-                            <rect x="8" y="8" width="284" height="284" class="kd-chart-bg" stroke-width="2" />
-                            <line x1="8" y1="8" x2="292" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <line x1="292" y1="8" x2="8" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <polygon points="150,8 292,150 150,292 8,150" fill="none" class="kd-chart-line" stroke-width="1.5" />
-
-                            @foreach ($report['divisionalCharts']['vargas']['D1']['houses'] as $hNum => $hData)
-                                @php
-                                    [$px, $py, $sx, $sy] = $slots[$hNum];
-                                    $plText = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                <text x="{{ $sx }}" y="{{ $sy }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                @if ($plText)
-                                    <text x="{{ $px }}" y="{{ $py }}" class="kd-svg-planet yellow">{{ $plText }}</text>
-                                @endif
+            <div class="kd-card">
+                <div class="kd-card-header"><h2 class="kd-card-title">Planetary Positions</h2></div>
+                <div class="kd-table-responsive">
+                    <table class="kd-table">
+                        <thead>
+                            <tr><th>PLANET</th><th>SIGN</th><th>SIGN LORD</th><th>NAKSHATRA</th><th>NAKSHATRA LORD</th><th>DEGREE</th><th>HOUSE</th><th>RETRO</th><th>COMBUST</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ascendant</strong></td><td>{{ $lagna['sign'] }}</td><td>{{ $lagna['lord'] }}</td><td>{{ $lagna['nakshatra'] }}</td>
+                                <td>{{ $lagna['nakLord'] }}</td><td>{{ \App\Helpers\FreeKundliHelper::dms($lagna['inSign']) }}</td><td>1st</td><td>—</td><td>—</td>
+                            </tr>
+                            @foreach ($all as $n => $p)
+                                <tr>
+                                    <td><strong>{{ $n }}</strong></td><td>{{ $p['sign'] }}</td><td>{{ $p['lord'] }}</td><td>{{ $p['nakshatra'] }}</td>
+                                    <td>{{ $p['nakLord'] }}</td><td>{{ \App\Helpers\FreeKundliHelper::dms($p['inSign']) }}</td><td>{{ $ord[$p['house']] }}</td>
+                                    <td>{{ $p['retro'] ? 'Yes' : 'No' }}</td>
+                                    @if ($p['combust'])<td class="kd-badge-combust">Combust</td>@else<td>—</td>@endif
+                                </tr>
                             @endforeach
-                        </svg>
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">Navamsha Kundli (D-9 Dharma)</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 300 300">
-                            <rect x="8" y="8" width="284" height="284" class="kd-chart-bg" stroke-width="2" />
-                            <line x1="8" y1="8" x2="292" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <line x1="292" y1="8" x2="8" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <polygon points="150,8 292,150 150,292 8,150" fill="none" class="kd-chart-line" stroke-width="1.5" />
-
-                            @foreach ($report['divisionalCharts']['vargas']['D9']['houses'] as $hNum => $hData)
-                                @php
-                                    [$px, $py, $sx, $sy] = $slots[$hNum];
-                                    $plText = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                <text x="{{ $sx }}" y="{{ $sy }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                @if ($plText)
-                                    <text x="{{ $px }}" y="{{ $py }}" class="kd-svg-planet green">{{ $plText }}</text>
-                                @endif
-                            @endforeach
-                        </svg>
+            <div class="kd-card" id="kd-vimshottari-card">
+                <div class="kd-card-header">
+                    <div>
+                        <h2 class="kd-card-title">Vimshottari Dasha</h2>
+                        <p class="kd-card-subtitle" id="kd-dasha-subtitle">Showing major periods (Mahadasha)</p>
                     </div>
                 </div>
-
-                <!-- South Indian Birth Charts -->
-                <div class="kd-charts-grid-2x2 kd-charts-south">
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">Lagna Kundli (South Indian)</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 320 320">
-                            <rect x="8" y="8" width="304" height="304" class="kd-chart-bg" stroke-width="2" rx="2" />
-                            <line x1="84" y1="8" x2="84" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="160" y1="8" x2="160" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="160" y1="236" x2="160" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="236" y1="8" x2="236" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="84" x2="312" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="160" x2="84" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="236" y1="160" x2="312" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="236" x2="312" y2="236" class="kd-chart-line" stroke-width="1.6" />
-                            <rect x="84" y="84" width="152" height="152" class="kd-south-center" stroke-width="1.6" />
-                            <circle cx="160" cy="160" r="3.5" fill="var(--kd-gold)" />
-
-                            @foreach ([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as $bNum)
-                                <text x="{{ $boxCoords[$bNum]['x'] - 20 }}" y="{{ $boxCoords[$bNum]['y'] - 25 }}" class="kd-south-num">{{ $bNum }}</text>
-                            @endforeach
-                            @foreach ($report['divisionalCharts']['vargas']['D1']['houses'] as $hData)
-                                @php
-                                    $sNum = $hData['signNum'];
-                                    $pl = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                @if ($pl)
-                                    <text x="{{ $boxCoords[$sNum]['x'] }}" y="{{ $boxCoords[$sNum]['y'] }}" class="kd-south-planet yellow">{{ $pl }}</text>
-                                @endif
-                            @endforeach
-                        </svg>
+                <div class="kd-stepper-wrap" id="kd-dasha-stepper">
+                    <div class="kd-step-item active" data-step="1"><span class="kd-step-num">1</span><span>Mahadasha</span></div>
+                    <span class="kd-step-divider">›</span>
+                    <div class="kd-step-item" data-step="2"><span class="kd-step-num">2</span><span>Antardasha</span></div>
+                    <span class="kd-step-divider">›</span>
+                    <div class="kd-step-item" data-step="3"><span class="kd-step-num">3</span><span>Pratyantar</span></div>
+                    <span class="kd-step-divider">›</span>
+                    <div class="kd-step-item" data-step="4"><span class="kd-step-num">4</span><span>Sookshma</span></div>
+                </div>
+                <div class="kd-dasha-level-pane">
+                    <div class="kd-table-responsive">
+                        <table class="kd-table">
+                            <thead><tr><th>PLANET</th><th>START DATE</th><th>END DATE</th><th id="kd-dasha-action-head">ACTION</th></tr></thead>
+                            <tbody id="kd-dasha-tbody"></tbody>
+                        </table>
                     </div>
-
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">Navamsha Kundli (South Indian)</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 320 320">
-                            <rect x="8" y="8" width="304" height="304" class="kd-chart-bg" stroke-width="2" rx="2" />
-                            <line x1="84" y1="8" x2="84" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="160" y1="8" x2="160" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="160" y1="236" x2="160" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="236" y1="8" x2="236" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="84" x2="312" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="160" x2="84" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="236" y1="160" x2="312" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                            <line x1="8" y1="236" x2="312" y2="236" class="kd-chart-line" stroke-width="1.6" />
-                            <rect x="84" y="84" width="152" height="152" class="kd-south-center" stroke-width="1.6" />
-                            <circle cx="160" cy="160" r="3.5" fill="var(--kd-gold)" />
-
-                            @foreach ([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as $bNum)
-                                <text x="{{ $boxCoords[$bNum]['x'] - 20 }}" y="{{ $boxCoords[$bNum]['y'] - 25 }}" class="kd-south-num">{{ $bNum }}</text>
-                            @endforeach
-                            @foreach ($report['divisionalCharts']['vargas']['D9']['houses'] as $hData)
-                                @php
-                                    $sNum = $hData['signNum'];
-                                    $pl = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                @if ($pl)
-                                    <text x="{{ $boxCoords[$sNum]['x'] }}" y="{{ $boxCoords[$sNum]['y'] }}" class="kd-south-planet green">{{ $pl }}</text>
-                                @endif
-                            @endforeach
-                        </svg>
+                    <div class="kd-level-up-wrap" id="kd-dasha-levelup" style="display:none">
+                        <button type="button" class="kd-btn-level-up">LEVEL UP</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Transit Charts (Gochar) -->
             <div class="kd-card">
                 <div class="kd-card-header">
                     <div>
-                        <h2 class="kd-card-title">Live Planetary Transits (Gochar Charts)</h2>
-                        <p class="kd-card-subtitle">Real astronomical planetary positions in the sky right now overlaid on your Ascendant &amp; Moon signs.</p>
+                        <h2 class="kd-card-title">Shadbala</h2>
+                        <p class="kd-card-subtitle">Six-fold planetary strength system in traditional Vedic astrology (in virupas)</p>
                     </div>
                 </div>
-
-                <div class="kd-charts-grid-2x2 kd-charts-north">
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">{{ $report['divisionalCharts']['transits']['lagnaTransit']['title'] }}</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 300 300">
-                            <rect x="8" y="8" width="284" height="284" class="kd-chart-bg" stroke-width="2" />
-                            <line x1="8" y1="8" x2="292" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <line x1="292" y1="8" x2="8" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <polygon points="150,8 292,150 150,292 8,150" fill="none" class="kd-chart-line" stroke-width="1.5" />
-
-                            @foreach ($report['divisionalCharts']['transits']['lagnaTransit']['houses'] as $hNum => $hData)
-                                @php
-                                    [$px, $py, $sx, $sy] = $slots[$hNum];
-                                    $plText = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                <text x="{{ $sx }}" y="{{ $sy }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                @if ($plText)
-                                    <text x="{{ $px }}" y="{{ $py }}" class="kd-svg-planet yellow">{{ $plText }}</text>
-                                @endif
+                <div class="kd-table-responsive">
+                    <table class="kd-table">
+                        <thead><tr><th>STRENGTH TYPE</th>@foreach ($r['shadbala'] as $n => $s)<th>{{ strtoupper($n) }}</th>@endforeach</tr></thead>
+                        <tbody>
+                            @foreach (['sthana' => 'Sthana Bala', 'dig' => 'Dig Bala', 'kala' => 'Kala Bala', 'chesta' => 'Chesta Bala', 'naisargika' => 'Naisargika Bala', 'drik' => 'Drik Bala'] as $k => $lbl)
+                                <tr><td>{{ $lbl }}</td>@foreach ($r['shadbala'] as $s)<td>{{ number_format($s[$k], 2) }}</td>@endforeach</tr>
                             @endforeach
-                        </svg>
-                    </div>
+                            <tr class="highlight-row"><td><strong>Total Shadbala</strong></td>@foreach ($r['shadbala'] as $s)<td><strong>{{ number_format($s['total'], 2) }}</strong></td>@endforeach</tr>
+                            <tr><td>Shadbala in Rupa</td>@foreach ($r['shadbala'] as $s)<td>{{ number_format($s['rupa'], 2) }}</td>@endforeach</tr>
+                            <tr><td>Shadbala Rank</td>@foreach ($r['shadbala'] as $s)<td>{{ $s['rank'] }}</td>@endforeach</tr>
+                            <tr><td>Required Bala</td>@foreach ($r['shadbala'] as $s)<td>{{ $s['required'] }}</td>@endforeach</tr>
+                            <tr><td>Strength Ratio</td>@foreach ($r['shadbala'] as $s)<td>{{ number_format($s['ratio'], 2) }}</td>@endforeach</tr>
+                            <tr><td>Relative Rank</td>@foreach ($r['shadbala'] as $s)<td>{{ $s['relativeRank'] }}</td>@endforeach</tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="kd-chart-box">
-                        <div class="kd-chart-label">{{ $report['divisionalCharts']['transits']['moonTransit']['title'] }}</div>
-                        <svg class="kd-chart-svg" viewBox="0 0 300 300">
-                            <rect x="8" y="8" width="284" height="284" class="kd-chart-bg" stroke-width="2" />
-                            <line x1="8" y1="8" x2="292" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <line x1="292" y1="8" x2="8" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                            <polygon points="150,8 292,150 150,292 8,150" fill="none" class="kd-chart-line" stroke-width="1.5" />
-
-                            @foreach ($report['divisionalCharts']['transits']['moonTransit']['houses'] as $hNum => $hData)
-                                @php
-                                    [$px, $py, $sx, $sy] = $slots[$hNum];
-                                    $plText = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                @endphp
-                                <text x="{{ $sx }}" y="{{ $sy }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                @if ($plText)
-                                    <text x="{{ $px }}" y="{{ $py }}" class="kd-svg-planet orange">{{ $plText }}</text>
-                                @endif
-                            @endforeach
-                        </svg>
+            <div class="kd-card">
+                <div class="kd-card-header">
+                    <div>
+                        <h2 class="kd-card-title">Bhavabala</h2>
+                        <p class="kd-card-subtitle">House strength analysis — overall potency &amp; capacity of the 12 astrological houses</p>
                     </div>
+                </div>
+                <div class="kd-table-responsive">
+                    <table class="kd-table">
+                        <thead><tr><th>BHAVA (HOUSE)</th>@for ($h = 1; $h <= 12; $h++)<th>{{ $h }}</th>@endfor</tr></thead>
+                        <tbody>
+                            <tr class="highlight-row"><td><strong>Total Bhava Bala</strong></td>@foreach ($r['bhavabala'] as $b)<td>{{ round($b['total']) }}</td>@endforeach</tr>
+                            <tr><td>Bhava Bala (Rupas)</td>@foreach ($r['bhavabala'] as $b)<td>{{ number_format($b['rupa'], 1) }}</td>@endforeach</tr>
+                            <tr><td>Strength Ratio</td>@foreach ($r['bhavabala'] as $b)<td>{{ number_format($b['ratio'], 1) }}</td>@endforeach</tr>
+                            <tr><td>Ranking</td>@foreach ($r['bhavabala'] as $b)<td>{{ $b['rank'] }}</td>@endforeach</tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
-        <!-- ==============================================
-             TAB 3: PLANETARY POSITIONS (GRAHA SPASHTA)
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-planets">
+        {{-- ================= TAB 3: KP ================= --}}
+        <div class="kd-tab-pane" id="tab-kp">
+            <div class="kd-kp-top-row">
+                <div class="kd-card" style="margin-bottom: 0;">
+                    <div class="kd-card-header">
+                        <h2 class="kd-card-title">Bhav Chalit Chart</h2>
+                        <div class="kd-toggle-group">
+                            <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North</button>
+                            <button type="button" class="kd-toggle-btn" data-chart-mode="south">South</button>
+                        </div>
+                    </div>
+                    <div class="kd-chart-box kd-charts-north">{!! $north($charts['chalit']) !!}</div>
+                    <div class="kd-chart-box kd-charts-south">{!! $south($charts['chalit']) !!}</div>
+                </div>
+                <div class="kd-card" style="margin-bottom: 0;">
+                    <div class="kd-card-header"><h2 class="kd-card-title">Ruling Planets</h2></div>
+                    @php $rp = $r['kp']['ruling']; @endphp
+                    <div class="kd-card-split-2">
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Asc Sign Lord</span><span class="kd-info-value">{{ $rp['ascSignLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Asc Sub Lord</span><span class="kd-info-value">{{ $rp['ascSubLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Moon Star Lord</span><span class="kd-info-value">{{ $rp['moonStarLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Day Lord</span><span class="kd-info-value">{{ $rp['dayLord'] }}</span></div>
+                        </div>
+                        <div class="kd-info-grid">
+                            <div class="kd-info-row"><span class="kd-info-label">Asc Star Lord</span><span class="kd-info-value">{{ $rp['ascStarLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Moon Sign Lord</span><span class="kd-info-value">{{ $rp['moonSignLord'] }}</span></div>
+                            <div class="kd-info-row"><span class="kd-info-label">Moon Sub Lord</span><span class="kd-info-value">{{ $rp['moonSubLord'] }}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @php $ab = fn ($n) => \App\Helpers\KundliHelper::ABBR[$n] ?? $n; @endphp
+            <div class="kd-card">
+                <div class="kd-card-header"><h2 class="kd-card-title">KP Planets</h2></div>
+                <div class="kd-table-responsive">
+                    <table class="kd-table">
+                        <thead><tr><th>PLANET</th><th>CUSP</th><th>SIGN</th><th>SIGN LORD</th><th>STAR</th><th>STAR LORD</th><th>SUB LORD</th></tr></thead>
+                        <tbody>
+                            @foreach ($r['kp']['planets'] as $row)
+                                <tr><td><strong>{{ $row['planet'] }}</strong></td><td>{{ $row['cusp'] }}</td><td>{{ $row['sign'] }}</td><td>{{ $ab($row['signLord']) }}</td><td>{{ $row['star'] }}</td><td>{{ $ab($row['starLord']) }}</td><td>{{ $ab($row['subLord']) }}</td></tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <div class="kd-card">
                 <div class="kd-card-header">
                     <div>
-                        <h2 class="kd-card-title">Planetary Positions &amp; Status (Graha Spashta)</h2>
-                        <p class="kd-card-subtitle">Exact sidereal degrees, nakshatras, dignities, and houses of all celestial bodies at your birth.</p>
+                        <h2 class="kd-card-title">KP Cusps</h2>
+                        <p class="kd-card-subtitle">Placidus house cusps</p>
                     </div>
                 </div>
-
                 <div class="kd-table-responsive">
                     <table class="kd-table">
-                        <thead>
-                            <tr>
-                                <th>Planet</th>
-                                <th>Sign (Rashi)</th>
-                                <th>Sign Lord</th>
-                                <th>Nakshatra</th>
-                                <th>Naksh Lord</th>
-                                <th>Degree</th>
-                                <th>House</th>
-                                <th>Motion</th>
-                                <th>Combust</th>
-                                <th>Dignity</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>CUSP</th><th>DEGREE</th><th>SIGN</th><th>SIGN LORD</th><th>STAR</th><th>STAR LORD</th><th>SUB LORD</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td><strong style="color: #e3b568;">Ascendant (Lagna)</strong></td>
-                                <td>{{ $lagna['sign'] }}</td>
-                                <td>{{ $lagna['lord'] }}</td>
-                                <td>{{ $lagna['nakshatra'] }} (Pada {{ $lagna['pada'] }})</td>
-                                <td>{{ $lagna['nakLord'] }}</td>
-                                <td>{{ $lagna['degree'] }}° {{ sprintf('%02d', $lagna['minute']) }}′</td>
-                                <td>1st House</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
-                            </tr>
-                            @foreach ($allPlanets as $name => $p)
-                                <tr>
-                                    <td><strong>{{ $name }}</strong></td>
-                                    <td>{{ $p['sign'] }}</td>
-                                    <td>{{ $p['lord'] }}</td>
-                                    <td>{{ $p['nakshatra'] }} (Pada {{ $p['pada'] }})</td>
-                                    <td>{{ $p['nakLord'] }}</td>
-                                    <td>{{ $p['degree'] }}° {{ sprintf('%02d', $p['minute']) }}′</td>
-                                    <td>{{ \App\Helpers\KundliHelper::ORDINALS[$p['house']] ?? $p['house'] }} House</td>
-                                    <td>{{ ($p['retro'] ?? false) ? 'Retrograde (R)' : 'Direct' }}</td>
-                                    <td>{{ ($p['combust'] ?? false) ? 'Combust (Asta)' : 'No' }}</td>
-                                    <td>
-                                        @if (!empty($p['dignity']))
-                                            <span class="kd-badge-active">{{ $p['dignity'] }}</span>
-                                        @else
-                                            —
-                                        @endif
-                                    </td>
-                                </tr>
+                            @foreach ($r['kp']['cusps'] as $c)
+                                <tr><td><strong>{{ $c['cusp'] }}</strong></td><td>{{ $c['degree'] }}</td><td>{{ $c['sign'] }}</td><td>{{ $ab($c['signLord']) }}</td><td>{{ $c['star'] }}</td><td>{{ $ab($c['starLord']) }}</td><td>{{ $ab($c['subLord']) }}</td></tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -474,604 +386,518 @@
             </div>
         </div>
 
-        <!-- ==============================================
-             TAB 4: KP ASTROLOGY SYSTEM
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-kp">
-            <div class="kd-grid-2">
-                <div>
-                    <div class="kd-card">
-                        <div class="kd-card-header">
-                            <h2 class="kd-card-title">KP Bhav Chalit Chart</h2>
-                            <span class="kd-hero-tag">Bhava Madhyam</span>
-                        </div>
-                        <div class="kd-chart-box">
-                            <svg class="kd-chart-svg" viewBox="0 0 300 300">
-                                <rect x="8" y="8" width="284" height="284" class="kd-chart-bg" stroke-width="2" />
-                                <line x1="8" y1="8" x2="292" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                                <line x1="292" y1="8" x2="8" y2="292" class="kd-chart-line" stroke-width="1.4" />
-                                <polygon points="150,8 292,150 150,292 8,150" fill="none" class="kd-chart-line" stroke-width="1.5" />
-
-                                @foreach ($report['divisionalCharts']['vargas']['BhavChalit']['houses'] as $hNum => $hData)
-                                    @php
-                                        [$px, $py, $sx, $sy] = $slots[$hNum];
-                                        $plText = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                    @endphp
-                                    <text x="{{ $sx }}" y="{{ $sy }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                    @if ($plText)
-                                        <text x="{{ $px }}" y="{{ $py }}" class="kd-svg-planet yellow">{{ $plText }}</text>
-                                    @endif
-                                @endforeach
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="kd-card">
-                        <div class="kd-card-header">
-                            <h2 class="kd-card-title">KP Ruling Planets</h2>
-                            <span class="kd-hero-tag">Key Drivers</span>
-                        </div>
-                        <div class="kd-info-row"><span class="kd-label">Day Lord (Vara Natha)</span><span class="kd-value gold">{{ $kp['ruling']['dayLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Ascendant Sign Lord</span><span class="kd-value">{{ $kp['ruling']['ascSignLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Ascendant Star Lord</span><span class="kd-value">{{ $kp['ruling']['ascStarLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Ascendant Sub Lord</span><span class="kd-value gold">{{ $kp['ruling']['ascSubLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Moon Sign Lord</span><span class="kd-value">{{ $kp['ruling']['moonSignLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Moon Star Lord</span><span class="kd-value">{{ $kp['ruling']['moonStarLord'] }}</span></div>
-                        <div class="kd-info-row"><span class="kd-label">Moon Sub Lord</span><span class="kd-value gold">{{ $kp['ruling']['moonSubLord'] }}</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- KP Cusps Table -->
+        {{-- ================= TAB 4: ASHTAKVARGA ================= --}}
+        <div class="kd-tab-pane" id="tab-ashtakvarga">
             <div class="kd-card">
                 <div class="kd-card-header">
                     <div>
-                        <h2 class="kd-card-title">KP 12 Bhava Cusps &amp; Sub Lords</h2>
-                        <p class="kd-card-subtitle">Placidus Bhava Cusps with exact star lords and sub lords according to Krishnamurti Paddhati.</p>
+                        <h2 class="kd-card-title">Ashtakvarga</h2>
+                        <p class="kd-card-subtitle">Each chart shows the bindus in every house (small numbers are the signs). SAV is the combined Sarvashtakvarga — total {{ $r['ashtakvarga']['total'] }}.</p>
                     </div>
                 </div>
-                <div class="kd-table-responsive">
-                    <table class="kd-table">
-                        <thead>
-                            <tr>
-                                <th>Cusp</th>
-                                <th>Sign</th>
-                                <th>Degree</th>
-                                <th>Sign Lord</th>
-                                <th>Star</th>
-                                <th>Star Lord</th>
-                                <th>Sub Lord</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($kp['cusps'] as $c)
-                                <tr>
-                                    <td><strong>House {{ $c['cusp'] }}</strong></td>
-                                    <td>{{ $c['sign'] }}</td>
-                                    <td>{{ $c['degree'] }}°</td>
-                                    <td>{{ $c['signLord'] }}</td>
-                                    <td>{{ $c['star'] }}</td>
-                                    <td>{{ $c['starLord'] }}</td>
-                                    <td><strong style="color: #e3b568;">{{ $c['subLord'] }}</strong></td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==============================================
-             TAB 5: ASHTAKVARGA SYSTEM
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-ashtak">
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Sarvashtakvarga (SAV) &amp; Bhinna Ashtakvarga</h2>
-                        <p class="kd-card-subtitle">Classical numerical benefic point evaluation (337 Bindus). Houses with 28+ points yield sustained strength.</p>
-                    </div>
-                </div>
-
                 <div class="kd-ashtak-grid">
-                    <!-- SAV -->
-                    <div class="kd-ashtak-card" style="border: 2px solid var(--kd-gold);">
-                        <div class="kd-ashtak-title">SAV (Total: {{ $ashtak['total'] }} Bindus)</div>
-                        <svg class="kd-ashtak-svg" viewBox="0 0 260 260">
-                            <rect x="4" y="4" width="252" height="252" class="kd-chart-bg" stroke-width="1.6" />
-                            <line x1="4" y1="4" x2="256" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                            <line x1="256" y1="4" x2="4" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                            <polygon points="130,4 256,130 130,256 4,130" fill="none" class="kd-chart-line" stroke-width="1.4" />
-
-                            @foreach ($ashtak['sav'] as $h => $pts)
-                                <text x="{{ $ashtakCoords[$h][0] }}" y="{{ $ashtakCoords[$h][1] }}" class="pdf-svg-bindu">{{ $pts }}</text>
-                            @endforeach
-                        </svg>
+                    <div class="kd-ashtak-card">
+                        <div class="kd-ashtak-title">SAV (Sarvashtakvarga)</div>
+                        {!! $bindu($r['ashtakvarga']['sav']) !!}
                     </div>
-
-                    <!-- 8 Bhinna charts -->
-                    @foreach ($ashtak['bhinna'] as $pName => $bPts)
+                    @foreach ($r['ashtakvarga']['bhinna'] as $n => $vals)
                         <div class="kd-ashtak-card">
-                            <div class="kd-ashtak-title">{{ $pName }} Ashtakvarga</div>
-                            <svg class="kd-ashtak-svg" viewBox="0 0 260 260">
-                                <rect x="4" y="4" width="252" height="252" class="kd-chart-bg" stroke-width="1.6" />
-                                <line x1="4" y1="4" x2="256" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                                <line x1="256" y1="4" x2="4" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                                <polygon points="130,4 256,130 130,256 4,130" fill="none" class="kd-chart-line" stroke-width="1.4" />
-
-                                @foreach ($bPts as $h => $pts)
-                                    <text x="{{ $ashtakCoords[$h][0] }}" y="{{ $ashtakCoords[$h][1] }}" class="pdf-svg-bindu">{{ $pts }}</text>
-                                @endforeach
-                            </svg>
+                            <div class="kd-ashtak-title">{{ $n }} <span class="kd-ashtak-total">({{ array_sum($vals) }})</span></div>
+                            {!! $bindu($vals) !!}
                         </div>
                     @endforeach
                 </div>
             </div>
         </div>
 
-        <!-- ==============================================
-             TAB 6: DIVISIONAL CHARTS (SHODASHVARGA 16)
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-divisional">
+        {{-- ================= TAB 5: CHARTS ================= --}}
+        <div class="kd-tab-pane" id="tab-charts">
             <div class="kd-card">
                 <div class="kd-card-header">
                     <div>
-                        <h2 class="kd-card-title">16 Divisional Charts (Shodashvarga)</h2>
-                        <p class="kd-card-subtitle">Parashari harmonic divisions examining wealth, marriage, progeny, career, vehicles, and spirituality.</p>
+                        <h2 class="kd-card-title">Transit Charts</h2>
+                        <p class="kd-card-subtitle">Planets in the sky right now ({{ $charts['transitDate']->copy()->setTimezone($tz)->format('d M Y, h:i A') }}) over your Lagna and Moon sign</p>
                     </div>
                     <div class="kd-toggle-group">
-                        <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North Style</button>
-                        <button type="button" class="kd-toggle-btn" data-chart-mode="south">South Style</button>
+                        <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North</button>
+                        <button type="button" class="kd-toggle-btn" data-chart-mode="south">South</button>
                     </div>
                 </div>
+                <div class="kd-charts-row kd-charts-north">
+                    <div class="kd-chart-box"><div class="kd-chart-label">Ascendant Sign (Lagna Kundli)</div>{!! $north($charts['transitLagna']) !!}</div>
+                    <div class="kd-chart-box"><div class="kd-chart-label">Moon Sign (Chandra Kundli)</div>{!! $north($charts['transitMoon']) !!}</div>
+                </div>
+                <div class="kd-charts-row kd-charts-south">
+                    <div class="kd-chart-box"><div class="kd-chart-label">Ascendant Sign (Lagna Kundli)</div>{!! $south($charts['transitLagna']) !!}</div>
+                    <div class="kd-chart-box"><div class="kd-chart-label">Moon Sign (Chandra Kundli)</div>{!! $south($charts['transitMoon']) !!}</div>
+                </div>
+            </div>
 
-                <!-- North Indian Divisional Charts Grid -->
-                <div class="kd-divisional-grid kd-charts-north">
-                    @foreach ($report['divisionalCharts']['vargas'] as $vKey => $vChart)
-                        <div class="kd-ashtak-card">
-                            <div class="kd-ashtak-title">{{ $vChart['num'] }} · {{ $vChart['title'] }}</div>
-                            <svg class="kd-ashtak-svg" viewBox="0 0 260 260">
-                                <rect x="4" y="4" width="252" height="252" class="kd-chart-bg" stroke-width="1.6" />
-                                <line x1="4" y1="4" x2="256" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                                <line x1="256" y1="4" x2="4" y2="256" class="kd-chart-line" stroke-width="1.3" />
-                                <polygon points="130,4 256,130 130,256 4,130" fill="none" class="kd-chart-line" stroke-width="1.4" />
-
-                                @foreach ($vChart['houses'] as $hNum => $hData)
-                                    @php
-                                        $co = $ashtakCoords[$hNum];
-                                        $plStr = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                    @endphp
-                                    <text x="{{ $co[0] }}" y="{{ $co[1] - 8 }}" class="kd-svg-house-num">{{ $hData['signNum'] }}</text>
-                                    @if ($plStr)
-                                        <text x="{{ $co[0] }}" y="{{ $co[1] + 8 }}" class="kd-svg-planet yellow">{{ $plStr }}</text>
-                                    @endif
-                                @endforeach
-                            </svg>
-                        </div>
+            <div class="kd-card">
+                <div class="kd-card-header">
+                    <div>
+                        <h2 class="kd-card-title">Divisional Charts</h2>
+                        <p class="kd-card-subtitle">Divisional charts divide each sign into smaller parts to show one area of life in detail.</p>
+                    </div>
+                    <div class="kd-toggle-group">
+                        <button type="button" class="kd-toggle-btn active" data-chart-mode="north">North</button>
+                        <button type="button" class="kd-toggle-btn" data-chart-mode="south">South</button>
+                    </div>
+                </div>
+                <div class="kd-ashtak-grid kd-charts-north">
+                    @foreach ($charts['vargas'] as $v)
+                        <div class="kd-ashtak-card"><div class="kd-ashtak-title">{{ $v['key'] }} · {{ $v['title'] }}</div>{!! str_replace('kd-chart-svg', 'kd-ashtak-svg', $north($v, false)) !!}</div>
                     @endforeach
                 </div>
-
-                <!-- South Indian Divisional Charts Grid -->
-                <div class="kd-divisional-grid kd-charts-south">
-                    @foreach ($report['divisionalCharts']['vargas'] as $vKey => $vChart)
-                        <div class="kd-ashtak-card">
-                            <div class="kd-ashtak-title">{{ $vChart['num'] }} · {{ $vChart['title'] }}</div>
-                            <svg class="kd-ashtak-svg" viewBox="0 0 320 320">
-                                <rect x="8" y="8" width="304" height="304" class="kd-chart-bg" stroke-width="2" rx="2" />
-                                <line x1="84" y1="8" x2="84" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="160" y1="8" x2="160" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="160" y1="236" x2="160" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="236" y1="8" x2="236" y2="312" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="8" y1="84" x2="312" y2="84" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="8" y1="160" x2="84" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="236" y1="160" x2="312" y2="160" class="kd-chart-line" stroke-width="1.6" />
-                                <line x1="8" y1="236" x2="312" y2="236" class="kd-chart-line" stroke-width="1.6" />
-                                <rect x="84" y="84" width="152" height="152" class="kd-south-center" stroke-width="1.6" />
-                                <circle cx="160" cy="160" r="3.5" fill="var(--kd-gold)" />
-
-                                @foreach ([12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as $bNum)
-                                    <text x="{{ $boxCoords[$bNum]['x'] - 20 }}" y="{{ $boxCoords[$bNum]['y'] - 25 }}" class="kd-south-num">{{ $bNum }}</text>
-                                @endforeach
-                                @foreach ($vChart['houses'] as $hData)
-                                    @php
-                                        $sNum = $hData['signNum'];
-                                        $pl = collect($hData['planets'])->pluck('abbr')->implode(' ');
-                                    @endphp
-                                    @if ($pl)
-                                        <text x="{{ $boxCoords[$sNum]['x'] }}" y="{{ $boxCoords[$sNum]['y'] }}" class="kd-south-planet yellow">{{ $pl }}</text>
-                                    @endif
-                                @endforeach
-                            </svg>
-                        </div>
+                <div class="kd-ashtak-grid kd-charts-south">
+                    @foreach ($charts['vargas'] as $v)
+                        <div class="kd-ashtak-card"><div class="kd-ashtak-title">{{ $v['key'] }} · {{ $v['title'] }}</div>{!! str_replace('kd-chart-svg', 'kd-ashtak-svg', $south($v, false)) !!}</div>
                     @endforeach
                 </div>
             </div>
         </div>
 
-        <!-- ==============================================
-             TAB 7: DASHA SYSTEM (VIMSHOTTARI & YOGINI)
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-dasha">
-            <!-- Vimshottari Mahadashas -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">120-Year Vimshottari Mahadasha Timeline</h2>
-                        <p class="kd-card-subtitle">Cycles calculated from your natal Moon's exact longitude at birth.</p>
+        {{-- ================= TAB 6: DASHA ================= --}}
+        <div class="kd-tab-pane" id="tab-dasha">
+            <div class="kd-subtabs-nav-wrapper">
+                <div class="kd-subtabs-nav" aria-label="Dasha System">
+                    <button class="kd-subtab-btn active" data-subtab="dasha-vimshottari">Vimshottari</button>
+                    <button class="kd-subtab-btn" data-subtab="dasha-yogini">Yogini</button>
+                </div>
+            </div>
+
+            <div class="kd-subtab-pane active" id="dasha-vimshottari">
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <div>
+                            <h2 class="kd-card-title">Vimshottari Mahadasha Periods</h2>
+                            <p class="kd-card-subtitle">Each card is one major period (Mahadasha) of the 120-year cycle, read from your own chart.</p>
+                        </div>
+                    </div>
+                    <div class="kd-dasha-grid">
+                        @foreach ($r['vimshottari'] as $d)
+                            @php $t = $r['predictions']['dasha'][$d['planet']]; @endphp
+                            <div class="kd-dasha-card {{ $d['active'] ? 'is-active-period' : '' }}">
+                                <div class="kd-dasha-card-head">
+                                    <h3 class="kd-dasha-planet-title">{{ $d['planet'] }} Mahadasha</h3>
+                                    @if ($d['active'])<span class="kd-dasha-badge-active">ACTIVE</span>@endif
+                                </div>
+                                <div class="kd-dasha-dates">{{ $dateFmt($d['start'], 'd-m-Y') }} - {{ $dateFmt($d['end'], 'd-m-Y') }}</div>
+                                <div class="kd-dasha-card-body">
+                                    <p>{{ $t['house'] }}</p>
+                                    <p>{{ $t['sign'] }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="kd-subtab-pane" id="dasha-yogini">
+                <div class="kd-yogini-row">
+                    <div class="kd-card" id="kd-yogini-card">
+                        <div class="kd-card-header" style="margin-bottom: 2px;"><h2 class="kd-card-title">Yogini Dasha</h2></div>
+                        <div class="kd-yogini-crumbs-wrap" id="kd-yogini-crumbs"></div>
+                        <div class="kd-dasha-level-pane">
+                            <div class="kd-table-responsive">
+                                <table class="kd-table">
+                                    <thead><tr><th>PLANET</th><th>START DATE</th><th>END DATE</th><th></th></tr></thead>
+                                    <tbody id="kd-yogini-tbody"></tbody>
+                                </table>
+                            </div>
+                            <div class="kd-level-up-wrap" id="kd-yogini-levelup" style="display:none">
+                                <button type="button" class="kd-btn-level-up">LEVEL UP</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kd-card">
+                        <div class="kd-card-header"><h2 class="kd-card-title">Rashi Chart</h2></div>
+                        <div class="kd-chart-box">{!! $north($charts['lagna']) !!}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ================= TAB 7: FREE REPORT ================= --}}
+        <div class="kd-tab-pane" id="tab-report">
+            <div class="kd-subtabs-nav-wrapper">
+                <div class="kd-subtabs-nav" aria-label="Free Report Sections">
+                    <button class="kd-subtab-btn active" data-subtab="report-general">General</button>
+                    <button class="kd-subtab-btn" data-subtab="report-remedies">Remedies</button>
+                    <button class="kd-subtab-btn" data-subtab="report-dosha">Dosha</button>
+                </div>
+            </div>
+
+            <div class="kd-subtab-pane active" id="report-general">
+                <div class="kd-card">
+                    <div class="kd-card-header"><h2 class="kd-card-title">General Predictions</h2></div>
+                    <div class="kd-grid-2col">
+                        @foreach ($r['predictions']['general'] as $title => $text)
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">{{ $title }}</h3><p>{{ $text }}</p></div>
+                        @endforeach
                     </div>
                 </div>
 
-                <div class="kd-table-responsive mb-4">
-                    <table class="kd-table">
-                        <thead>
-                            <tr>
-                                <th>Mahadasha</th>
-                                <th>Duration</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($dasha as $m)
-                                <tr style="{{ $m['active'] ? 'background: rgba(227, 181, 104, 0.15);' : '' }}">
-                                    <td><strong style="color: #e3b568;">{{ $m['planet'] }} ({{ $m['hindi'] }})</strong></td>
-                                    <td>{{ $m['years'] }} Years</td>
-                                    <td>{{ $m['start']->format('d M Y') }}</td>
-                                    <td>{{ $m['end']->format('d M Y') }}</td>
-                                    <td>
-                                        @if ($m['active'])
-                                            <span class="kd-badge-active">ACTIVE MAHADASHA</span>
-                                        @elseif ($m['end']->isPast())
-                                            Completed
-                                        @else
-                                            Upcoming
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <div>
+                            <h2 class="kd-card-title">Planetary Predictions</h2>
+                            <p class="kd-card-subtitle">Predictions based on planetary positions in your Kundli</p>
+                        </div>
+                    </div>
+                    <div class="kd-grid-2col">
+                        @foreach ($r['predictions']['planets'] as $n => $text)
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">{{ $n }} Prediction</h3><p>{{ $text }}</p></div>
+                        @endforeach
+                    </div>
                 </div>
 
-                <!-- Active Antardashas -->
-                @if ($activeDasha)
-                    <div class="kd-subbox">
-                        <h3 class="kd-subbox-title">
-                            Current Active Antardashas (Under {{ $activeDasha['planet'] }} Mahadasha)
-                        </h3>
-                        <div class="kd-table-responsive">
-                            <table class="kd-table">
-                                <thead>
-                                    <tr>
-                                        <th>Antardasha Lord</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($activeDasha['antardashas'] as $a)
-                                        <tr class="{{ $a['active'] ? 'kd-row-active' : '' }}">
-                                            <td><strong>{{ $activeDasha['planet'] }} - {{ $a['planet'] }}</strong></td>
-                                            <td>{{ $a['start']->format('d M Y') }}</td>
-                                            <td>{{ $a['end']->format('d M Y') }}</td>
-                                            <td>
-                                                @if ($a['active'])
-                                                    <span class="kd-badge-active">RUNNING NOW</span>
-                                                @elseif ($a['end']->isPast())
-                                                    Completed
-                                                @else
-                                                    Upcoming
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <div>
+                            <h2 class="kd-card-title">Current Vimshottari Dasha Predictions</h2>
+                            <p class="kd-card-subtitle">Predictions for planetary Mahadashas</p>
+                        </div>
+                    </div>
+                    <div class="kd-grid-2col">
+                        @foreach ($r['vimshottari'] as $d)
+                            <div class="kd-subcard" @if ($d['active']) style="border-color: rgba(227, 181, 104, 0.45);" @endif>
+                                <h3 class="kd-subcard-title">{{ strtoupper($d['planet']) }} MAHADASHA ({{ $dateFmt($d['start'], 'd-m-Y') }} - {{ $dateFmt($d['end'], 'd-m-Y') }}){{ $d['active'] ? ' · CURRENT' : '' }}</h3>
+                                <p>{{ $r['predictions']['dasha'][$d['planet']]['short'] }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                @if ($r['yogas'])
+                    <div class="kd-card">
+                        <div class="kd-card-header"><h2 class="kd-card-title">Yogas in Your Kundli</h2></div>
+                        <div class="kd-grid-2col">
+                            @foreach ($r['yogas'] as $y)
+                                <div class="kd-subcard"><h3 class="kd-subcard-title">{{ $y['name'] }}</h3><p>{{ $y['desc'] }}</p></div>
+                            @endforeach
                         </div>
                     </div>
                 @endif
-            </div>
 
-            <!-- Yogini Dasha -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Yogini Dasha (36-Year Repeating Cycle)</h2>
-                        <p class="kd-card-subtitle">Eight Yogini periods representing distinct spiritual and material planetary phases.</p>
+                <div class="kd-card">
+                    <div class="kd-card-header"><h2 class="kd-card-title">Lucky and Unlucky Factors</h2></div>
+                    <div class="kd-grid-2col">
+                        <div class="kd-subcard">
+                            <div class="kd-info-grid">
+                                <div class="kd-info-row"><span class="kd-info-label">Lucky Day</span><span class="kd-info-value gold">{{ $r['lucky']['days'] }}</span></div>
+                                <div class="kd-info-row"><span class="kd-info-label">Bad Day</span><span class="kd-info-value" style="color: #f87171;">{{ $r['lucky']['badDay'] }}</span></div>
+                            </div>
+                        </div>
+                        <div class="kd-subcard">
+                            <div class="kd-info-grid">
+                                <div class="kd-info-row"><span class="kd-info-label">Lucky Color</span><span class="kd-info-value gold">{{ $r['lucky']['colors'] }}</span></div>
+                                <div class="kd-info-row"><span class="kd-info-label">Lucky Number</span><span class="kd-info-value gold">{{ $r['lucky']['number'] }}</span></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="kd-table-responsive">
-                    <table class="kd-table">
-                        <thead>
-                            <tr>
-                                <th>Yogini</th>
-                                <th>Governing Planet</th>
-                                <th>Span</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($yogini as $y)
-                                <tr class="{{ $y['active'] ? 'kd-row-active' : '' }}">
-                                    <td><strong>{{ ucfirst($y['name']) }}</strong></td>
-                                    <td>{{ $y['lord'] }}</td>
-                                    <td>{{ $y['years'] }} Years</td>
-                                    <td>{{ $y['start'] }}</td>
-                                    <td>{{ $y['end'] }}</td>
-                                    <td>
-                                        @if ($y['active'])
-                                            <span class="kd-badge-active">ACTIVE NOW</span>
-                                        @else
-                                            —
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            </div>
+
+            <div class="kd-subtab-pane" id="report-remedies">
+                @php $rem = $r['remedies']; $mukhiKeys = array_keys($rem['mukhis']); @endphp
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <div>
+                            <h2 class="kd-card-title">Rudraksha Recommendation</h2>
+                            <p class="kd-card-subtitle">Tap a Mukhi to read its benefits.</p>
+                        </div>
+                    </div>
+                    <div class="kd-subcard" style="margin-bottom: 20px;">
+                        <h3 class="kd-subcard-title">Rudraksha Suggestion Report</h3>
+                        <p>This Rudraksha suggestion report helps you choose the Rudraksha best suited to you, to receive the blessings of Lord Shiva. It is based on the Nakshatra you were born in. Wearing the right Rudraksha shields you from negative energies and keeps positivity in your life.</p>
+                        <h4 class="kd-subcard-h4">Rudraksha &amp; Its Importance</h4>
+                        <p>Rudraksha beads are the seeds of the Elaeocarpus tree, which grows in the mountains, especially the Himalayas — the home of Lord Shiva. Scriptures say the wearer is blessed with Dharma, Artha, Kama and Moksha. Rudraksha come from 1-Mukhi to 21-Mukhi, each for a different purpose, so wearing the wrong one can disturb the energies of a planet. Consult an astrologer before you choose.</p>
+                    </div>
+                    <div class="kd-subcard" style="margin-bottom: 20px; border-color: rgba(227, 181, 104, 0.35);">
+                        <h3 class="kd-subcard-title">Recommendation</h3>
+                        <p>Having been born in the {{ $rem['nakshatra'] }} nakshatra, ruled by {{ $rem['nakLord'] }}, the most suitable Rudraksha for you {{ count($mukhiKeys) > 1 ? 'are' : 'is' }} {{ implode(' and ', array_map(fn ($m) => $m . '-Mukhi', $mukhiKeys)) }}.
+                            @foreach ($rem['mukhis'] as $m => $info) The {{ $m }}-Mukhi is blessed by {{ $info['deity'] }}.@endforeach
+                            Consult an astrologer before wearing any of them, as they can tell you the most suitable one for your current planetary periods.</p>
+                    </div>
+
+                    <div class="kd-mukhi-pills">
+                        @foreach ($mukhiKeys as $i => $m)
+                            <button type="button" class="kd-mukhi-pill {{ $i === 0 ? 'active' : '' }}" data-mukhi="{{ $m }}">{{ $m }}-Mukhi</button>
+                        @endforeach
+                    </div>
+                    @foreach ($rem['mukhis'] as $m => $info)
+                        <div class="kd-grid-2x2 kd-mukhi-pane" data-mukhi-pane="{{ $m }}" @if ($m !== $mukhiKeys[0]) style="display:none" @endif>
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">Details</h3><p>{{ $info['details'] }}</p><p>Ruling planet: {{ $info['planet'] }} · Deity: {{ $info['deity'] }}</p></div>
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">Benefits</h3>@foreach ($info['benefits'] as $b)<p>• {{ $b }}</p>@endforeach</div>
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">How to Wear</h3><p>Wear the {{ $m }}-Mukhi rudraksha on a {{ $info['day'] }} morning after your bath. Clean the bead with Gangajal and raw milk, place it on a clean plate facing east, offer flowers and incense, and chant "{{ $info['mantra'] }}" 108 times. Wear it in a {{ $info['thread'] }} thread or a gold or silver chain.</p></div>
+                            <div class="kd-subcard"><h3 class="kd-subcard-title">Precautions</h3>@foreach ($rem['precautions'] as $pc)<p>• {{ $pc }}</p>@endforeach</div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <div>
+                            <h2 class="kd-card-title">Gemstone Recommendations</h2>
+                            <p class="kd-card-subtitle">Each stone supports a different area of life. Consult an astrologer before wearing one.</p>
+                        </div>
+                    </div>
+                    <div class="kd-gemstones-grid">
+                        @foreach ($rem['gemstones'] as $g)
+                            <div class="kd-gemstone-card">
+                                <div>
+                                    <h3 class="kd-gemstone-card-title">{{ $g['title'] }}</h3>
+                                    <p class="kd-gemstone-desc">{{ $g['text'] }}</p>
+                                </div>
+                                <div class="kd-gemstone-specs">
+                                    <div class="kd-info-row"><span class="kd-info-label">Gemstone</span><span class="kd-info-value gold">{{ $g['gem'] }}</span></div>
+                                    <div class="kd-info-row"><span class="kd-info-label">How to Wear</span><span class="kd-info-value">{{ $g['wear'] }}, on {{ $g['day'] }}</span></div>
+                                    <div class="kd-info-row"><span class="kd-info-label">Mantra</span><span class="kd-info-value" style="font-size: 11.5px;">{{ $g['mantra'] }}</span></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <div class="kd-subtab-pane" id="report-dosha">
+                @php $mg = $r['doshas']['mangal']; $ks = $r['doshas']['kaalSarp']; $ss = $r['doshas']['sadeSati']; @endphp
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <h2 class="kd-card-title">Manglik Dosha</h2>
+                        {!! $doshaBadge(!$mg['present'] || $mg['safe'], strtoupper($mg['present'] ? $mg['status'] : 'Non-Manglik')) !!}
+                    </div>
+                    <p class="kd-dosha-text"><strong>{{ $name }}</strong> — {{ $mg['summary'] }}</p>
+                    @foreach ($mg['formation'] ?? [] as $line)<p class="kd-dosha-sub">• {{ $line }}</p>@endforeach
+                    @foreach ($mg['cancellations'] ?? [] as $c)<p class="kd-dosha-sub">✓ {{ $c['title'] }}</p>@endforeach
+                </div>
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <h2 class="kd-card-title">Kalsarpa Dosha</h2>
+                        {!! $doshaBadge($ks['level'] === 'none', $ks['level'] === 'none' ? 'NOT PRESENT' : strtoupper($ks['status'])) !!}
+                    </div>
+                    <p class="kd-dosha-text">{{ $ks['summary'] }}</p>
+                    @if ($ks['level'] !== 'none')<p class="kd-dosha-sub">{{ $ks['effect'] }}</p>@endif
+                </div>
+                <div class="kd-card">
+                    <div class="kd-card-header">
+                        <h2 class="kd-card-title">Sade Sati</h2>
+                        {!! $doshaBadge(!$ss['current'], $ss['current'] ? 'ACTIVE' : 'NOT ACTIVE') !!}
+                    </div>
+                    @if ($ss['current'])
+                        <p class="kd-dosha-text">Sade Sati is running now: Saturn is in {{ $ss['current']['sign'] }} ({{ $ss['current']['phase'] }}) from {{ $ss['current']['start']->format('d M Y') }} to {{ $ss['current']['end']->format('d M Y') }}.</p>
+                        <p class="kd-dosha-sub">{{ $ss['current']['text'] }}</p>
+                        @if ($ss['currentCycle'])<p class="kd-dosha-sub">This Sade Sati cycle lasts until {{ $ss['currentCycle']['end']->format('d M Y') }}.</p>@endif
+                    @else
+                        <p class="kd-dosha-text">Sade Sati is not active right now. Your Moon sign is {{ $ss['moon']['sign'] }} and Saturn is in {{ $ss['saturnSign'] }}.</p>
+                        @if ($ss['next'])<p class="kd-dosha-sub">Next phase: Saturn enters {{ $ss['next']['sign'] }} on {{ $ss['next']['start']->format('d M Y') }} ({{ $ss['next']['phase'] }}).</p>@endif
+                    @endif
                 </div>
             </div>
         </div>
 
-        <!-- ==============================================
-             TAB 8: PREDICTIONS, YOGAS & REMEDIES
-             ============================================== -->
-        <div class="kd-tab-content" id="tab-predictions">
-            <!-- Ascendant Predictions -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Ascendant Predictions ({{ $lagna['sign'] }} Lagna)</h2>
-                        <p class="kd-card-subtitle">Vedic character, personality traits, career inclinations, and relationship outlook.</p>
-                    </div>
+        {{-- ================= COMMON BOTTOM ================= --}}
+        <div class="kd-pdf-card">
+            <div class="kd-pdf-left">
+                <div class="kd-pdf-icon-badge">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span class="kd-pdf-tag">PDF</span>
                 </div>
-                <div class="kd-pred-grid">
-                    <div class="kd-pred-card">
-                        <h3 class="kd-pred-title">Personality &amp; Outlook</h3>
-                        <p class="kd-pred-body">{{ $predictions['ascendant']['personality'] }}</p>
-                    </div>
-                    <div class="kd-pred-card">
-                        <h3 class="kd-pred-title">Physical Appearance &amp; Vitality</h3>
-                        <p class="kd-pred-body">{{ $predictions['ascendant']['physical'] }}</p>
-                    </div>
-                    <div class="kd-pred-card">
-                        <h3 class="kd-pred-title">Career &amp; Professional Trajectory</h3>
-                        <p class="kd-pred-body">{{ $predictions['ascendant']['career'] }}</p>
-                    </div>
-                    <div class="kd-pred-card">
-                        <h3 class="kd-pred-title">Love, Marriage &amp; Partnerships</h3>
-                        <p class="kd-pred-body">{{ $predictions['ascendant']['relationship'] }}</p>
-                    </div>
+                <div class="kd-pdf-text">
+                    <h3>Get your full Kundli as a PDF</h3>
+                    <p>Download every section — birth details, charts, dashas and predictions — in a single printable report.</p>
                 </div>
             </div>
-
-            <!-- Vedic Yogas -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Vedic Yoga Combinations</h2>
-                        <p class="kd-card-subtitle">Special planetary conjunctions and alignments discovered in your Janam Kundli.</p>
-                    </div>
-                </div>
-                <div class="kd-pred-grid">
-                    @forelse ($yogas as $yoga)
-                        <div class="kd-pred-card">
-                            <h3 class="kd-pred-title">✨ {{ $yoga['name'] }}</h3>
-                            <p class="kd-pred-body">{{ $yoga['desc'] }}</p>
-                        </div>
-                    @empty
-                        <div class="kd-pred-card" style="grid-column: 1 / -1;">
-                            <p class="kd-pred-body">Your planetary alignments create a well-balanced, harmonious flow across the houses.</p>
-                        </div>
-                    @endforelse
-                </div>
-            </div>
-
-            <!-- Rudraksha & Gemstone Remedies -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Sacred Remedies &amp; Gemstones</h2>
-                        <p class="kd-card-subtitle">Vedic recommendations tailored to your rising Ascendant and Janma Nakshatra.</p>
-                    </div>
-                </div>
-
-                <!-- Rudraksha -->
-                <div class="kd-rudraksha-box">
-                    <h3 class="kd-rudraksha-title">
-                        Recommended Rudraksha: {{ $rudraksha['mukhis'] }}
-                    </h3>
-                    <p class="kd-rudraksha-desc">
-                        Having been born under <strong>{{ $panchang['nakshatra'] }}</strong> ruled by {{ $panchang['nakshatraLord'] }}, wearing {{ $rudraksha['primary'] }} Rudraksha (presided by {{ $rudraksha['deity'] }}) purges past karmic blocks and shields you against negative energies. {{ $rudraksha['benefits'] }}
-                    </p>
-                </div>
-
-                <!-- Gemstones Grid -->
-                <div class="kd-grid-3">
-                    <div class="kd-gemstone-card">
-                        <div>
-                            <h3 class="kd-gemstone-title">Life Stone (Lagna Lord)</h3>
-                            <p class="kd-gemstone-text">Strengthens physical vitality, personal confidence, social stature, and all-round growth.</p>
-                        </div>
-                        <div>
-                            <div class="kd-info-row"><span class="kd-label">Gemstone</span><span class="kd-value gold">{{ $gemstones['life']['gem'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Metal &amp; Finger</span><span class="kd-value">{{ $gemstones['life']['metal'] }}, {{ $gemstones['life']['finger'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Beej Mantra</span><span class="kd-value" style="font-size: 11px;">{{ $gemstones['life']['mantra'] }}</span></div>
-                        </div>
-                    </div>
-
-                    <div class="kd-gemstone-card">
-                        <div>
-                            <h3 class="kd-gemstone-title">Lucky Stone (Bhagya Vardhak)</h3>
-                            <p class="kd-gemstone-text">Multiplies auspicious opportunities, resolves persistent hurdles, and invites divine grace.</p>
-                        </div>
-                        <div>
-                            <div class="kd-info-row"><span class="kd-label">Gemstone</span><span class="kd-value gold">{{ $gemstones['lucky']['gem'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Metal &amp; Finger</span><span class="kd-value">{{ $gemstones['lucky']['metal'] }}, {{ $gemstones['lucky']['finger'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Beej Mantra</span><span class="kd-value" style="font-size: 11px;">{{ $gemstones['lucky']['mantra'] }}</span></div>
-                        </div>
-                    </div>
-
-                    <div class="kd-gemstone-card">
-                        <div>
-                            <h3 class="kd-gemstone-title">Fortune Stone (9th House)</h3>
-                            <p class="kd-gemstone-text">Fosters higher spiritual awareness, luck in ambitious commercial ventures, and lasting fortune.</p>
-                        </div>
-                        <div>
-                            <div class="kd-info-row"><span class="kd-label">Gemstone</span><span class="kd-value gold">{{ $gemstones['fortune']['gem'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Metal &amp; Finger</span><span class="kd-value">{{ $gemstones['fortune']['metal'] }}, {{ $gemstones['fortune']['finger'] }}</span></div>
-                            <div class="kd-info-row"><span class="kd-label">Beej Mantra</span><span class="kd-value" style="font-size: 11px;">{{ $gemstones['fortune']['mantra'] }}</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Dosha Analysis -->
-            <div class="kd-card">
-                <div class="kd-card-header">
-                    <div>
-                        <h2 class="kd-card-title">Major Dosha Clearance Verification</h2>
-                        <p class="kd-card-subtitle">Comprehensive Vedic verification of Mangal Dosha, Kaal Sarp Dosha, and Shani Sade Sati.</p>
-                    </div>
-                </div>
-
-                <div class="kd-dosha-row">
-                    <div>
-                        <h3 class="kd-dosha-name">Manglik Dosha</h3>
-                        <p class="kd-dosha-desc">
-                            {{ $doshas['mangal']['summary'] }}
-                        </p>
-                    </div>
-                    <span class="{{ $doshas['mangal']['safe'] ? 'kd-badge-safe' : 'kd-badge-alert' }}">
-                        {{ strtoupper($doshas['mangal']['status']) }}
-                    </span>
-                </div>
-
-                <div class="kd-dosha-row">
-                    <div>
-                        <h3 class="kd-dosha-name">Kaal Sarp Dosha</h3>
-                        <p class="kd-dosha-desc">
-                            {{ $doshas['kaalSarp']['summary'] }}
-                        </p>
-                    </div>
-                    <span class="{{ $doshas['kaalSarp']['level'] === 'none' ? 'kd-badge-safe' : 'kd-badge-alert' }}">
-                        {{ strtoupper($doshas['kaalSarp']['status']) }}
-                    </span>
-                </div>
-
-                <div class="kd-dosha-row">
-                    <div>
-                        <h3 class="kd-dosha-name">Shani Sade Sati Status</h3>
-                        <p class="kd-dosha-desc">
-                            {{ !empty($doshas['sadeSati']['current']) ? 'Saturn is currently in ' . $doshas['sadeSati']['current']['sign'] . ' (' . $doshas['sadeSati']['current']['phase'] . ').' : 'Natal Moon is outside the influence of the current Saturn transit. Sade Sati is inactive.' }}
-                        </p>
-                    </div>
-                    <span class="{{ !empty($doshas['sadeSati']['current']) ? 'kd-badge-alert' : 'kd-badge-safe' }}">
-                        {{ !empty($doshas['sadeSati']['current']) ? 'ACTIVE (' . strtoupper($doshas['sadeSati']['current']['phase']) . ')' : 'CURRENTLY INACTIVE (CLEARED)' }}
-                    </span>
-                </div>
-            </div>
+            <a href="{{ route('free-kundli-pdf', $pdfQuery) }}" class="kd-btn-view-pdf" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                View PDF Report
+            </a>
         </div>
 
-        <!-- Astrologer Promo Banner -->
-        <div class="kd-astrologer-banner">
-            <h3>Want deeper personalized insights into your Kundli?</h3>
-            <p>Our verified Vedic astrologers decode your dasha transitions, career prospects, relationship compatibility, and remedial gemstones with complete confidentiality.</p>
-            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
-                <a href="{{ route('talk-to-astrologers') }}" class="kd-btn-pdf">
-                    📞 Talk to Astrologer
-                </a>
-                <a href="{{ route('chat-with-astrologers') }}" class="kd-btn-outline">
-                    💬 Chat with Astrologer
-                </a>
-            </div>
+        <div class="kd-deeper-card">
+            <div class="kd-deeper-badge">🔮</div>
+            <h2 class="kd-deeper-title">Want a deeper Kundli analysis?</h2>
+            <p class="kd-deeper-desc">To know more about what your kundli says about your love, career, health and finance, consult our expert astrologers.</p>
+            <a href="{{ Route::has('chat-with-astrologer') ? route('chat-with-astrologer') : url('/') }}" class="kd-btn-chat-astro">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" /></svg>
+                Chat with Astrologer →
+            </a>
         </div>
 
-        <!-- Cross-Linking: Related Guides & Free Astrology Tools -->
-        <div class="fk-tags-section">
-            <div class="fk-tags-cat-title">EXPLORE VEDIC ASTROLOGY GUIDES (5 CHAPTERS)</div>
-            <div class="fk-tags-wrap" style="margin-bottom: 24px;">
-                <a href="{{ route('guide.read-kundli') }}" class="fk-tag-pill">
-                    How to Read Kundli Online <span class="fk-pill-arrow">→</span>
-                </a>
-                <a href="{{ route('guide.read-houses') }}" class="fk-tag-pill">
-                    How to Read Houses in Kundli <span class="fk-pill-arrow">→</span>
-                </a>
-                <a href="{{ route('guide.read-planets') }}" class="fk-tag-pill">
-                    How to Read Planets in Astrology <span class="fk-pill-arrow">→</span>
-                </a>
-                <a href="{{ route('guide.planets-signs-houses') }}" class="fk-tag-pill">
-                    Planets, Signs &amp; Houses in Astrology <span class="fk-pill-arrow">→</span>
-                </a>
-                <a href="{{ route('guide.planets-signs-significance') }}" class="fk-tag-pill">
-                    Planets, Signs and Their Significance <span class="fk-pill-arrow">→</span>
-                </a>
-            </div>
-
-            <div class="fk-tags-cat-title">OTHER POPULAR FREE CALCULATORS &amp; SERVICES</div>
-            <div class="fk-tags-wrap">
-                <a href="{{ route('kundli-matching') }}" class="fk-tag-pill">💞 Kundli Matching</a>
-                <a href="{{ route('compatibility') }}" class="fk-tag-pill">♊ Compatibility</a>
-                <a href="{{ route('tarot') }}" class="fk-tag-pill">🔮 Tarot Reading</a>
-                <a href="{{ route('love-calculator') }}" class="fk-tag-pill">❤️ Love Calculator</a>
-                <a href="{{ route('mangal-dosha-calculator') }}" class="fk-tag-pill">🔥 Mangal Dosha</a>
-                <a href="{{ route('shani-sade-sati-calculator') }}" class="fk-tag-pill">🪐 Shani Sade Sati</a>
-                <a href="{{ route('kaal-sarp-dosh-calculator') }}" class="fk-tag-pill">🐍 Kaal Sarp Dosh</a>
-                <a href="{{ route('dasha-calculator') }}" class="fk-tag-pill">⏳ Dasha Calculator</a>
-                <a href="{{ route('nakshatra-calculator') }}" class="fk-tag-pill">✨ Nakshatra Finder</a>
-                <a href="{{ route('sun-sign-calculator') }}" class="fk-tag-pill">☀️ Sun Sign</a>
-                <a href="{{ route('rashi-calculator') }}" class="fk-tag-pill">🌙 Moon Sign (Rashi)</a>
-                <a href="{{ route('numerology-calculator') }}" class="fk-tag-pill">🔢 Numerology Calculator</a>
-                <a href="{{ route('atmakaraka-darakaraka-calculator') }}" class="fk-tag-pill">👑 Atmakaraka Calculator</a>
-                <a href="{{ route('birth-chart-calculator') }}" class="fk-tag-pill">🗺️ Birth Chart</a>
+        <div class="kd-related-section">
+            <div class="kd-related-label">RELATED GUIDES</div>
+            <div class="kd-related-pills">
+                <a href="{{ route('guide.read-kundli') }}" class="kd-guide-pill">How to Read Kundli →</a>
+                <a href="{{ route('guide.read-houses') }}" class="kd-guide-pill">How to Read Houses in Kundli →</a>
+                <a href="{{ route('guide.read-planets') }}" class="kd-guide-pill">How to Read Planets in Astrology →</a>
+                <a href="{{ route('guide.planets-signs-houses') }}" class="kd-guide-pill">Planets, Signs &amp; Houses in Astrology →</a>
+                <a href="{{ route('guide.planets-signs-significance') }}" class="kd-guide-pill">Planets, Signs and Their Significance →</a>
             </div>
         </div>
-
     </div>
 </section>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Tab switching logic
-        const tabBtns = document.querySelectorAll('.kd-tab-btn');
-        const tabContents = document.querySelectorAll('.kd-tab-content');
+(function () {
+    const BIRTH = {{ $birthTs }};
+    const NOW = Math.floor(Date.now() / 1000);
+    const YEARS = { Ketu: 7, Venus: 20, Sun: 6, Moon: 10, Mars: 7, Rahu: 18, Jupiter: 16, Saturn: 19, Mercury: 17 };
+    const ORDER = Object.keys(YEARS);
+    const AB = { Ketu: 'KE', Venus: 'VE', Sun: 'SU', Moon: 'MO', Mars: 'MA', Rahu: 'RA', Jupiter: 'JU', Saturn: 'SA', Mercury: 'ME' };
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const TZ_OFFSET = {{ $r['birth']->getOffset() }};
+    const fmt = (ts) => {
+        if (ts <= BIRTH) return 'Birth';
+        const d = new Date((ts + TZ_OFFSET) * 1000);
+        return String(d.getUTCDate()).padStart(2, '0') + ' ' + MON[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+    };
+    const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const target = btn.dataset.tab;
-                tabBtns.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(tc => tc.classList.remove('active'));
+    // ---------- Tabs ----------
+    const tabButtons = document.querySelectorAll('.kd-tab-btn');
+    const tabPanes = document.querySelectorAll('.kd-tab-pane');
+    tabButtons.forEach(btn => btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.toggle('active', b === btn));
+        tabPanes.forEach(p => p.classList.toggle('active', p.id === btn.dataset.tab));
+        if (history.replaceState) history.replaceState(null, '', '#' + btn.dataset.tab);
+    }));
+    const hashBtn = location.hash && document.querySelector('.kd-tab-btn[data-tab="' + location.hash.slice(1) + '"]');
+    if (hashBtn) { hashBtn.click(); setTimeout(() => window.scrollTo(0, 0), 0); }
 
-                btn.classList.add('active');
-                const content = document.getElementById(target);
-                if (content) {
-                    content.classList.add('active');
-                }
-            });
-        });
-
-        // North vs South Indian Charts Toggle
-        const toggleButtons = document.querySelectorAll('.kd-toggle-btn');
-        toggleButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const mode = btn.dataset.chartMode;
-                toggleButtons.forEach(b => {
-                    b.classList.toggle('active', b.dataset.chartMode === mode);
-                });
-                if (mode === 'south') {
-                    document.body.classList.add('show-south-charts');
-                } else {
-                    document.body.classList.remove('show-south-charts');
-                }
-            });
-        });
+    document.querySelectorAll('.kd-subtabs-nav').forEach(nav => {
+        const buttons = nav.querySelectorAll('.kd-subtab-btn');
+        const panes = nav.closest('.kd-tab-pane').querySelectorAll('.kd-subtab-pane');
+        buttons.forEach(b => b.addEventListener('click', () => {
+            buttons.forEach(x => x.classList.toggle('active', x === b));
+            panes.forEach(p => p.classList.toggle('active', p.id === b.dataset.subtab));
+        }));
     });
-</script>
 
+    document.querySelectorAll('.kd-toggle-group').forEach(group => {
+        const btns = group.querySelectorAll('.kd-toggle-btn');
+        const card = group.closest('.kd-card');
+        btns.forEach(btn => btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.toggle('active', b === btn));
+            card.classList.toggle('show-south', btn.dataset.chartMode === 'south');
+        }));
+    });
+
+    document.querySelectorAll('.kd-mukhi-pills').forEach(group => {
+        const pills = group.querySelectorAll('.kd-mukhi-pill');
+        const card = group.closest('.kd-card');
+        pills.forEach(pill => pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.toggle('active', p === pill));
+            card.querySelectorAll('.kd-mukhi-pane').forEach(p => p.style.display = p.dataset.mukhiPane === pill.dataset.mukhi ? '' : 'none');
+        }));
+    });
+
+    // ---------- Vimshottari drill-down ----------
+    const MD = @json($dashaJson);
+    const subPeriods = (lord, s, e) => {
+        const out = [];
+        let cur = s;
+        const start = ORDER.indexOf(lord);
+        for (let i = 0; i < 9; i++) {
+            const p = ORDER[(start + i) % 9];
+            const end = cur + (e - s) * YEARS[p] / 120;
+            out.push({ p, s: cur, e: end });
+            cur = end;
+        }
+        return out;
+    };
+    const dSubtitles = ['Showing major periods (Mahadasha)', 'Showing Antardasha sub-periods', 'Showing Pratyantar sub-sub periods', 'Showing Sookshma micro-periods'];
+    let dStack = [];  // chosen parents: [{p, s, e, code}]
+    const renderDasha = () => {
+        const level = dStack.length + 1;
+        const parent = dStack[dStack.length - 1];
+        const rows = parent ? subPeriods(parent.p, parent.s, parent.e) : MD;
+        const tbody = document.getElementById('kd-dasha-tbody');
+        tbody.innerHTML = '';
+        rows.filter(x => x.e > BIRTH).forEach(x => {
+            const code = parent ? parent.code + '-' + AB[x.p] : AB[x.p];
+            const current = NOW >= x.s && NOW < x.e;
+            const label = parent ? code + ' (' + x.p + ')' : x.p + (current ? ' (Current)' : '');
+            const tr = document.createElement('tr');
+            if (current) tr.className = 'highlight-row';
+            tr.innerHTML = '<td><strong>' + esc(label) + '</strong></td><td>' + fmt(x.s) + '</td><td>' + fmt(x.e) + '</td>'
+                + (level < 4 ? '<td><button type="button" class="kd-table-btn">View Details →</button></td>' : '<td></td>');
+            if (level < 4) {
+                tr.style.cursor = 'pointer';
+                tr.addEventListener('click', () => { dStack.push({ p: x.p, s: x.s, e: x.e, code }); renderDasha(); });
+            }
+            tbody.appendChild(tr);
+        });
+        document.querySelectorAll('#kd-dasha-stepper .kd-step-item').forEach(it => it.classList.toggle('active', +it.dataset.step === level));
+        document.getElementById('kd-dasha-subtitle').textContent = dSubtitles[level - 1] + (parent ? ' of ' + parent.code : '');
+        document.getElementById('kd-dasha-levelup').style.display = level > 1 ? '' : 'none';
+        document.getElementById('kd-dasha-action-head').textContent = level < 4 ? 'ACTION' : '';
+    };
+    document.querySelector('#kd-dasha-levelup button').addEventListener('click', () => { dStack.pop(); renderDasha(); });
+    document.querySelectorAll('#kd-dasha-stepper .kd-step-item').forEach(it => it.addEventListener('click', () => {
+        const step = +it.dataset.step;
+        // going deeper by stepper follows the current period
+        while (dStack.length + 1 > step) dStack.pop();
+        while (dStack.length + 1 < step) {
+            const parent = dStack[dStack.length - 1];
+            const rows = parent ? subPeriods(parent.p, parent.s, parent.e) : MD;
+            const cur = rows.find(x => NOW >= x.s && NOW < x.e) || rows.find(x => x.e > BIRTH);
+            dStack.push({ p: cur.p, s: cur.s, e: cur.e, code: (parent ? parent.code + '-' : '') + AB[cur.p] });
+        }
+        renderDasha();
+    }));
+    renderDasha();
+
+    // ---------- Yogini drill-down ----------
+    const YG = @json($yoginiJson);
+    const YORDER = [['MAN', 'Mangala', 1], ['PIN', 'Pingala', 2], ['DHA', 'Dhanya', 3], ['BHR', 'Bhramari', 4], ['BHA', 'Bhadrika', 5], ['ULK', 'Ulka', 6], ['SID', 'Siddha', 7], ['SAN', 'Sankata', 8]];
+    const ySub = (code, s, e) => {
+        const start = YORDER.findIndex(y => y[0] === code);
+        const out = [];
+        let cur = s;
+        for (let i = 0; i < 8; i++) {
+            const y = YORDER[(start + i) % 8];
+            const end = cur + (e - s) * y[2] / 36;
+            out.push({ c: y[0], n: y[1], s: cur, e: end });
+            cur = end;
+        }
+        return out;
+    };
+    let yStack = [];
+    const renderYogini = () => {
+        const parent = yStack[yStack.length - 1];
+        const level = yStack.length + 1;
+        const rows = parent ? ySub(parent.c, parent.s, parent.e) : YG;
+        const tbody = document.getElementById('kd-yogini-tbody');
+        tbody.innerHTML = '';
+        rows.filter(x => x.e > BIRTH).forEach(x => {
+            const code = parent ? parent.code + '-' + x.c : x.c;
+            const tr = document.createElement('tr');
+            if (NOW >= x.s && NOW < x.e) tr.className = 'highlight-row';
+            tr.innerHTML = '<td><strong>' + esc(code) + '</strong> (' + esc(x.n.toLowerCase()) + ')</td><td>' + fmt(x.s) + '</td><td>' + fmt(x.e) + '</td>'
+                + (level < 4 ? '<td><button type="button" class="kd-btn-drill-in">Drill in →</button></td>' : '<td></td>');
+            if (level < 4) {
+                tr.style.cursor = 'pointer';
+                tr.addEventListener('click', () => { yStack.push({ c: x.c, n: x.n, s: x.s, e: x.e, code }); renderYogini(); });
+            }
+            tbody.appendChild(tr);
+        });
+        const wrap = document.getElementById('kd-yogini-crumbs');
+        wrap.innerHTML = '';
+        const crumbs = [{ label: 'Yogini', depth: 0 }].concat(yStack.map((y, i) => ({ label: y.n.toLowerCase(), depth: i + 1 })));
+        crumbs.forEach((c, i) => {
+            if (i) { const sep = document.createElement('span'); sep.className = 'kd-yogini-crumb-sep'; sep.textContent = '›'; wrap.appendChild(sep); }
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.className = 'kd-yogini-crumb-btn' + (i === crumbs.length - 1 ? ' active' : '');
+            b.textContent = c.label;
+            b.addEventListener('click', () => { yStack = yStack.slice(0, c.depth); renderYogini(); });
+            wrap.appendChild(b);
+        });
+        document.getElementById('kd-yogini-levelup').style.display = level > 1 ? '' : 'none';
+    };
+    document.querySelector('#kd-yogini-levelup button').addEventListener('click', () => { yStack.pop(); renderYogini(); });
+    renderYogini();
+})();
+</script>
 @endsection
