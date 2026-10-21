@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\AscendantHelper;
 use App\Helpers\DoshaHelper;
+use App\Helpers\FreeKundliHelper;
 use App\Helpers\JaiminiHelper;
 use App\Helpers\KundliHelper;
 use Carbon\Carbon;
@@ -16,6 +17,68 @@ use Illuminate\Validation\ValidationException;
  */
 class KundliCalculatorController extends Controller
 {
+    public function freeKundli()
+    {
+        return view('free-kundli');
+    }
+
+    public function freeKundliReport(Request $request)
+    {
+        $input = $this->birthInput($request);
+        $report = FreeKundliHelper::generateReport(
+            $input['birth'],
+            $input['lat'],
+            $input['lng'],
+            $input['name'],
+            $input['gender'],
+            $input['place'],
+            $input['timeUnknown']
+        );
+
+        return view('free-kundli-report', $input + ['report' => $report]);
+    }
+
+    public function freeKundliPdf(Request $request)
+    {
+        $input = $this->birthInput($request);
+        $report = FreeKundliHelper::generateReport(
+            $input['birth'],
+            $input['lat'],
+            $input['lng'],
+            $input['name'],
+            $input['gender'],
+            $input['place'],
+            $input['timeUnknown']
+        );
+
+        return view('free-kundli-pdf', $input + ['report' => $report]);
+    }
+
+    public function guideHowToReadKundli()
+    {
+        return view('guides.how-to-read-kundli');
+    }
+
+    public function guideHowToReadHouses()
+    {
+        return view('guides.how-to-read-houses-in-kundli');
+    }
+
+    public function guideHowToReadPlanets()
+    {
+        return view('guides.how-to-read-planets-in-astrology');
+    }
+
+    public function guidePlanetsSignsHouses()
+    {
+        return view('guides.planets-signs-houses-in-astrology');
+    }
+
+    public function guidePlanetsSignsSignificance()
+    {
+        return view('guides.planets-signs-and-their-significance-in-astrology');
+    }
+
     public function atmakarakaDarakaraka(Request $request)
     {
         $input = $this->birthInput($request);
@@ -90,7 +153,7 @@ class KundliCalculatorController extends Controller
     {
         $data = $request->validate([
             'name'   => 'required|string|max:50',
-            'gender' => 'nullable|in:male,female',
+            'gender' => 'nullable|in:male,female,other',
             'day'    => 'required|integer|between:1,31',
             'month'  => 'required|integer|between:1,12',
             'year'   => 'required|integer|between:1900,' . date('Y'),

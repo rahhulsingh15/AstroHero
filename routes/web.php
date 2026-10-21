@@ -113,8 +113,16 @@ Route::get('/mulank-report', [MulankCalculatorController::class, 'report'])->nam
 Route::get('/age-calculator', [AgeCalculatorController::class, 'index'])->name('age-calculator');
 Route::get('/age-report', [AgeCalculatorController::class, 'report'])->name('age-report');
 
-// Free Services ke static pages (abhi sirf HTML hai)
-Route::view('/free-kundli', 'free-kundli')->name('free-kundli');
+// Free Services: Free Kundli form, comprehensive report, printable PDF & guides
+Route::get('/free-kundli', [KundliCalculatorController::class, 'freeKundli'])->name('free-kundli');
+Route::get('/free-kundli-report', [KundliCalculatorController::class, 'freeKundliReport'])->name('free-kundli-report');
+Route::get('/free-kundli-pdf', [KundliCalculatorController::class, 'freeKundliPdf'])->name('free-kundli-pdf');
+Route::get('/how-to-read-kundli', [KundliCalculatorController::class, 'guideHowToReadKundli'])->name('guide.read-kundli');
+Route::get('/how-to-read-houses-in-kundli', [KundliCalculatorController::class, 'guideHowToReadHouses'])->name('guide.read-houses');
+Route::get('/how-to-read-planets-in-astrology', [KundliCalculatorController::class, 'guideHowToReadPlanets'])->name('guide.read-planets');
+Route::get('/planets-signs-houses-in-astrology', [KundliCalculatorController::class, 'guidePlanetsSignsHouses'])->name('guide.planets-signs-houses');
+Route::get('/planets-signs-and-their-significance-in-astrology', [KundliCalculatorController::class, 'guidePlanetsSignsSignificance'])->name('guide.planets-signs-significance');
+
 Route::view('/kundli-matching', 'kundli-matching')->name('kundli-matching');
 Route::view('/compatibility', 'compatibility')->name('compatibility');
 Route::get('/compatibility/{sign}', [CompatibilityController::class, 'sign'])
