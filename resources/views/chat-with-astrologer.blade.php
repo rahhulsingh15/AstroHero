@@ -47,7 +47,7 @@
                 <div class="astro-card">
                     <div class="card-header">
                         <div class="astro-avatar">
-                            <img src="{{asset('assets/images/chatimg1.png')}}" alt="Dr. Aradhana">
+                            <img src="{{asset('assets/images/chatimg1.webp')}}" alt="Dr. Aradhana">
                             <div class="online-dot"></div>
                         </div>
                         <span class="celeb-tag">Celebrity</span>
@@ -81,7 +81,7 @@
                 <div class="astro-card">
                     <div class="card-header">
                         <div class="astro-avatar">
-                            <img src="{{asset('assets/images/chatimg2.png')}}" alt="Meera Sharma">
+                            <img src="{{asset('assets/images/chatimg2.webp')}}" alt="Meera Sharma">
                             <div class="online-dot"></div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                 <div class="astro-card">
                     <div class="card-header">
                         <div class="astro-avatar">
-                            <img src="{{asset('assets/images/chatimg3.png')}}" alt="Riya Singh">
+                            <img src="{{asset('assets/images/chatimg3.webp')}}" alt="Riya Singh">
                             <div class="online-dot"></div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                 <div class="astro-card">
                     <div class="card-header">
                         <div class="astro-avatar">
-                            <img src="{{ asset('assets/images/chatimg4.png') }}" alt="Kavya Verma">
+                            <img src="{{ asset('assets/images/chatimg4.webp') }}" alt="Kavya Verma">
                             <div class="online-dot"></div>
                         </div>
                     </div>
@@ -325,7 +325,7 @@
                 <div class="trending-item">
                     <div class="t-left">
                         <div class="t-avatar">
-                            <img src="{{asset('assets/images/chatimg1.png')}}" alt="Dr. Aradhana">
+                            <img src="{{asset('assets/images/chatimg1.webp')}}" alt="Dr. Aradhana">
                         </div>
                         <div class="t-info">
                             <h4>Dr. Aradhana <span class="verified-icon">✔</span></h4>
@@ -344,7 +344,7 @@
                 <div class="trending-item">
                     <div class="t-left">
                         <div class="t-avatar">
-                            <img src="{{asset('assets/images/chatimg3.png')}}" alt="Riya Singh">
+                            <img src="{{asset('assets/images/chatimg3.webp')}}" alt="Riya Singh">
                         </div>
                         <div class="t-info">
                             <h4>Riya Singh <span class="verified-icon">✔</span></h4>
@@ -362,7 +362,7 @@
                 <div class="trending-item">
                     <div class="t-left">
                         <div class="t-avatar">
-                            <img src="{{asset('assets/images/chatimg4.png')}}" alt="Kavya Verma">
+                            <img src="{{asset('assets/images/chatimg4.webp')}}" alt="Kavya Verma">
                         </div>
                         <div class="t-info">
                             <h4>Kavya Verma <span class="verified-icon">✔</span></h4>
@@ -380,7 +380,7 @@
                 <div class="trending-item">
                     <div class="t-left">
                         <div class="t-avatar">
-                            <img src="{{asset('assets/images/chatimg2.png')}}" alt="Meera Sharma">
+                            <img src="{{asset('assets/images/chatimg2.webp')}}" alt="Meera Sharma">
                         </div>
                         <div class="t-info">
                             <h4>Meera Sharma <span class="verified-icon">✔</span></h4>

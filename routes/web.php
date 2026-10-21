@@ -124,6 +124,7 @@ Route::get('/planets-signs-houses-in-astrology', [KundliCalculatorController::cl
 Route::get('/planets-signs-and-their-significance-in-astrology', [KundliCalculatorController::class, 'guidePlanetsSignsSignificance'])->name('guide.planets-signs-significance');
 
 Route::view('/kundli-matching', 'kundli-matching')->name('kundli-matching');
+Route::get('/kundli-matching-report', [KundliCalculatorController::class, 'kundliMatchingReport'])->name('kundli-matching-report');
 Route::view('/compatibility', 'compatibility')->name('compatibility');
 Route::get('/compatibility/{sign}', [CompatibilityController::class, 'sign'])
     ->where('sign', CompatibilityHelper::slugs())->name('compatibility.sign');

@@ -27,9 +27,10 @@
     {{-- ?v= file badalte hi badal jaata hai, taaki browser purani CSS cache se na dikhaye --}}
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ filemtime(public_path('assets/css/style.css')) }}">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    {{-- Fonts load without blocking the first paint; text shows in the fallback font for a moment --}}
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media=&#39;all&#39;">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700&family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
 
         <style>
             /* Card Container */
@@ -234,24 +235,24 @@
 
     <!-- Footer -->
     @include('frontend.layouts.footer')
-    <!-- Night sky stars, shown behind every page -->
+    <!-- Night sky stars, shown behind every page: one still layer and two twinkling layers -->
     <svg class="stars" width="100%" height="100%" aria-hidden="true"></svg>
+    <svg class="stars twinkle twinkle-a" width="100%" height="100%" aria-hidden="true"></svg>
+    <svg class="stars twinkle twinkle-b" width="100%" height="100%" aria-hidden="true"></svg>
     <script>
         (function () {
-            const starsSvg = document.querySelector('svg.stars');
-            if (!starsSvg) return;
-            let starMarkup = '';
+            const layers = document.querySelectorAll('svg.stars');
+            if (!layers.length) return;
+            const markup = ['', '', ''];
             for (let i = 0; i < 90; i++) {
                 const x = Math.random() * 100,
                     y = Math.random() * 100,
                     r = Math.random() * 1.4 + 0.4,
                     o = Math.random() * 0.6 + 0.3,
-                    fill = i % 6 === 0 ? '#f2d9a8' : '#fff',
-                    dur = (Math.random() * 3 + 2.5).toFixed(1),
-                    delay = (Math.random() * 5).toFixed(1);
-                starMarkup += `<circle cx="${x}%" cy="${y}%" r="${r}" fill="${fill}" style="--o:${o};animation-duration:${dur}s;animation-delay:-${delay}s"/>`;
+                    fill = i % 6 === 0 ? '#f2d9a8' : '#fff';
+                markup[i % 3] += `<circle cx="${x}%" cy="${y}%" r="${r}" fill="${fill}" style="--o:${o}"/>`;
             }
-            starsSvg.innerHTML = starMarkup;
+            layers.forEach((svg, i) => svg.innerHTML = markup[i] || '');
         })();
     </script>
     <script>
@@ -271,15 +272,26 @@
         })();
     </script>
     <!-- Firebase push notifications -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
     <script>
+        // Firebase is loaded only when a visitor has allowed notifications, so normal page loads stay light
+        window.astroLoadFirebase = function () {
+            if (window.firebase && window.firebase.messaging) return Promise.resolve();
+            const load = src => new Promise((resolve, reject) => {
+                const s = document.createElement("script");
+                s.src = src; s.onload = resolve; s.onerror = reject;
+                document.head.appendChild(s);
+            });
+            return load("https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js")
+                .then(() => load("https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"));
+        };
+
         // Browser ka FCM token lo aur DB mein save karo. Isi token par admin se notification jaata hai.
         window.astroSaveSubscriber = async function (permission) {
             let fcmToken = null;
 
-            if (permission === "granted" && "serviceWorker" in navigator && window.firebase) {
+            if (permission === "granted" && "serviceWorker" in navigator) {
                 try {
+                    await window.astroLoadFirebase();
                     if (!firebase.apps.length) {
                         firebase.initializeApp(@json(\App\Http\Controllers\SubscriberController::firebaseWebConfig()));
                     }

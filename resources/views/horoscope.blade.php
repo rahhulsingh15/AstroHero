@@ -208,7 +208,7 @@
                             </div>
                             <div class="expert-list">
                                 <div class="expert-item">
-                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg1.png') }}" width="100%" alt="Expert"></div>
+                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg1.webp') }}" width="100%" alt="Expert"></div>
                                     <div class="expert-info">
                                         <h4>Vasunendra</h4>
                                         <p>Vedic, Nadi, Numerology</p>
@@ -217,7 +217,7 @@
                                     <button class="chat-btn">Chat</button>
                                 </div>
                                 <div class="expert-item">
-                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg2.png') }}" width="100%" alt="Expert"></div>
+                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg2.webp') }}" width="100%" alt="Expert"></div>
                                     <div class="expert-info">
                                         <h4>Deepakh</h4>
                                         <p>Vedic, Vastu, Life Coach</p>
@@ -226,7 +226,7 @@
                                     <button class="chat-btn">Chat</button>
                                 </div>
                                 <div class="expert-item">
-                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg3.png') }}" width="100%" alt="Expert"></div>
+                                    <div class="expert-img"><img src="{{ asset('assets/images/chatimg3.webp') }}" width="100%" alt="Expert"></div>
                                     <div class="expert-info">
                                         <h4>Madhusudhan</h4>
                                         <p>Numerology, Vedic, Palmistry</p>

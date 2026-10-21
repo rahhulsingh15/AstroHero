@@ -105,7 +105,7 @@
                     <div class="expert-list">
                         <!-- Expert 1 -->
                         <div class="expert-item">
-                            <img src="{{ asset('assets/images/chatimg1.png') }}" alt="Prachesta" class="exp-img">
+                            <img src="{{ asset('assets/images/chatimg1.webp') }}" alt="Prachesta" class="exp-img">
                             <div class="expert-info">
                                 <h5>Prachesta</h5>
                                 <p>Vedic Astrology, Numerology</p>
@@ -115,7 +115,7 @@
                         </div>
                         <!-- Expert 2 -->
                         <div class="expert-item">
-                            <img src="{{ asset('assets/images/chatimg3.png') }}" alt="Nevibala" class="exp-img">
+                            <img src="{{ asset('assets/images/chatimg3.webp') }}" alt="Nevibala" class="exp-img">
                             <div class="expert-info">
                                 <h5>Nevibala</h5>
                                 <p>Vedic, Tarot</p>
@@ -125,7 +125,7 @@
                         </div>
                         <!-- Expert 3 -->
                         <div class="expert-item">
-                            <img src="{{ asset('assets/images/chatimg1.png') }}" alt="Swarna" class="exp-img">
+                            <img src="{{ asset('assets/images/chatimg1.webp') }}" alt="Swarna" class="exp-img">
                             <div class="expert-info">
                                 <h5>Swarna</h5>
                                 <p>Vedic, Numerology</p>
@@ -135,7 +135,7 @@
                         </div>
                         <!-- Expert 4 -->
                         <div class="expert-item">
-                            <img src="{{ asset('assets/images/chatimg2.png') }}" alt="Supransh" class="exp-img">
+                            <img src="{{ asset('assets/images/chatimg2.webp') }}" alt="Supransh" class="exp-img">
                             <div class="expert-info">
                                 <h5>Supransh</h5>
                                 <p>Vedic, Life Coach</p>
@@ -145,7 +145,7 @@
                         </div>
                         <!-- Expert 5 -->
                         <div class="expert-item">
-                            <img src="{{ asset('assets/images/chatimg3.png') }}" alt="Aarav" class="exp-img">
+                            <img src="{{ asset('assets/images/chatimg3.webp') }}" alt="Aarav" class="exp-img">
                             <div class="expert-info">
                                 <h5>Aarav</h5>
                                 <p>Vedic, Vastu</p>

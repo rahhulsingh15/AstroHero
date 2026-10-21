@@ -2534,3 +2534,38 @@
 .kd-dosha-text { font-size: 14px; color: #e2e4f0; margin: 0 0 8px; font-weight: 500; line-height: 1.6; }
 .kd-dosha-sub { font-size: 13.5px; color: #b6b8cb; margin: 0 0 6px; line-height: 1.6; }
 .kd-chart-svg .kd-svg-planet { font-size: 10.5px; letter-spacing: -0.2px; }
+
+/* =========================================
+   KUNDLI MATCHING REPORT
+   ========================================= */
+.km-score-card { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+.km-score-ring {
+    --c: #e3b568; width: 160px; height: 160px; border-radius: 50%; flex-shrink: 0;
+    background: conic-gradient(var(--c) calc(var(--pct) * 1%), rgba(255, 255, 255, 0.08) 0);
+    display: grid; place-items: center;
+}
+.km-tone-good .km-score-ring { --c: #4ade80; }
+.km-tone-low .km-score-ring { --c: #f87171; }
+.km-score-inner { width: 128px; height: 128px; border-radius: 50%; background: #0d0f1e; display: grid; place-content: center; text-align: center; }
+.km-score-num { font-family: 'Poppins', sans-serif; font-size: 40px; font-weight: 700; color: #fff; line-height: 1; }
+.km-score-max { font-size: 14px; color: #9da0b8; margin-top: 4px; }
+.km-score-text { flex: 1; min-width: 240px; }
+.km-score-label { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(227, 181, 104, 0.15); color: #e3b568; }
+.km-tone-good .km-score-label { background: rgba(74, 222, 128, 0.12); color: #4ade80; }
+.km-tone-low .km-score-label { background: rgba(248, 113, 113, 0.12); color: #f87171; }
+.km-score-text h2 { font-family: 'Poppins', sans-serif; font-size: 24px; color: #fff; margin: 10px 0 8px; }
+.km-score-text p { color: #c3c5d6; font-size: 14.5px; line-height: 1.6; margin: 0 0 8px; }
+.km-score-manglik { color: #e3b568 !important; }
+.km-got { display: inline-block; min-width: 34px; text-align: center; padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+.km-got.full { background: rgba(74, 222, 128, 0.14); color: #4ade80; }
+.km-got.part { background: rgba(227, 181, 104, 0.14); color: #e3b568; }
+.km-got.zero { background: rgba(248, 113, 113, 0.14); color: #f87171; }
+.km-note { border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; border: 1px solid; }
+.km-note.ok { border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.06); }
+.km-note.warn { border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.06); }
+.km-note strong { color: #fff; font-size: 14.5px; }
+.km-note p { color: #c3c5d6; font-size: 14px; margin: 6px 0 0; line-height: 1.6; }
+.km-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+@media (max-width: 600px) {
+    .km-score-card { flex-direction: column; text-align: center; }
+}

@@ -290,16 +290,23 @@ body {
 
       svg.stars circle {
           opacity: var(--o, .6);
-          animation: starTwinkle 4s ease-in-out infinite;
       }
 
+      /* stars sit in three layers; each whole layer twinkles, which the GPU handles without repainting the page */
+      svg.stars.twinkle {
+          will-change: opacity;
+          animation: starTwinkle 4.5s ease-in-out infinite;
+      }
+
+      svg.stars.twinkle-b { animation-duration: 6s; animation-delay: -2s; }
+
       @keyframes starTwinkle {
-          0%, 100% { opacity: var(--o, .6); }
-          50% { opacity: .1; }
+          0%, 100% { opacity: 1; }
+          50% { opacity: .2; }
       }
 
       @media (prefers-reduced-motion: reduce) {
-          svg.stars circle { animation: none; }
+          svg.stars.twinkle { animation: none; }
       }
 
       .hero_section .grid {
@@ -449,12 +456,17 @@ body {
           width: 100%;
           height: 100%;
           animation: spinKundli 90s linear infinite;
-          filter: drop-shadow(0 0 40px rgba(var(--gold-rgb), 0.25)) drop-shadow(0 0 15px rgba(var(--bg-rgb), 0.8));
-          transition: filter 0.3s ease;
+          will-change: transform;
       }
 
-      .hero_section .kundli-wheel-wrapper {
-          filter: drop-shadow(0 0 50px rgba(var(--gold-rgb), 0.45)) drop-shadow(0 0 20px rgba(242, 217, 168, 0.4));
+      /* gold glow behind the wheel: a static layer, so it is painted once instead of every frame */
+      .hero_section .kundli-wheel-container::before {
+          content: "";
+          position: absolute;
+          inset: 4%;
+          border-radius: 50%;
+          box-shadow: 0 0 60px 6px rgba(var(--gold-rgb), 0.38), 0 0 22px rgba(242, 217, 168, 0.3);
+          pointer-events: none;
       }
 
       .hero_section .kundli-svg {
@@ -507,8 +519,8 @@ body {
       }
 
       @keyframes planetGlow {
-          0%, 22%, 100% { opacity: .6; filter: none; }
-          10% { opacity: 1; filter: drop-shadow(0 0 5px var(--gold-soft)); }
+          0%, 22%, 100% { opacity: .6; }
+          10% { opacity: 1; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -526,7 +538,6 @@ body {
           stroke-linecap: round;
           transform-origin: 250px 250px;
           animation: spinKundli 9s linear infinite;
-          filter: drop-shadow(0 0 6px var(--gold-soft));
       }
 
       .hero_section .kundli-moon-sector {

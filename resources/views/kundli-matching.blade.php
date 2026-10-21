@@ -18,152 +18,96 @@
         <div class="container">
             <h2 class="km-heading">Match Your <span>Kundli</span></h2>
             <p class="km-sub">Enter both birth details. Accurate time and place give the sharpest reading.</p>
-            {{-- Abhi sirf HTML hai: calculation baad me jodni hai --}}
-            <form class="km-form" onsubmit="return false;" autocomplete="off">
+            @if (isset($errors) && $errors->any())
+                <div class="km-errors" style="max-width: 960px; margin: 0 auto 18px; padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(248, 113, 113, 0.4); background: rgba(248, 113, 113, 0.08); color: #fca5a5; font-size: 14px;">
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </div>
+            @endif
+            <form class="km-form" action="{{ route('kundli-matching-report') }}" method="GET" autocomplete="off">
                 <div class="km-grid">
-                    <div class="km-person">
-                        <div class="km-person-head">
-                            <span class="km-badge">👤</span>
-                            <h3>Your Details</h3>
-                        </div>
-                        <div class="km-fields">
-                            <div class="form-group">
-                                <label for="km-you_name">Name *</label>
-                                <input type="text" id="km-you_name" name="you_name" placeholder="Enter full name, e.g. Rahul Sharma" maxlength="50" required>
+                    @foreach ([['you', 'Your Details', '👤', 'male', 'Rahul Sharma', 'New Delhi, India'], ['partner', 'Partner\'s Details', '💞', 'female', 'Priya Verma', 'Jaipur, India']] as $idx => [$p, $title, $badge, $defGender, $namePh, $placePh])
+                        @if ($idx === 1)
+                            <span class="km-divider"></span>
+                        @endif
+                        @php $gender = old($p . '_gender', request($p . '_gender', $defGender)); @endphp
+                        <div class="km-person">
+                            <div class="km-person-head">
+                                <span class="km-badge">{{ $badge }}</span>
+                                <h3>{{ $title }}</h3>
                             </div>
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <input type="hidden" name="you_gender" value="male">
-                                <div class="km-gender">
-                                    <button type="button" class="active" data-gender="male">Male</button>
-                                    <button type="button" data-gender="female">Female</button>
-                                    <button type="button" data-gender="other">Other</button>
+                            <div class="km-fields">
+                                <div class="form-group">
+                                    <label for="km-{{ $p }}_name">Name *</label>
+                                    <input type="text" id="km-{{ $p }}_name" name="{{ $p }}_name" value="{{ old($p . '_name', request($p . '_name')) }}" placeholder="Enter full name, e.g. {{ $namePh }}" maxlength="50" required>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Birth Date *</label>
-                                <div class="date-inputs">
-                                    <select name="you_day" required aria-label="Day">
-                                        <option value="">Day</option>
-                                        @for ($i = 1; $i <= 31; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="you_month" required aria-label="Month">
-                                        <option value="">Month</option>
-                                        @foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $i => $monthName)
-                                            <option value="{{ $i + 1 }}">{{ $monthName }}</option>
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <input type="hidden" name="{{ $p }}_gender" value="{{ $gender }}">
+                                    <div class="km-gender">
+                                        @foreach (['male' => 'Male', 'female' => 'Female', 'other' => 'Other'] as $g => $gl)
+                                            <button type="button" class="{{ $gender === $g ? 'active' : '' }}" data-gender="{{ $g }}">{{ $gl }}</button>
                                         @endforeach
-                                    </select>
-                                    <select name="you_year" required aria-label="Year">
-                                        <option value="">Year</option>
-                                        @for ($i = date('Y'); $i >= 1900; $i--)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Birth Time <i class="km-optional">optional</i></label>
-                                <div class="time-inputs">
-                                    <select name="you_hour" aria-label="Hour">
-                                        <option value="">Hour</option>
-                                        @for ($i = 1; $i <= 12; $i++)
-                                            <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="you_minute" aria-label="Minute">
-                                        <option value="">Minute</option>
-                                        @for ($i = 0; $i <= 59; $i++)
-                                            <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="you_ampm" aria-label="AM or PM">
-                                        <option value="AM">AM</option>
-                                        <option value="PM">PM</option>
-                                    </select>
+                                <div class="form-group">
+                                    <label>Birth Date *</label>
+                                    <div class="date-inputs">
+                                        <select name="{{ $p }}_day" required aria-label="Day">
+                                            <option value="">Day</option>
+                                            @for ($i = 1; $i <= 31; $i++)
+                                                <option value="{{ $i }}" @selected(old($p . '_day', request($p . '_day')) == $i)>{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                        <select name="{{ $p }}_month" required aria-label="Month">
+                                            <option value="">Month</option>
+                                            @foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $i => $monthName)
+                                                <option value="{{ $i + 1 }}" @selected(old($p . '_month', request($p . '_month')) == $i + 1)>{{ $monthName }}</option>
+                                            @endforeach
+                                        </select>
+                                        <select name="{{ $p }}_year" required aria-label="Year">
+                                            <option value="">Year</option>
+                                            @for ($i = date('Y'); $i >= 1900; $i--)
+                                                <option value="{{ $i }}" @selected(old($p . '_year', request($p . '_year')) == $i)>{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
                                 </div>
-                                <small class="km-hint">Defaults to 12:00 AM if not provided</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="km-you_place">Birth Place *</label>
-                                <input type="text" id="km-you_place" name="you_place" placeholder="Enter city, e.g. New Delhi, India" maxlength="120" required>
-                                <small class="km-hint">Exact birth time fixes the Lagna and sharpens the reading.</small>
+                                <div class="form-group">
+                                    <label>Birth Time <i class="km-optional">optional</i></label>
+                                    <div class="time-inputs">
+                                        <select name="{{ $p }}_hour" aria-label="Hour">
+                                            <option value="">Hour</option>
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                <option value="{{ $i }}" @selected(old($p . '_hour', request($p . '_hour')) == $i)>{{ sprintf('%02d', $i) }}</option>
+                                            @endfor
+                                        </select>
+                                        <select name="{{ $p }}_minute" aria-label="Minute">
+                                            <option value="">Minute</option>
+                                            @for ($i = 0; $i <= 59; $i++)
+                                                <option value="{{ $i }}" @selected((string) old($p . '_minute', request($p . '_minute')) === (string) $i)>{{ sprintf('%02d', $i) }}</option>
+                                            @endfor
+                                        </select>
+                                        <select name="{{ $p }}_ampm" aria-label="AM or PM">
+                                            <option value="AM">AM</option>
+                                            <option value="PM" @selected(old($p . '_ampm', request($p . '_ampm')) === 'PM')>PM</option>
+                                        </select>
+                                    </div>
+                                    <small class="km-hint">If left empty, 12:00 PM (noon) is used</small>
+                                </div>
+                                <div class="form-group" style="position: relative;">
+                                    <label for="km-{{ $p }}_place">Birth Place *</label>
+                                    <input type="text" id="km-{{ $p }}_place" class="km-place-input" name="{{ $p }}_place" value="{{ old($p . '_place', request($p . '_place')) }}" placeholder="Enter city, e.g. {{ $placePh }}" maxlength="120" required autocomplete="off">
+                                    <input type="hidden" name="{{ $p }}_lat" class="km-lat" value="{{ old($p . '_lat', request($p . '_lat')) }}">
+                                    <input type="hidden" name="{{ $p }}_lng" class="km-lng" value="{{ old($p . '_lng', request($p . '_lng')) }}">
+                                    <input type="hidden" name="{{ $p }}_tz" class="km-tz" value="{{ old($p . '_tz', request($p . '_tz')) }}">
+                                    <ul class="ras-place-list km-place-list" hidden style="position: absolute; top: 100%; left: 0; right: 0; background: #1c182d; border: 1px solid rgba(227, 181, 104, 0.3); border-radius: 8px; max-height: 220px; overflow-y: auto; list-style: none; padding: 0; margin: 4px 0 0; z-index: 9999; box-shadow: 0 8px 24px rgba(0,0,0,0.5);"></ul>
+                                    <small class="km-hint">Exact birth time fixes the Lagna and sharpens the reading.</small>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <span class="km-divider"></span>
-                    <div class="km-person">
-                        <div class="km-person-head">
-                            <span class="km-badge">💞</span>
-                            <h3>Partner's Details</h3>
-                        </div>
-                        <div class="km-fields">
-                            <div class="form-group">
-                                <label for="km-partner_name">Name *</label>
-                                <input type="text" id="km-partner_name" name="partner_name" placeholder="Enter full name, e.g. Priya Verma" maxlength="50" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <input type="hidden" name="partner_gender" value="female">
-                                <div class="km-gender">
-                                    <button type="button" data-gender="male">Male</button>
-                                    <button type="button" class="active" data-gender="female">Female</button>
-                                    <button type="button" data-gender="other">Other</button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Birth Date *</label>
-                                <div class="date-inputs">
-                                    <select name="partner_day" required aria-label="Day">
-                                        <option value="">Day</option>
-                                        @for ($i = 1; $i <= 31; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="partner_month" required aria-label="Month">
-                                        <option value="">Month</option>
-                                        @foreach (['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $i => $monthName)
-                                            <option value="{{ $i + 1 }}">{{ $monthName }}</option>
-                                        @endforeach
-                                    </select>
-                                    <select name="partner_year" required aria-label="Year">
-                                        <option value="">Year</option>
-                                        @for ($i = date('Y'); $i >= 1900; $i--)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Birth Time <i class="km-optional">optional</i></label>
-                                <div class="time-inputs">
-                                    <select name="partner_hour" aria-label="Hour">
-                                        <option value="">Hour</option>
-                                        @for ($i = 1; $i <= 12; $i++)
-                                            <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="partner_minute" aria-label="Minute">
-                                        <option value="">Minute</option>
-                                        @for ($i = 0; $i <= 59; $i++)
-                                            <option value="{{ $i }}">{{ sprintf('%02d', $i) }}</option>
-                                        @endfor
-                                    </select>
-                                    <select name="partner_ampm" aria-label="AM or PM">
-                                        <option value="AM">AM</option>
-                                        <option value="PM">PM</option>
-                                    </select>
-                                </div>
-                                <small class="km-hint">Defaults to 12:00 AM if not provided</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="km-partner_place">Birth Place *</label>
-                                <input type="text" id="km-partner_place" name="partner_place" placeholder="Enter city, e.g. Jaipur, India" maxlength="120" required>
-                                <small class="km-hint">Exact birth time fixes the Lagna and sharpens the reading.</small>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="km-foot">
                     <p>Name, birth date and birth place are needed for both partners.</p>
@@ -248,7 +192,7 @@
                         <div class="expert-list">
                             <!-- Expert 1 -->
                             <div class="expert-item">
-                                <img src="{{ asset('assets/images/chatimg1.png') }}" alt="Prachesta" class="exp-img">
+                                <img src="{{ asset('assets/images/chatimg1.webp') }}" alt="Prachesta" class="exp-img">
                                 <div class="expert-info">
                                     <h5>Prachesta</h5>
                                     <p>Vedic Astrology, Numerology</p>
@@ -258,7 +202,7 @@
                             </div>
                             <!-- Expert 2 -->
                             <div class="expert-item">
-                                <img src="{{ asset('assets/images/chatimg3.png') }}" alt="Nevibala" class="exp-img">
+                                <img src="{{ asset('assets/images/chatimg3.webp') }}" alt="Nevibala" class="exp-img">
                                 <div class="expert-info">
                                     <h5>Nevibala</h5>
                                     <p>Vedic, Tarot</p>
@@ -268,7 +212,7 @@
                             </div>
                             <!-- Expert 3 -->
                             <div class="expert-item">
-                                <img src="{{ asset('assets/images/chatimg1.png') }}" alt="Swarna" class="exp-img">
+                                <img src="{{ asset('assets/images/chatimg1.webp') }}" alt="Swarna" class="exp-img">
                                 <div class="expert-info">
                                     <h5>Swarna</h5>
                                     <p>Vedic, Numerology</p>
@@ -278,7 +222,7 @@
                             </div>
                             <!-- Expert 4 -->
                             <div class="expert-item">
-                                <img src="{{ asset('assets/images/chatimg2.png') }}" alt="Supransh" class="exp-img">
+                                <img src="{{ asset('assets/images/chatimg2.webp') }}" alt="Supransh" class="exp-img">
                                 <div class="expert-info">
                                     <h5>Supransh</h5>
                                     <p>Vedic, Life Coach</p>
@@ -288,7 +232,7 @@
                             </div>
                             <!-- Expert 5 -->
                             <div class="expert-item">
-                                <img src="{{ asset('assets/images/chatimg3.png') }}" alt="Aarav" class="exp-img">
+                                <img src="{{ asset('assets/images/chatimg3.webp') }}" alt="Aarav" class="exp-img">
                                 <div class="expert-info">
                                     <h5>Aarav</h5>
                                     <p>Vedic, Vastu</p>
@@ -391,6 +335,46 @@
                 buttons.forEach(b => b.classList.toggle('active', b === button));
                 hidden.value = button.dataset.gender;
             }));
+        });
+    </script>
+    <script>
+        // Place search for both partners: picking a city fills its lat, lng and timezone
+        document.querySelectorAll('.km-person').forEach(person => {
+            const input = person.querySelector('.km-place-input');
+            const list = person.querySelector('.km-place-list');
+            const lat = person.querySelector('.km-lat'), lng = person.querySelector('.km-lng'), tz = person.querySelector('.km-tz');
+            if (!input || !list) return;
+            let timer = null;
+            const close = () => { list.hidden = true; list.innerHTML = ''; };
+            input.addEventListener('input', () => {
+                lat.value = lng.value = tz.value = '';
+                clearTimeout(timer);
+                const q = input.value.trim();
+                if (q.length < 2) return close();
+                timer = setTimeout(async () => {
+                    try {
+                        const res = await fetch(@json(route('place-search')) + '?q=' + encodeURIComponent(q));
+                        const places = await res.json();
+                        if (input.value.trim() !== q) return;
+                        list.innerHTML = '';
+                        places.forEach(place => {
+                            const li = document.createElement('li');
+                            li.textContent = place.label;
+                            li.style.cssText = 'padding:10px 14px;cursor:pointer;color:#fff;border-bottom:1px solid rgba(255,255,255,0.06)';
+                            li.addEventListener('mouseenter', () => li.style.background = 'rgba(227, 181, 104, 0.15)');
+                            li.addEventListener('mouseleave', () => li.style.background = 'transparent');
+                            li.addEventListener('mousedown', e => {
+                                e.preventDefault();
+                                input.value = place.label; lat.value = place.lat; lng.value = place.lng; tz.value = place.tz;
+                                close();
+                            });
+                            list.appendChild(li);
+                        });
+                        list.hidden = places.length === 0;
+                    } catch (e) { close(); }
+                }, 280);
+            });
+            input.addEventListener('blur', () => setTimeout(close, 180));
         });
     </script>
 @endsection

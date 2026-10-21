@@ -298,7 +298,7 @@
                     @endphp
                     <div class="raashi-card {{ ($active && $active->sign_name == $sign->sign_name) ? 'active' : '' }}">
                         <div class="raashi-avatar">
-                            <img src="{{ asset('assets/images/' . $imgFile) }}"
+                            <img loading="lazy" decoding="async" src="{{ asset('assets/images/' . $imgFile) }}"
                                 alt="{{ $sign->sign_name ?? '' }}">
                         </div>
                         <div class="raashi-name">{{ $sign->sign_name ?? '' }}</div>
@@ -321,7 +321,7 @@
                 <div class="detail-header-row">
                     <div class="detail-sign-info">
                         <div class="detail-avatar">
-                            <img id="detail-img"
+                            <img loading="lazy" decoding="async" id="detail-img"
                                 src="{{ asset('assets/images/' . ($signImages[$active->sign_name] ?? 'horoscope-01.avif')) }}"
                                 alt="{{ $active->sign_name }}">
                         </div>
@@ -443,8 +443,8 @@
                     <div class="expert-astrologers-card premium-card">
                         <div class="expert-badge">Top Rated</div>
                         <div class="expert-astrologers-avatar-wrapper">
-                            <div class="expert-astrologers-avatar"><img
-                                    src="{{ asset('assets/images/chatimg1.png') }}" alt="Astrologer"
+                            <div class="expert-astrologers-avatar"><img loading="lazy" decoding="async"
+                                    src="{{ asset('assets/images/chatimg1.webp') }}" alt="Astrologer"
                                     width="100%">
                             </div>
                             <span class="online-indicator"></span>
@@ -487,7 +487,7 @@
 
                             <div class="expert-astrologers-avatar"
                                 style="background: linear-gradient(135deg, #f2d9a8, #e3b568); color: var(--navy-deep);">
-                                <img src="{{ asset('assets/images/chatimg2.png') }}" alt="Astrologer"
+                                <img loading="lazy" decoding="async" src="{{ asset('assets/images/chatimg2.webp') }}" alt="Astrologer"
                                     width="100%">
                             </div>
                             <span class="online-indicator"></span>
@@ -529,8 +529,8 @@
                         <div class="expert-badge trending">Trending</div>
                         <div class="expert-astrologers-avatar-wrapper">
                             <div class="expert-astrologers-avatar"
-                                style="background: linear-gradient(135deg, #a7a4c2, #7a68d9);"> <img
-                                    src="{{ asset('assets/images/chatimg3.png') }}" alt="Astrologer"
+                                style="background: linear-gradient(135deg, #a7a4c2, #7a68d9);"> <img loading="lazy" decoding="async"
+                                    src="{{ asset('assets/images/chatimg3.webp') }}" alt="Astrologer"
                                     width="100%"></div>
                             <span class="online-indicator"></span>
 
@@ -575,8 +575,8 @@
                     <div class="expert-astrologers-card">
                         <div class="expert-astrologers-avatar-wrapper">
                             <div class="expert-astrologers-avatar"
-                                style="background: linear-gradient(135deg, #5fd8a0, #2a2960);"> <img
-                                    src="{{ asset('assets/images/chatimg4.png') }}  " alt="Astrologer"
+                                style="background: linear-gradient(135deg, #5fd8a0, #2a2960);"> <img loading="lazy" decoding="async"
+                                    src="{{ asset('assets/images/chatimg4.webp') }}  " alt="Astrologer"
                                     width="100%"></div>
                             <span class="online-indicator"></span>
                         </div>
@@ -763,7 +763,7 @@
                         
                         <div class="review-user">
                             <div class="user-avatar">
-                                <img src="{{ asset('assets/images/unsplash1.avif') }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('assets/images/unsplash1.avif') }}"
                                     alt="Amar Thakur">
                             </div>
                             <div class="user-details">
@@ -786,7 +786,7 @@
                         </p>
                         <div class="review-user">
                             <div class="user-avatar">
-                                <img src="{{ asset('assets/images/unsplash2.avif') }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('assets/images/unsplash2.avif') }}"
                                     alt="Priya Sharma">
                             </div>
                             <div class="user-details">
@@ -808,7 +808,7 @@
                         </p>
                         <div class="review-user">
                             <div class="user-avatar">
-                                <img src="{{ asset('assets/images/unsplash3.avif') }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('assets/images/unsplash3.avif') }}"
                                     alt="Vikram Malhotra">
                             </div>
                             <div class="user-details">
@@ -830,7 +830,7 @@
                         </p>
                         <div class="review-user">
                             <div class="user-avatar">
-                                <img src="{{ asset('assets/images/unsplash4.avif') }}"
+                                <img loading="lazy" decoding="async" src="{{ asset('assets/images/unsplash4.avif') }}"
                                     alt="Ananya Roy">
                             </div>
                             <div class="user-details">
@@ -858,7 +858,7 @@
             <!-- Blog Card 1 -->
             <a href="#" class="blog-card">
                 <div class="blog-img-box">
-                    <img src="{{ asset('assets/images/blog1.png') }}" alt="5555 Angel Number">
+                    <img loading="lazy" decoding="async" src="{{ asset('assets/images/blog1.webp') }}" alt="5555 Angel Number">
                 </div>
                 <div class="blog-content">
                     <span class="blog-author">ASTROLOGY GUIDE</span>
@@ -873,7 +873,7 @@
             <!-- Blog Card 2 -->
             <a href="#" class="blog-card">
                 <div class="blog-img-box">
-                    <img src="{{ asset('assets/images/blog2.png') }}" alt="1919 Angel Number">
+                    <img loading="lazy" decoding="async" src="{{ asset('assets/images/blog2.webp') }}" alt="1919 Angel Number">
                 </div>
                 <div class="blog-content">
                     <span class="blog-author">TAROT & NUMEROLOGY</span>
@@ -888,7 +888,7 @@
             <!-- Blog Card 3 -->
             <a href="#" class="blog-card">
                 <div class="blog-img-box">
-                    <img src="{{ asset('assets/images/blog3.png') }}" alt="707 Angel Number">
+                    <img loading="lazy" decoding="async" src="{{ asset('assets/images/blog3.webp') }}" alt="707 Angel Number">
                 </div>
                 <div class="blog-content">
                     <span class="blog-author">SPIRITUAL WISDOM</span>
@@ -903,7 +903,7 @@
             <!-- Blog Card 4 -->
             <a href="#" class="blog-card">
                 <div class="blog-img-box">
-                    <img src="{{ asset('assets/images/blog4.png') }}"
+                    <img loading="lazy" decoding="async" src="{{ asset('assets/images/blog4.webp') }}"
                         alt="Anant Chaturdashi 2026">
                 </div>
                 <div class="blog-content">
@@ -1048,7 +1048,7 @@
     let selectedRaashiIndex = 0;
     let selectedPeriod = 'Today';
 
-    function updateHoroscopeView() {
+    function updateHoroscopeView(scrollCard = true) {
         if (!raashiData || raashiData.length === 0) return;
         const sign = raashiData[selectedRaashiIndex];
         if (!sign) return;
@@ -1064,13 +1064,13 @@
             if (index === selectedRaashiIndex) {
                 card.classList.add('active');
                 const container = document.getElementById('raashi-cards-container');
-                if (container) {
-                    const cardLeft = card.offsetLeft;
-                    const cardWidth = card.offsetWidth;
-                    const containerWidth = container.offsetWidth;
-                    container.scrollTo({
-                        left: cardLeft - (containerWidth / 2) + (cardWidth / 2),
-                        behavior: 'smooth'
+                // read sizes in the next frame, so the class change and the measuring do not force an extra layout
+                if (container && scrollCard) {
+                    requestAnimationFrame(() => {
+                        container.scrollTo({
+                            left: card.offsetLeft - (container.offsetWidth / 2) + (card.offsetWidth / 2),
+                            behavior: 'smooth'
+                        });
                     });
                 }
             } else {
@@ -1190,21 +1190,12 @@
             return;
         }
 
-        progressStartTime = Date.now();
-        if (progressFill) progressFill.style.width = '0%';
-
-        progressInterval = setInterval(() => {
-            const elapsed = Date.now() - progressStartTime;
-            const percent = Math.min((elapsed / SLIDE_DURATION) * 100, 100);
-            if (progressFill) progressFill.style.width = percent + '%';
-
-            if (elapsed >= SLIDE_DURATION) {
-                clearInterval(progressInterval);
-                selectedRaashiIndex = (selectedRaashiIndex + 1) % (raashiData.length || 12);
-                updateHoroscopeView();
-                startAutoSlide();
-            }
-        }, 50);
+        // One timer per slide (the progress bar is hidden, so nothing needs to tick every 50 ms)
+        slideTimer = setTimeout(() => {
+            selectedRaashiIndex = (selectedRaashiIndex + 1) % (raashiData.length || 12);
+            updateHoroscopeView();
+            startAutoSlide();
+        }, SLIDE_DURATION);
     }
 
     // User ne khud kuch chuna hai: 1 minute tak apne aap aage mat badho
@@ -1318,8 +1309,16 @@
     // Initial Trigger
 
     document.addEventListener('DOMContentLoaded', () => {
-        updateHoroscopeView();
-        startAutoSlide();
+        updateHoroscopeView(false);
+        // auto-slide only while the horoscope section is on screen
+        const box = document.getElementById('horoscope-detail-box');
+        if (box && 'IntersectionObserver' in window) {
+            new IntersectionObserver(entries => {
+                entries[0].isIntersecting ? startAutoSlide() : stopAutoSlide();
+            }).observe(box);
+        } else {
+            startAutoSlide();
+        }
     });
 
 </script>
