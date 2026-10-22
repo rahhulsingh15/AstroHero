@@ -21,7 +21,7 @@
                             <span>MATCH</span>
                         </div>
                     </div>
-                    <span class="calc-pill {{ $report['good'] ? '' : 'is-care' }}">{{ $report['good'] ? '✅' : '⚠️' }} {{ $report['title'] }}</span>
+                    <span class="calc-pill {{ $report['good'] ? '' : 'is-care'  }}">{{ $report['good'] ? '✅' : '⚠️' }} {{ $report['title'] }}</span>
 
                     <div class="calc-number-row">
                         @foreach ([
