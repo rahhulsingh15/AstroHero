@@ -661,6 +661,89 @@ class FreeKundliHelper
         return $sign % 12;
     }
 
+    // North Indian chart (300 x 300): outline of each house, its number spot and its label centre
+    public const NORTH_SHAPE = [
+        1 => [[150, 8], [221, 79], [150, 150], [79, 79]], 2 => [[8, 8], [150, 8], [79, 79]], 3 => [[8, 8], [79, 79], [8, 150]],
+        4 => [[8, 150], [79, 79], [150, 150], [79, 221]], 5 => [[8, 150], [79, 221], [8, 292]], 6 => [[8, 292], [79, 221], [150, 292]],
+        7 => [[150, 150], [221, 221], [150, 292], [79, 221]], 8 => [[150, 292], [221, 221], [292, 292]], 9 => [[292, 150], [221, 221], [292, 292]],
+        10 => [[221, 79], [292, 150], [221, 221], [150, 150]], 11 => [[292, 8], [221, 79], [292, 150]], 12 => [[150, 8], [292, 8], [221, 79]],
+    ];
+    public const NORTH_NUM = [1 => [150, 136], 2 => [79, 68], 3 => [72, 79], 4 => [136, 150], 5 => [72, 221], 6 => [79, 232],
+        7 => [150, 166], 8 => [221, 232], 9 => [228, 221], 10 => [164, 150], 11 => [228, 79], 12 => [221, 68]];
+    public const NORTH_CENTER = [1 => [150, 70], 2 => [79, 26], 3 => [36, 79], 4 => [78, 150], 5 => [36, 221], 6 => [79, 274],
+        7 => [150, 230], 8 => [221, 274], 9 => [264, 221], 10 => [222, 150], 11 => [264, 79], 12 => [221, 26]];
+
+    /**
+     * Places the label lines of one North chart house so they stay inside it and clear of its number.
+     * Returns one [x, y, fontSize] per line; the font shrinks only when a line is too wide.
+     */
+    public static function northLayout(int $h, array $lines, float $base = 10.0): array
+    {
+        $shape = self::NORTH_SHAPE[$h];
+        [$nx, $ny] = self::NORTH_NUM[$h];
+        $cy = self::NORTH_CENTER[$h][1];
+        $sideNum = abs($ny - $cy) < 10; // number sits beside the labels, not above or below them
+        $n = count($lines);
+
+        // Rough Inter semibold width of a line at 1px
+        $width = function (string $t) {
+            $w = 0;
+            foreach (mb_str_split($t) as $c) {
+                $w += match (true) {
+                    $c === ' ', $c === '.' => 0.3, $c === '-' => 0.4, $c === '°' => 0.42,
+                    ctype_upper($c) => 0.68, default => 0.6,
+                };
+            }
+            return $w;
+        };
+        // Left and right edge of the house at height $y
+        $span = function (float $y) use ($shape) {
+            $xs = [];
+            foreach ($shape as $i => [$x1, $y1]) {
+                [$x2, $y2] = $shape[($i + 1) % count($shape)];
+                if ($y1 != $y2 && $y >= min($y1, $y2) && $y <= max($y1, $y2)) $xs[] = $x1 + ($y - $y1) * ($x2 - $x1) / ($y2 - $y1);
+            }
+            return $xs ? [min($xs), max($xs)] : [0, 0];
+        };
+
+        $fs = $base;
+        for ($pass = 0; $pass < 4; $pass++) {
+            $half = $fs * 0.5;
+            $lh = $fs * 1.3;
+            $ys = array_column($shape, 1);
+            $top = min($ys) + $half + 3;
+            $bottom = max($ys) - $half - 3;
+            if (!$sideNum) {
+                if ($ny > $cy) $bottom = min($bottom, $ny - 6 - $half);
+                else $top = max($top, $ny + 6 + $half);
+            }
+            $y0 = $cy - ($n - 1) * $lh / 2;
+            $y0 = max($top, min($y0, $bottom - ($n - 1) * $lh));
+
+            $out = [];
+            $next = $fs;
+            foreach ($lines as $i => $t) {
+                $y = $y0 + $i * $lh;
+                [$l1, $r1] = $span($y - $half);
+                [$l2, $r2] = $span($y + $half);
+                $l = max($l1, $l2) + 3;
+                $r = min($r1, $r2) - 3;
+                if ($sideNum && abs($y - $ny) < $half + 6) {
+                    if ($nx < ($l + $r) / 2) $l = max($l, $nx + 8);
+                    else $r = min($r, $nx - 8);
+                }
+                $need = $width($t);
+                if ($need > 0) $next = min($next, max(0, $r - $l) / $need);
+                $out[] = [round(($l + $r) / 2, 1), round($y, 1), $fs];
+            }
+            $next = max(6.0, min($base, $next));
+            if (abs($next - $fs) < 0.05) break;
+            $fs = $next;
+        }
+
+        return $out;
+    }
+
     /**
      * Chart = ['ascSign' => 0..11, 'houses' => [1..12 => ['sign' => 0..11, 'planets' => [...]]]]
      * $entries: [['abbr', 'name', 'sign', 'deg' (in-sign or null), 'retro']]

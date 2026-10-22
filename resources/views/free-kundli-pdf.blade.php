@@ -17,10 +17,10 @@
 
     $colors = ['Asc' => 'purple', 'Su' => 'orange', 'Mo' => 'blue', 'Ma' => 'red', 'Me' => 'green', 'Ju' => 'gold',
                'Ve' => 'pink', 'Sa' => 'teal', 'Ra' => 'teal', 'Ke' => 'grey', 'Ur' => 'grey', 'Ne' => 'grey', 'Pl' => 'grey'];
-    $numPos = [1 => [150, 136], 2 => [79, 66], 3 => [66, 79], 4 => [136, 150], 5 => [66, 221], 6 => [79, 236],
-               7 => [150, 166], 8 => [221, 236], 9 => [236, 221], 10 => [164, 150], 11 => [236, 79], 12 => [221, 66]];
-    $center = [1 => [150, 72], 2 => [79, 30], 3 => [42, 79], 4 => [78, 150], 5 => [42, 221], 6 => [79, 270],
-               7 => [150, 228], 8 => [221, 270], 9 => [258, 221], 10 => [222, 150], 11 => [258, 79], 12 => [221, 30]];
+    $numPos = [1 => [150, 136], 2 => [79, 68], 3 => [72, 79], 4 => [136, 150], 5 => [72, 221], 6 => [79, 232],
+               7 => [150, 166], 8 => [221, 232], 9 => [228, 221], 10 => [164, 150], 11 => [228, 79], 12 => [221, 68]];
+    $center = [1 => [150, 70], 2 => [79, 26], 3 => [36, 79], 4 => [78, 150], 5 => [36, 221], 6 => [79, 274],
+               7 => [150, 230], 8 => [221, 274], 9 => [264, 221], 10 => [222, 150], 11 => [264, 79], 12 => [221, 26]];
     $frame = '<rect x="8" y="8" width="284" height="284" fill="#fcfbf7" stroke="#c29744" stroke-width="1.8"/>'
         . '<line x1="8" y1="8" x2="292" y2="292" stroke="#c29744" stroke-width="1.2"/>'
         . '<line x1="292" y1="8" x2="8" y2="292" stroke="#c29744" stroke-width="1.2"/>'
@@ -34,12 +34,14 @@
             if (!$items) continue;
             $useDeg = $deg && count($items) <= 4;
             $lines = array_chunk($items, count($items) > 4 ? (in_array($h, [1, 4, 7, 10]) ? 3 : 2) : 1);
-            $y0 = $center[$h][1] - (count($lines) - 1) * 6.5;
+            $text = fn ($p) => $p['abbr'] . ($useDeg && $p['deg'] !== null ? '-' . number_format($p['deg'], 2) . '°' : '')
+                . ($p['retro'] && !in_array($p['abbr'], ['Asc', 'Ra', 'Ke']) ? ' R' : '');
+            $place = \App\Helpers\FreeKundliHelper::northLayout($h, array_map(fn ($line) => implode(' ', array_map($text, $line)), $lines));
             foreach ($lines as $i => $line) {
-                $s .= '<text x="' . $center[$h][0] . '" y="' . ($y0 + $i * 13) . '" class="pdf-svg-planet">';
+                [$x, $y, $fs] = $place[$i];
+                $s .= '<text x="' . $x . '" y="' . $y . '" class="pdf-svg-planet"' . ($fs < 9.95 ? ' style="font-size:' . round($fs, 1) . 'px"' : '') . '>';
                 foreach ($line as $j => $p) {
-                    $t = $p['abbr'] . ($useDeg && $p['deg'] !== null ? '-' . number_format($p['deg'], 2) . '°' : '')
-                        . ($p['retro'] && !in_array($p['abbr'], ['Asc', 'Ra', 'Ke']) ? ' R' : '');
+                    $t = $text($p);
                     $s .= '<tspan class="pdf-c-' . ($colors[$p['abbr']] ?? 'grey') . '">' . e($t) . ($j < count($line) - 1 ? ' ' : '') . '</tspan>';
                 }
                 $s .= '</text>';
