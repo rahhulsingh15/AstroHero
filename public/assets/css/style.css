@@ -10477,6 +10477,52 @@ a.tab-btn {
     opacity: 0.9;
 }
 
+.km-guides-section {
+    padding: 30px 20px 10px;
+}
+
+.fk-tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.fk-tag-pill {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 9999px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.22s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.fk-tag-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold-soft);
+    background: rgba(var(--gold-rgb), 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.fk-tag-pill .fk-pill-arrow {
+    font-size: 14px;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: var(--gold);
+    display: inline-block;
+}
+
+.fk-tag-pill:hover .fk-pill-arrow {
+    transform: translateX(4px);
+    color: var(--gold-soft);
+}
+
 .km-tools-section {
     padding: 0 20px 50px;
 }
@@ -10908,10 +10954,17 @@ html[data-theme="light"] .zodiac-card,
 html[data-theme="light"] .calc-card,
 html[data-theme="light"] .cp-pair-card,
 html[data-theme="light"] .km-tools a,
+html[data-theme="light"] .fk-tag-pill,
 html[data-theme="light"] .hl-card,
 html[data-theme="light"] .acord-item {
     background: #ffffff;
     box-shadow: 0 14px 36px -26px rgba(60, 44, 10, 0.45);
+}
+
+html[data-theme="light"] .fk-tag-pill:hover {
+    border-color: var(--gold);
+    color: var(--gold-deep);
+    background: rgba(var(--gold-rgb), 0.1);
 }
 
 html[data-theme="light"] .form-group input,

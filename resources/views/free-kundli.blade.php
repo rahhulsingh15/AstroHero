@@ -506,25 +506,25 @@
     </section>
 
     <!-- Master Vedic Astrology Guides (5 Guides Section Placed Above Calculators) -->
-    <section class="km-guides-section" style="padding: 30px 20px 10px;">
+    <section class="km-guides-section">
         <div class="container">
             <h2 class="km-heading">Master <span>Vedic Astrology Guides</span></h2>
             <p class="km-sub" style="margin-bottom: 22px;">Explore our comprehensive 5-part master guides to decode your Janam Kundli, houses, planets, signs, and planetary significance like an expert Vedic astrologer.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-                <a href="{{ route('guide.read-kundli') }}" class="fk-tag-pill" style="font-size: 14px; padding: 10px 20px;">
-                    How to Read Kundli Online <span class="fk-pill-arrow">→</span>
+            <div class="fk-tags-wrap">
+                <a href="{{ route('guide.read-kundli') }}" class="fk-tag-pill">
+                    <span>📖</span> How to Read Kundli Online <span class="fk-pill-arrow">→</span>
                 </a>
-                <a href="{{ route('guide.read-houses') }}" class="fk-tag-pill" style="font-size: 14px; padding: 10px 20px;">
-                    How to Read Houses in Kundli <span class="fk-pill-arrow">→</span>
+                <a href="{{ route('guide.read-houses') }}" class="fk-tag-pill">
+                    <span>🏛️</span> How to Read Houses in Kundli <span class="fk-pill-arrow">→</span>
                 </a>
-                <a href="{{ route('guide.read-planets') }}" class="fk-tag-pill" style="font-size: 14px; padding: 10px 20px;">
-                    How to Read Planets in Astrology <span class="fk-pill-arrow">→</span>
+                <a href="{{ route('guide.read-planets') }}" class="fk-tag-pill">
+                    <span>🪐</span> How to Read Planets in Astrology <span class="fk-pill-arrow">→</span>
                 </a>
-                <a href="{{ route('guide.planets-signs-houses') }}" class="fk-tag-pill" style="font-size: 14px; padding: 10px 20px;">
-                    Planets, Signs &amp; Houses in Astrology <span class="fk-pill-arrow">→</span>
+                <a href="{{ route('guide.planets-signs-houses') }}" class="fk-tag-pill">
+                    <span>♈</span> Planets, Signs &amp; Houses in Astrology <span class="fk-pill-arrow">→</span>
                 </a>
-                <a href="{{ route('guide.planets-signs-significance') }}" class="fk-tag-pill" style="font-size: 14px; padding: 10px 20px;">
-                    Planets, Signs and Their Significance <span class="fk-pill-arrow">→</span>
+                <a href="{{ route('guide.planets-signs-significance') }}" class="fk-tag-pill">
+                    <span>✨</span> Planets, Signs and Their Significance <span class="fk-pill-arrow">→</span>
                 </a>
             </div>
         </div>
